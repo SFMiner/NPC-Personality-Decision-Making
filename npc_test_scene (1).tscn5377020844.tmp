@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://test_npc_interface.gd" id="1"]
+[ext_resource type="Script" path="res://npc_system_architecture.gd" id="2"]
+
+[node name="NPCTestScene" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.1, 0.1, 0.15, 1)
+
+[node name="Title" type="Label" parent="."]
+offset_left = 20
+offset_top = 20
+offset_right = 400
+offset_bottom = 60
+theme_override_font_sizes/font_size = 24
+text = "NPC Personality System Test"
+
+[node name="Instructions" type="Label" parent="."]
+offset_left = 20
+offset_top = 520
+offset_right = 600
+offset_bottom = 580
+theme_override_font_sizes/font_size = 12
+text = "Type any request and send it to the selected NPC. Try different phrasings and tones!
+Examples: 'Help me fight', 'Give me your gold!', 'What do you know about the ruins?'"
+autowrap_mode = 2

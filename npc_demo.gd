@@ -221,7 +221,6 @@ func _ready() -> void:
 	
 
 	var requests : Array[ScenarioRequest] = [ScenarioRequest.new("Rebellion Scenario", rebellion_scenario), ScenarioRequest.new("Diplomatic Crisis", diplomatic_crisis), ScenarioRequest.new("Ruins Exploration", ruins_exploration), ScenarioRequest.new("Moral Choice", moral_choice), ScenarioRequest.new("Leadership Crisis", leadership_crisis), ScenarioRequest.new("Social Approach", social_approach), ScenarioRequest.new("Resource Crisis", resource_crisis), ScenarioRequest.new("Betrayal Response", betrayal_response)]
-
 	
 	
 	for request in requests:

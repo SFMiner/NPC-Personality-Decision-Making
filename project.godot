@@ -11,5 +11,5 @@ config_version=5
 [application]
 
 config/name="NPC Decision Demo"
-run/main_scene="uid://crycyedflkk3d"
+run/main_scene="res://mainOld.tscn"
 config/features=PackedStringArray("4.5")
