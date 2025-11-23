@@ -4,3 +4,5 @@ res://enhancced_system_test.gd
 res://npc_system_enhanced.gd
 res://enhanced_test.tscn
 res://enhanced_system_test.gd
+res://test_personality_fixes.gd
+res://test_request_parser.gd

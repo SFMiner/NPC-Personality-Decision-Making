@@ -8,6 +8,8 @@ var debugging = true
 # 3. Stress accumulation bug
 # 4. Response variety
 
+
+
 # ============================================================================
 # CORE DATA STRUCTURES (same as before)
 # ============================================================================
@@ -299,7 +301,9 @@ class RequestParser:
 			challenge.personality_tags = {"is_aggressive": true, "is_brave": true}
 			challenge.response_template = "You dare threaten me? {consequence}"
 			options.append(challenge)
-		
+
+		assert(options.size() >= 9, "Not enough response options generated!")
+	
 		return options
 
 # ============================================================================
@@ -307,52 +311,93 @@ class RequestParser:
 # ============================================================================
 
 class ResponseGenerator:
-	var re : RegEx = RegEx.new()
-	
+
+	# NEW: Grammar compatibility constants
+	const DEFINITIVE_CORES = [
+		"Out of the question",
+		"Never",
+		"Absolutely not",
+		"Certainly",
+		"Of course"
+	]
+
+	const INCOMPATIBLE_WITH_HESITATION = [
+		"Out of the question",
+		"Never",
+		"That is final",
+		"End of discussion",
+		"Absolutely",
+		"Certainly"
+	]
+
+	const STRONG_ENDINGS = [
+		"That is final.",
+		"End of discussion.",
+		"No more debate."
+	]
+
 	var enthusiasm_phrases = {
 		"high": ["Absolutely", "Gladly", "With pleasure", "Certainly"],
 		"medium": ["Sure", "Alright", "I can do that", "Very well"],
 		"low": ["I suppose", "If necessary", "Fine", "As you wish"]
 	}
-	
+
 	var dismissal_phrases = {
 		"harsh": ["No", "Absolutely not", "Out of the question", "Never"],
 		"polite": ["I'm afraid not", "I must decline", "Unfortunately no", "I cannot"]
 	}
-	
+
 	var condition_questions = [
 		"What can you offer me in return?",
 		"What's in it for me?",
 		"And what do I gain from this?",
 		"Why should I agree to this?"
 	]
+
+	# NEW: Risk-tolerance phrases
+	var personality_phrases = {
+		"high_risk_accept": ["Let's do it!", "Sounds exciting!", "I'm in!", "Why not?", "Absolutely!"],
+		"high_risk_enthusiasm": ["gladly", "eagerly", "enthusiastically", "with excitement"],
+		"low_risk_accept": ["If we're careful…", "Cautiously, yes", "We must be safe", "Proceed slowly"],
+		"low_risk_hedging": ["carefully", "cautiously", "with great care", "if it's safe"]
+	}
 	
 	func generate_response(npc: NPC, chosen_option: ResponseOption, request: Request) -> String:
 		var template = chosen_option.response_template
 		var response = template
-		re.compile("\\bi\\b") 
-		
+		var hesitation_ok = true
 		# Replace template variables with personality-driven variations
-		response = _apply_personality_modifiers(response, npc.personality, chosen_option.template_variant)
+		response = _apply_personality_modifiers(response, npc.personality, chosen_option.template_variant, hesitation_ok)
 		response = _apply_value_modifiers(response, npc.personality.values, chosen_option.template_variant)
-		response = _apply_context_modifiers(response, npc.context, request.context)
-		response = _apply_relationship_modifiers(response, npc.get_relationship(request.context.requester_id))
+		response = _apply_context_modifiers(response, npc, request.context, hesitation_ok)
+		response = _apply_relationship_modifiers(response, 	
+			npc.get_relationship(request.context.requester_id),
+			hesitation_ok)
 		response = _add_personality_flavor(response, npc.personality)
-		
+
 		# Ensure response ends with punctuation before adding closings
 		if not response.ends_with(".") and not response.ends_with("!") and not response.ends_with("?"):
 			response = response + "."
-		
+ 
 		# Add closing punctuation variation
 		if npc.personality.warmth > 0.3 and randf() > 0.7:
 			response = response.trim_suffix(".") + ", friend."
-		elif npc.personality.assertiveness > 0.5 and randf() > 0.8:
-			response = response.trim_suffix(".") + ". That is final."
-		
+		# NEW: Use assertive ending function to check compatibility
+		response = _add_assertive_ending(response, npc.personality)
+
+		# NEW: High risk-tolerance adds excitement to acceptances
+		if npc.personality.risk_tolerance > 0.6:
+			if chosen_option.response_type in ["AGREE", "AGREE_CONDITIONAL"]:
+				# Add excitement - replace period with exclamation
+				if response.ends_with(".") and randf() > 0.6:
+					response = response.trim_suffix(".") + "!"
+
+		var re = RegEx.new()
+		re.compile("\\bi\\b")
 		response = re.sub(response, "I", true)
 		return response
 	
-	func _apply_personality_modifiers(template: String, personality: Personality, variant: int) -> String:
+	func _apply_personality_modifiers(template: String, personality: Personality, variant: int, hesitation_ok : bool) -> String:
 		var result = template
 		
 		# {action} variations
@@ -387,6 +432,9 @@ class ResponseGenerator:
 			result = result.replace("{enthusiasm}", phrases[randi() % phrases.size()])
 		
 		# {dismissal} based on assertiveness
+		if personality.assertiveness > 0.5:
+			hesitation_ok = false
+			
 		if result.contains("{dismissal}"):
 			var level = "polite"
 			if personality.assertiveness > 0.5:
@@ -408,7 +456,59 @@ class ResponseGenerator:
 				"That's not my problem"
 			]
 			result = result.replace("{harsh_reason}", harsh_reasons[randi() % harsh_reasons.size()])
-		
+
+		# NEW: Risk-Tolerance affects vocabulary
+		if personality.risk_tolerance > 0.6:
+			# High risk = enthusiastic, bold language
+			if result.contains("I'll ") and not result.contains("I'll gladly"):
+				result = result.replace("I'll ", "I'll gladly ")
+			result = result.replace("perhaps", "absolutely")
+			result = result.replace("I can", "I'd love to")
+
+			# Add enthusiasm markers
+			if result.begins_with("Of course"):
+				result = result.replace("Of course", "Absolutely")
+
+		elif personality.risk_tolerance < -0.4:
+			# Low risk = cautious, hedging language
+			if result.contains("I'll ") and not result.contains("carefully"):
+				result = result.replace("I'll ", "I'll carefully ")
+			elif result.contains("I can"):
+				result = result.replace("I can", "I can try to")
+
+			# Add safety qualifiers
+			if not result.contains("careful") and not result.contains("cautious"):
+				if randf() > 0.7:
+					result = result.replace(". ", ", if it's safe. ")
+
+		# NEW: Conscientiousness affects how they describe actions
+		if personality.conscientiousness > 0.6:
+			# High conscientiousness = precise language
+			# But ROTATE through different words, don't always use "properly"
+			var phrases = [
+				"correctly", "properly", "precisely",
+				"according to protocol", "by the book",
+				"as it should be done", "with proper procedure"
+			]
+			var chosen = phrases[randi() % phrases.size()]
+
+			# Only apply 30% of the time to avoid overuse
+			if randf() > 0.7:
+				if result.contains("I'll take care"):
+					result = result.replace("take care", "handle this " + chosen)
+				elif result.contains("I can do"):
+					result = result.replace("I can do", "I can execute this " + chosen)
+
+		elif personality.conscientiousness < -0.3:
+			# Low conscientiousness = casual language
+			if randf() > 0.75:
+				var phrases = [
+					"more or less", "I guess", "probably",
+					"good enough", "doesn't matter much", "whatever works"
+				]
+				var chosen = phrases[randi() % phrases.size()]
+				result = result.replace("I'll ", "I'll " + chosen + " ")
+
 		return result
 	
 	func _generate_reasons(personality: Personality) -> Array[String]:
@@ -480,13 +580,18 @@ class ResponseGenerator:
 			_:
 				return ["What do you propose?", "What are your terms?", "What's the arrangement?", "Let's discuss."]
 	
-	func _apply_context_modifiers(template: String, npc_context: NPCContext, request_context: RequestContext) -> String:
+	func _apply_context_modifiers(template: String, npc, request_context: RequestContext, hesitation_ok : bool) -> String:
 		var result = template
-		
+		var personality = npc.personality
+		var npc_context : NPCContext = npc.context
+		var assertiveness = npc.personality.assertiveness
+		var stress_level = npc_context.stress_level
 		# Stress hesitation
-		if npc_context.stress_level > 0.7:
-			result = "I... " + result
-		
+		if (stress_level > 0.7 and randf() > 0.9) or (assertiveness < 0.4 and randf() > 0.85):
+			result = "I… " + result
+		elif assertiveness > 0.7:
+			hesitation_ok = true
+			
 		# Urgency modifications
 		if request_context.urgency > 0.8:
 			result = result.replace("Perhaps", "Fine")
@@ -520,7 +625,7 @@ class ResponseGenerator:
 			_:
 				return "We could try something else"
 	
-	func _apply_relationship_modifiers(template: String, relationship: Relationship) -> String:
+	func _apply_relationship_modifiers(template: String, relationship: Relationship, hesitation_ok : bool) -> String:
 		var result = template
 		
 		# High trust = more direct
@@ -529,9 +634,10 @@ class ResponseGenerator:
 			result = result.replace("I might", "I will")
 		
 		# Fear = cautious
-		if relationship.fear > 0.5:
-			if not result.begins_with("I... "):
-				result = "I... " + result.to_lower()
+		if hesitation_ok:
+			if relationship.fear > 0.5:
+				if not result.begins_with("I… "):
+					result = "I… " + result.to_lower()
 		
 		# Affection = warmth
 		if relationship.affection > 0.6 and randf() > 0.7:
@@ -547,19 +653,203 @@ class ResponseGenerator:
 		return result
 	
 	func _add_personality_flavor(response: String, personality: Personality) -> String:
-		# Don't add flavor if already has flavor (avoid "Well, Well, ...")
-		if response.begins_with("Well, ") or response.begins_with("Listen. ") or response.begins_with("Interesting... "):
+		# Don't add flavor if already has flavor (avoid "Well, Well, …")
+		if response.begins_with("Well, ") or response.begins_with("Listen. ") or response.begins_with("Interesting… "):
 			return response
-		
-		if personality.warmth > 0.6 and randf() > 0.8:
-			response = "Well, " + _lowercase_first_char_safe(response)
-		elif personality.assertiveness > 0.6 and randf() > 0.8:
+
+		# NEW: Check if response is incompatible with hesitation/uncertainty prefixes
+		var is_incompatible_with_hesitation = _starts_with_any(response, INCOMPATIBLE_WITH_HESITATION)
+
+		# Only add hesitation if response is NOT definitive/absolute
+		if not is_incompatible_with_hesitation:
+			# FIXED: Only trigger hesitation for VERY low assertiveness AND low stability (8% chance instead of 50%)
+			if personality.assertiveness < -0.4 and personality.stability < -0.3 and randf() > 0.92:
+				response = "I… " + response
+			# Similarly, reduce "Interesting…" prefix frequency
+			elif personality.curiosity > 0.7 and randf() > 0.85:
+				# But NOT if response already starts definitively
+				if not _starts_with_definitive(response):
+					response = "Interesting… " + _lowercase_first_char_safe(response)
+
+		# Assertive prefixes are OK with any content (they're strong markers)
+		if personality.assertiveness > 0.7 and randf() > 0.8:
 			response = "Listen. " + response
-		elif personality.curiosity > 0.6 and randf() > 0.8:
-			response = "Interesting... " + _lowercase_first_char_safe(response)
-		
+		elif personality.warmth > 0.5 and randf() > 0.85:
+			response = "Well, " + _lowercase_first_char_safe(response)
+
 		return response
-	
+
+	# NEW: Helper function to check if response starts with definitive statements
+	func _starts_with_definitive(response: String) -> bool:
+		var definitive_starts = [
+			"Out of the question",
+			"Never",
+			"Absolutely",
+			"Certainly",
+			"Of course",
+			"No."
+		]
+		for start in definitive_starts:
+			if response.begins_with(start):
+				return true
+		return false
+
+	# NEW: Helper to check if response starts with any item in array
+	func _starts_with_any(text: String, prefixes: Array) -> bool:
+		for prefix in prefixes:
+			if text.begins_with(prefix):
+				return true
+		return false
+
+	# NEW: Add assertive endings to strong refusals only
+	func _add_assertive_ending(response: String, personality: Personality) -> String:
+		# Only high assertiveness (>0.7) can add "That is final"
+		if personality.assertiveness > 0.7 and randf() > 0.7:
+			if _is_negative_response(response):
+				response += " That is final."
+
+		return response
+
+	# NEW: Check if response is a negative/refusal statement
+	func _is_negative_response(response: String) -> bool:
+		var negative_indicators = ["No.", "Never.", "Out of the question", "I cannot", "I must decline"]
+		for indicator in negative_indicators:
+			if response.contains(indicator):
+				return true
+		return false
+
+	# NEW: Apply personality-based constraints to filter options
+	func apply_personality_constraints(options: Array[ResponseOption], personality: Personality) -> Array[ResponseOption]:
+		var filtered: Array[ResponseOption] = []
+
+		var harsh_rejections = [
+			"No. Find someone else",
+			"No. This doesn't concern me",
+			"No. That's not my problem",
+			"Out of the question",
+			"Never."
+		]
+
+		# NEW: Define absolute language markers
+		var absolute_language = [
+			"Never",
+			"Absolutely not",
+			"Out of the question",
+			"That is final",
+			"End of discussion"
+		]
+
+		for option in options:
+			var is_harsh = false
+			var is_absolute = false
+
+			for harsh in harsh_rejections:
+				if option.response_template.contains(harsh):
+					is_harsh = true
+					break
+
+			for absolute in absolute_language:
+				if option.response_template.contains(absolute):
+					is_absolute = true
+					break
+
+			# High warmth (>0.7) characters CANNOT use harsh rejections
+			if personality.warmth > 0.7 and is_harsh:
+				continue  # Skip this option
+
+			# NEW: Low assertiveness constraint
+			# Characters with assertiveness < -0.2 should AVOID absolute language
+			if personality.assertiveness < -0.2 and is_absolute:
+				continue  # Skip this option
+
+			filtered.append(option)
+
+		return filtered
+
+	# NEW: Create soft refusal option for high-warmth characters
+	func create_soft_refusal() -> ResponseOption:
+		var option = ResponseOption.new()
+		option.response_type = "REFUSE_SOFT"
+		option.base_score = 0.6
+		option.personality_tags = {"is_polite": true, "is_apologetic": true}
+
+		var templates = [
+			"I'm so sorry, but I cannot {action}. I wish I could help",
+			"I'm afraid I can't {action}, friend. I truly wish I could",
+			"Unfortunately, I must decline. I apologize",
+			"I wish I could help, but I cannot {action}. Forgive me"
+		]
+		option.response_template = templates[randi() % templates.size()]
+
+		return option
+
+	# NEW: Create hedged refusal option for low-assertiveness characters
+	func create_hedged_refusal() -> ResponseOption:
+		var option = ResponseOption.new()
+		option.response_type = "REFUSE_HEDGED"
+		option.base_score = 0.6
+		option.personality_tags = {"is_uncertain": true, "is_cautious": true}
+
+		var templates = [
+			"I don't think I can {action}. Perhaps someone else",
+			"I'm not sure about this. Maybe {alternative}",
+			"I probably shouldn't {action}. I have my reasons",
+			"I'd rather not {action}, if that's alright"
+		]
+		option.response_template = templates[randi() % templates.size()]
+
+		return option
+
+	# NEW: Select refusal reason based on risk tolerance
+	func select_refusal_reason(personality: Personality) -> String:
+		if personality.risk_tolerance < -0.3:
+			# Low risk = safety concerns
+			var cautious_reasons = [
+				"That's too dangerous",
+				"Too risky for my taste",
+				"I must be cautious",
+				"It's too uncertain"
+			]
+			return cautious_reasons[randi() % cautious_reasons.size()]
+		elif personality.risk_tolerance > 0.6:
+			# High risk = boredom/disinterest
+			var bold_reasons = [
+				"Not worth my time",
+				"Doesn't interest me",
+				"I have better things to do",
+				"Too mundane"
+			]
+			return bold_reasons[randi() % bold_reasons.size()]
+		else:
+			# Neutral = practical concerns
+			return "I have more important matters"
+
+	# NEW: Select personality-specific fallback text
+	func select_fallback_text(npc: NPC) -> String:
+		# Assertive characters are decisive
+		if npc.personality.assertiveness > 0.5:
+			return "I need to consider my position strategically"
+
+		# Scholars prioritize research
+		elif npc.context.role == "scholar":
+			return "I need to research this matter further"
+
+		# Rogues weigh risks
+		elif npc.context.role == "rogue":
+			return "I need to weigh the risks before deciding"
+
+		# Nobles consult others
+		elif npc.context.role == "noble":
+			return "I must consult my advisors first"
+
+		# Warm characters are apologetic
+		elif npc.personality.warmth > 0.5:
+			return "I need a moment to think about this, friend"
+
+		# Default
+		else:
+			return "I need time to consider this carefully"
+
 	# Helper to lowercase first character but preserve "I" as "I"
 	func _lowercase_first_char_safe(text: String) -> String:
 		if text.is_empty():
@@ -605,7 +895,39 @@ class DecisionEngine:
 				score *= 0.7  # 30% penalty for same type
 		
 		return score
-	
+		
+		
+	func _generate_fallback(npc: NPC) -> String:
+		# Select fallback text based on personality and role
+		var fallback_text = ""
+		
+		# Assertive characters are decisive
+		if npc.personality.assertiveness > 0.5:
+			fallback_text = "I need to consider my position strategically"
+		
+		# Scholars prioritize research
+		elif npc.context.role == "scholar":
+			fallback_text = "I need to research this matter further"
+		
+		# Rogues weigh risks
+		elif npc.context.role == "rogue":
+			fallback_text = "I need to weigh the risks before deciding"
+		
+		# Nobles consult others
+		elif npc.context.role == "noble":
+			fallback_text = "I must consult my advisors first"
+		
+		# Warm characters are apologetic
+		elif npc.personality.warmth > 0.5:
+			fallback_text = "I need a moment to think about this, friend"
+		
+		# Default
+		else:
+			fallback_text = "I need time to consider this carefully"
+		
+		return "[" + npc.name + "]: " + fallback_text + "."
+		
+		
 	func _calculate_personality_modifier(personality: Personality, option: ResponseOption) -> float:
 		var modifier = 1.0
 		for tag in option.personality_tags:
@@ -625,6 +947,21 @@ class DecisionEngine:
 				"is_evasive":
 					if option.personality_tags[tag]:
 						modifier += (1.0 - personality.assertiveness) * 0.2
+
+		# NEW: Risk-Tolerance affects acceptance/refusal likelihood
+		if option.response_type in ["AGREE", "AGREE_CONDITIONAL"]:
+			# High risk-tolerance = more likely to accept
+			modifier += personality.risk_tolerance * 0.5
+		elif option.response_type in ["REFUSE", "REFUSE_SOFT", "REFUSE_HEDGED", "DEFLECT"]:
+			# Low risk-tolerance = more likely to refuse
+			modifier += (1.0 - personality.risk_tolerance) * 0.4
+
+		# Adjust conditional responses based on risk
+		if option.response_type == "AGREE_CONDITIONAL":
+			# Low risk wants MORE conditions (harder to accept unconditionally)
+			if personality.risk_tolerance < 0.0:
+				modifier += 0.3
+
 		return max(0.1, modifier)
 	
 	func _calculate_value_modifier(values: Dictionary, option: ResponseOption) -> float:
@@ -718,15 +1055,27 @@ func _create_sample_npcs():
 func process_request(npc_id: String, request_text: String) -> String:
 	if not npcs.has(npc_id):
 		return "Unknown NPC"
-	
+	var decision_engine = DecisionEngine.new()
 	var npc = npcs[npc_id]
 	var request = parser.parse_request(request_text)
-	
+
+	# NEW: Add soft refusal option for high-warmth characters
+	if npc.personality.warmth > 0.7:
+		request.response_options.append(generator.create_soft_refusal())
+
+	# NEW: Add hedged refusal option for low-assertiveness characters
+	if npc.personality.assertiveness < -0.2:
+		request.response_options.append(generator.create_hedged_refusal())
+
+	# NEW: Apply personality constraints to filter harsh options
+	request.response_options = generator.apply_personality_constraints(request.response_options, npc.personality)
+
 	# Evaluate options and pick best (with anti-repetition)
 	var best_option: ResponseOption = null
 	var best_score = -INF
 	var attempts = 0
-	var max_attempts = 2  # Reduced from 3
+	
+	var max_attempts = _get_max_attempts(npc)
 	
 	while attempts < max_attempts:
 		best_option = null
@@ -751,9 +1100,35 @@ func process_request(npc_id: String, request_text: String) -> String:
 		if best_option:
 			best_option.base_score *= 0.5
 		attempts += 1
+
+	# NEW: Check fallback threshold before triggering fallback
+#	if best_score >= fallback_threshold and best_option:
+		# Score is good enough - use it even if repetitive
+#		var response = generator.generate_response(npc, best_option, request)
+#		npc.remember_response(response)
+#		_update_npc_after_response(npc, best_option, request)
+#		return "[" + npc.name + "]: " + response
+
+	# NEW: Personality-specific fallback
+	var fallback_text = generator.select_fallback_text(npc)
+	return decision_engine._generate_fallback(npc)
+
+func _get_max_attempts(npc: NPC) -> int:
+	# Decisive roles try more times before giving up (lower fallback rate)
+	if npc.context.role in ["warlord", "noble"]:
+		return 5  # Try harder to find a non-repetitive response
+	elif npc.personality.assertiveness > 0.7:
+		return 4  # Assertive characters keep trying
 	
-	# Fallback
-	return "[" + npc.name + "]: I... I need to think about this."
+	# Thoughtful roles give up sooner (higher fallback rate is OK)
+	elif npc.context.role in ["scholar", "rogue"]:
+		return 2  # Current default
+	elif npc.personality.conscientiousness > 0.7:
+		return 2  # Deliberate characters may need to think
+	
+	# Default
+	else:
+		return 3
 
 func _update_npc_after_response(npc: NPC, chosen_option: ResponseOption, request: Request):
 	var relationship = npc.get_relationship(request.context.requester_id)

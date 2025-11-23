@@ -15,8 +15,10 @@ var test_requests = [
 	"Stand aside. I'm ordering you.",
 	"Let's work together on this. What do you need from me?"
 ]
+
 var npcs : Array = ["Vorak", "Lyris", "Thane", "Mira", "Kass", "Lord Aldric",
 		"Elena", "Grimm", "Sofia", "Marcus", "Zara", "Viktor"]
+
 var output_file := FileAccess.open("res://test_responses.txt", FileAccess.WRITE)
 # WRITE mode overwrites the file automatically
 
@@ -24,8 +26,6 @@ func _ready():
 	add_child(npc_system)
 # Test same request 5 times
 	multi_responses_test(npcs, test_requests, 10)
-
-
 
 func multi_responses_test(npc_list : Array, request_list : Array, num_times : int):
 	for current_request in request_list:
@@ -70,6 +70,9 @@ func test_responses(npc_name : String, request : String, num_times : int):
 #		output_file.store_line("   Trust = " + str(trust) +
 #			": Respect = " + str(respect) +
 #			": Affection  = " + str(affection))
-		
 		var response = npc_system.send_request_to_npc(npc_name, request)
+		var last_char = response.right(1)
+		if not (last_char == "?" or last_char == "." or last_char == "!" or last_char == "…"):
+			response = response + "."
+		
 		output_file.store_line("   " + response)
