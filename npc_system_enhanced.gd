@@ -367,7 +367,9 @@ class ResponseGenerator:
 		var response = template
 		var hesitation_ok = true
 		# Replace template variables with personality-driven variations
-		response = _apply_personality_modifiers(response, npc.personality, chosen_option.template_variant, hesitation_ok)
+		var response_complex = _apply_personality_modifiers(response, npc.personality, chosen_option.template_variant, hesitation_ok)
+		response = response_complex[0]
+		hesitation_ok = response_complex[1]
 		response = _apply_value_modifiers(response, npc.personality.values, chosen_option.template_variant)
 		response = _apply_context_modifiers(response, npc, request.context, hesitation_ok)
 		response = _apply_relationship_modifiers(response, 	
@@ -397,7 +399,7 @@ class ResponseGenerator:
 		response = re.sub(response, "I", true)
 		return response
 	
-	func _apply_personality_modifiers(template: String, personality: Personality, variant: int, hesitation_ok : bool) -> String:
+	func _apply_personality_modifiers(template: String, personality: Personality, variant: int, hesitation_ok : bool) -> Array:
 		var result = template
 		
 		# {action} variations
@@ -432,7 +434,7 @@ class ResponseGenerator:
 			result = result.replace("{enthusiasm}", phrases[randi() % phrases.size()])
 		
 		# {dismissal} based on assertiveness
-		if personality.assertiveness > 0.5:
+		if personality.assertiveness > 0.7:
 			hesitation_ok = false
 			
 		if result.contains("{dismissal}"):
@@ -509,7 +511,7 @@ class ResponseGenerator:
 				var chosen = phrases[randi() % phrases.size()]
 				result = result.replace("I'll ", "I'll " + chosen + " ")
 
-		return result
+		return [result, hesitation_ok]
 	
 	func _generate_reasons(personality: Personality) -> Array[String]:
 		var reasons: Array[String] = []
@@ -587,7 +589,7 @@ class ResponseGenerator:
 		var assertiveness = npc.personality.assertiveness
 		var stress_level = npc_context.stress_level
 		# Stress hesitation
-		if (stress_level > 0.7 and randf() > 0.9) or (assertiveness < 0.4 and randf() > 0.85):
+		if (stress_level > 0.7 and randf() > 0.9 and assertiveness < 0.7) or (assertiveness < 0.4 and randf() > 0.85):
 			result = "I… " + result
 		elif assertiveness > 0.7:
 			hesitation_ok = true

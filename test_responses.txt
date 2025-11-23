@@ -1,1846 +1,511 @@
 
-Vorak - Role : warlord - Warmth = -0.32943217296013 - Assertiveness = 0.70749227083471 - Risk-Tolerance = 0.68841901477193
-  Trust = 0.4494240258695: Respect = 0.48011071408767: Affection  = 0.21028769324525
+Vorak - Role : warlord - Warmth = -0.3995233349345 - Assertiveness = 0.97278061632238 - Risk-Tolerance = 0.7768654745528
+  Trust = 0.31569019747467: Respect = 0.64624062715258: Affection  = -0.14136725427772
+   [Vorak]: I suppose, I'd love to dive into this. It must be done!
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: Listen. Absolutely. I'll gladly take care of it.
+   [Vorak]: I'll gladly take on this challenge. It's necessary.
+   [Vorak]: What's in it for me? Then we can discuss terms.
    [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Why should I agree to this? Then we can discuss terms.
+   [Vorak]: Absolutely. I'll gladly take care of it!
    [Vorak]: Listen. I'd love tonot take on this challenge. It's necessary.
-   [Vorak]: What's in it for me? Then we can discuss terms.
-   [Vorak]: Never. It must be done.
-   [Vorak]: I suppose, I'd love to dive into this. It must be done.
-   [Vorak]: I'll gladly take on this challenge. It's necessary.
-   [Vorak]: Absolutely. I'll gladly take care of it!
-   [Vorak]: If necessary, I'd love to dive into this. It must be done.
+   [Vorak]: Listen. Absolutely. I'll gladly take care of it.
    [Vorak]: Perhaps, but I maintain control. I'll need something in return.
-   [Vorak]: Why should I agree to this? Then we can discuss terms.
-
-Lyris - Role : scholar - Warmth = 0.17214673689246 - Assertiveness = -0.23071338704159 - Risk-Tolerance = -0.24804487625229
-  Trust = 0.20570938173774: Respect = 0.37440627472431: Affection  = -0.05953996429788
-   [Lyris]: Interesting… I don't think I can handle this properly. Perhaps someone else.
-   [Lyris]: I probably shouldn't handle this properly. I have my reasons.
-   [Lyris]: Interesting… I… I'm afraid not. It's the right thing.
-   [Lyris]: I'd rather not handle this properly, if that's alright.
-   [Lyris]: I… No. This doesn't concern me.
-   [Lyris]: I cannot handle this properly. It's the proper course.
-   [Lyris]: Interesting… I don't think I can handle this properly. Perhaps someone else.
-   [Lyris]: Interesting… I'm not sure about this. Maybe Let me research this first.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: No. I have more important matters.
-
-Thane - Role : merchant - Warmth = 0.24620113107362 - Assertiveness = 0.29257992166318 - Risk-Tolerance = 0.58004697934837
-  Trust = 0.41523537799912: Respect = 0.48538871212312: Affection  = 0.05484636493282
-   [Thane]: Sure, I can address this correctly. It's the right thing.
-   [Thane]: Very well, I can address this correctly. It's the right thing.
-   [Thane]: No. I have more important matters.
-   [Thane]: Of course. I'll take care of it.
-   [Thane]: I cannot handle this properly. It's the proper course.
-   [Thane]: I… I'll handle this properly. It's the proper course.
-   [Thane]: I need time to consider this carefully.
-   [Thane]: Sure, I can address this correctly. It's the right thing.
-   [Thane]: I need time to consider this carefully.
-   [Thane]: I can do that, I can address this correctly. It's the right thing.
-
-Mira - Role : healer - Warmth = 0.78083344774017 - Assertiveness = -0.22877647495019 - Risk-Tolerance = -0.30890593353255
-  Trust = 0.38338542494974: Respect = 0.494893349249: Affection  = -0.07716752432062
-   [Mira]: I probably shouldn't handle this properly. I have my reasons.
-   [Mira]: I don't think I can handle this properly. Perhaps someone else.
-   [Mira]: I… I'd rather not handle this properly, if that's alright, friend.
-   [Mira]: I cannot handle this properly. I want to help.
-   [Mira]: I'm not sure about this. Maybe We could try something else.
-   [Mira]: No. That's not my problem.
-   [Mira]: I'm not sure about this. Maybe We could try something else, friend.
-   [Mira]: I probably shouldn't handle this properly. I have my reasons.
-   [Mira]: I don't think I can handle this properly. Perhaps someone else.
-   [Mira]: I'm afraid not. I'm happy to assist.
-
-Kass - Role : rogue - Warmth = -0.29778208848303 - Assertiveness = 0.21687103012762 - Risk-Tolerance = 0.8603164705766
-  Trust = 0.23650087560151: Respect = 0.63467285706821: Affection  = 0.14821709405348
-   [Kass]: Alright, I'd love to dive into this. It's complicated!
-   [Kass]: I must decline. It's complicated.
-   [Kass]: I… I'd love tonot take on this challenge. I have my reasons.
-   [Kass]: No. This doesn't concern me.
-   [Kass]: I… Absolutely. I'll gladly take care of it.
-   [Kass]: Absolutely. I'll gladly take care of it!
-   [Kass]: I'd love tonot. It's complicated.
-   [Kass]: Alright, I'd love to dive into this. It's complicated.
-   [Kass]: I… Sure, I'd love to dive into this. It's complicated.
-   [Kass]: Absolutely. I'll I guess gladly take care of it.
-
-Lord Aldric - Role : noble - Warmth = 0.08673255462394 - Assertiveness = 0.70331838827034 - Risk-Tolerance = -0.26155187540614
-  Trust = 0.48842861032183: Respect = 0.51890829742528: Affection  = 0.30493873909996
-   [Lord Aldric]: I cannot handle this properly. It's necessary.
-   [Lord Aldric]: Listen. No. Find someone else.
-   [Lord Aldric]: Absolutely not. It must be done.
-   [Lord Aldric]: Never. It must be done.
-   [Lord Aldric]: No. I have more important matters.
-   [Lord Aldric]: No. It must be done.
-   [Lord Aldric]: I cannot handle this properly. It's necessary.
-   [Lord Aldric]: No. This doesn't concern me. That is final.
-   [Lord Aldric]: Listen. No. This doesn't concern me.
-   [Lord Aldric]: Listen. No. Find someone else.
-
-Elena - Role : merchant - Warmth = 0.40038549330161 - Assertiveness = 0.33526103705814 - Risk-Tolerance = 0.39509259195557
-  Trust = 0.36441528661534: Respect = 0.63332572425472: Affection  = 0.05100507649537
-   [Elena]: Of course. I'll take care of it, friend.
-   [Elena]: I can do that, I can address this correctly. It's the right thing.
-   [Elena]: No. I have more important matters, friend.
-   [Elena]: I… I cannot handle this properly. It's the proper course.
-   [Elena]: Unfortunately no. It's the right thing.
-   [Elena]: I cannot. It's the right thing.
-   [Elena]: I need time to consider this carefully.
-   [Elena]: I'll handle this properly. It's the proper course, friend.
-   [Elena]: I'll handle this properly. It's the proper course.
-   [Elena]: No. This doesn't concern me.
-
-Grimm - Role : warlord - Warmth = -0.36509532230344 - Assertiveness = 0.64981651580788 - Risk-Tolerance = 0.83101828412636
-  Trust = 0.32496882349713: Respect = 0.51071597314395: Affection  = -0.03119273008787
-   [Grimm]: I'll gladly take on this challenge. It's necessary!
-   [Grimm]: Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: I might consider it if I keep authority. You'll owe me.
-   [Grimm]: Absolutely. I'll gladly take care of it.
-   [Grimm]: Fine, I'd love to dive into this. It must be done.
-   [Grimm]: As you wish, I'd love to dive into this. It must be done.
-   [Grimm]: I suppose, I'd love to dive into this. It must be done.
-   [Grimm]: Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: I'll gladly take on this challenge. It's necessary!
-   [Grimm]: What can you offer me in return? Then we can discuss terms.
-
-Sofia - Role : scholar - Warmth = 0.37273655580336 - Assertiveness = -0.3449593447801 - Risk-Tolerance = -0.22654663829932
-  Trust = 0.25032977923601: Respect = 0.30460352742292: Affection  = 0.18060413832791
-   [Sofia]: Interesting… I cannot. It's the right thing.
-   [Sofia]: I don't think I can handle this properly. Perhaps someone else.
-   [Sofia]: That's interesting, but there are other matters. Let me research this first.
-   [Sofia]: Interesting… I'd rather not handle this properly, if that's alright, friend.
-   [Sofia]: I'd rather not handle this properly, if that's alright.
-   [Sofia]: I'm not sure about this. Maybe Let me research this first.
-   [Sofia]: Interesting… I probably shouldn't handle this properly. I have my reasons, friend.
-   [Sofia]: Interesting… I… No. This doesn't concern me.
-   [Sofia]: No. I have more important matters, friend.
-   [Sofia]: I probably shouldn't handle this properly. I have my reasons.
-
-Marcus - Role : healer - Warmth = 0.88834658716196 - Assertiveness = -0.41430768248683 - Risk-Tolerance = -0.3361959775474
-  Trust = 0.30526725026359: Respect = 0.6006377538767: Affection  = 0.06356075987183
-   [Marcus]: I probably shouldn't handle this properly. I have my reasons.
-   [Marcus]: I… I don't think I can handle this properly. Perhaps someone else.
-   [Marcus]: I don't think I can handle this properly. Perhaps someone else, friend.
-   [Marcus]: No. That's not my problem.
-   [Marcus]: Well, I'd rather not handle this properly, if that's alright, friend.
-   [Marcus]: I cannot handle this properly. I want to help.
-   [Marcus]: Well, I'm not sure about this. Maybe We could try something else.
-   [Marcus]: I cannot handle this properly. I want to help, friend.
-   [Marcus]: No. I have more important matters.
-   [Marcus]: I'm afraid not. I'm happy to assist.
-
-Zara - Role : rogue - Warmth = -0.24432087461494 - Assertiveness = 0.14454972902991 - Risk-Tolerance = 0.95577574038679
-  Trust = 0.5608221851276: Respect = 0.52679695715807: Affection  = 0.12228690542973
-   [Zara]: I'll gladly take on this challenge. I have my reasons.
-   [Zara]: I… I'd love to do that, I'd love to dive into this. It's complicated!
-   [Zara]: Absolutely. I'll whatever works gladly take care of it.
-   [Zara]: Absolutely. I'll gladly take care of it.
-   [Zara]: Alright, I'd love to dive into this. It's complicated.
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: Very well, I'd love to dive into this. It's complicated.
-   [Zara]: I'll gladly take on this challenge. I have my reasons!
-   [Zara]: I'm afraid not. It's complicated.
-   [Zara]: I… I'll more or less gladly take on this challenge. I have my reasons!
-
-Viktor - Role : noble - Warmth = 0.30221681302188 - Assertiveness = 0.76707679732377 - Risk-Tolerance = -0.13377033659315
-  Trust = 0.30997499362755: Respect = 0.39756287233982: Affection  = 0.12107607594303
-   [Viktor]: No. I have more important matters, friend.
-   [Viktor]: No. It must be done, friend. That is final.
-   [Viktor]: No. It must be done. That is final.
-   [Viktor]: Listen. No. This doesn't concern me.
-   [Viktor]: I cannot handle this properly. It's necessary.
-   [Viktor]: I cannot handle this properly. It's necessary, friend.
-   [Viktor]: Absolutely not. It must be done.
-   [Viktor]: Out of the question. It must be done.
-   [Viktor]: Never. It must be done, friend.
-   [Viktor]: That's interesting, but there are other matters. We could try something else.
-
-Vorak - Role : warlord - Warmth = -0.32943217296013 - Assertiveness = 0.70749227083471 - Risk-Tolerance = 0.68841901477193
-  Trust = 0.4494240258695: Respect = 0.48011071408767: Affection  = 0.21028769324525
+   [Vorak]: Fine, I'd love to dive into this. It must be done.
    [Vorak]: I might consider it if I keep authority. You'll owe me.
-   [Vorak]: I'd love tonot take on this challenge. It's necessary.
-   [Vorak]: Absolutely. I'll gladly take care of it.
-   [Vorak]: Listen. What's in it for me? Then we can discuss terms.
-   [Vorak]: Out of the question. It must be done.
-   [Vorak]: I'll gladly take on this challenge. It's necessary!
-   [Vorak]: I might consider it if I keep authority. You'll owe me.
-   [Vorak]: As you wish, I'd love to dive into this. It must be done.
-   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
-   [Vorak]: What can you offer me in return? Then we can discuss terms.
-
-Lyris - Role : scholar - Warmth = 0.17214673689246 - Assertiveness = -0.23071338704159 - Risk-Tolerance = -0.24804487625229
-  Trust = 0.20570938173774: Respect = 0.37440627472431: Affection  = -0.05953996429788
-   [Lyris]: I need to research this matter further.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: No. That's not my problem.
-   [Lyris]: I'd rather not handle this properly, if that's alright.
-   [Lyris]: Interesting… I… No. I have more important matters.
-   [Lyris]: I… I probably shouldn't handle this properly. I have my reasons.
-   [Lyris]: I… No. This doesn't concern me.
-   [Lyris]: I don't think I can handle this properly. Perhaps someone else.
-   [Lyris]: That's interesting, but I have other concerns. Let me research this first.
-   [Lyris]: No. I have more important matters.
-
-Thane - Role : merchant - Warmth = 0.24620113107362 - Assertiveness = 0.29257992166318 - Risk-Tolerance = 0.58004697934837
-  Trust = 0.41523537799912: Respect = 0.48538871212312: Affection  = 0.05484636493282
-   [Thane]: I need time to consider this carefully.
-   [Thane]: I cannot. It's the right thing.
-   [Thane]: Of course. I'll take care of it.
-   [Thane]: I… I'm afraid not. It's the right thing.
-   [Thane]: I… I cannot handle this properly. It's the proper course.
-   [Thane]: I'll handle this properly. It's the proper course.
-   [Thane]: I can do that, I can address this correctly. It's the right thing.
-   [Thane]: Sure, I can address this correctly. It's the right thing.
-   [Thane]: No. I have more important matters.
-   [Thane]: I… Very well, I can address this correctly. It's the right thing.
-
-Mira - Role : healer - Warmth = 0.78083344774017 - Assertiveness = -0.22877647495019 - Risk-Tolerance = -0.30890593353255
-  Trust = 0.38338542494974: Respect = 0.494893349249: Affection  = -0.07716752432062
-   [Mira]: I'm not sure about this. Maybe We could try something else.
-   [Mira]: Well, I cannot handle this properly. I want to help.
-   [Mira]: Well, I'd rather not handle this properly, if that's alright, friend.
-   [Mira]: No. I have more important matters.
-   [Mira]: No. Find someone else.
-   [Mira]: I cannot handle this properly. I want to help, friend.
-   [Mira]: I probably shouldn't handle this properly. I have my reasons, friend.
-   [Mira]: I'd rather not handle this properly, if that's alright.
-   [Mira]: I probably shouldn't handle this properly. I have my reasons.
-   [Mira]: I'm not sure about this. Maybe We could try something else.
-
-Kass - Role : rogue - Warmth = -0.29778208848303 - Assertiveness = 0.21687103012762 - Risk-Tolerance = 0.8603164705766
-  Trust = 0.23650087560151: Respect = 0.63467285706821: Affection  = 0.14821709405348
-   [Kass]: No. I have more important matters.
-   [Kass]: Absolutely. I'll gladly take care of it!
-   [Kass]: I'd love tonot. It's complicated.
-   [Kass]: Very well, I'd love to dive into this. It's complicated.
-   [Kass]: I'd love tonot take on this challenge. I have my reasons.
-   [Kass]: I'm afraid not. It's complicated.
-   [Kass]: I'll gladly take on this challenge. I have my reasons.
-   [Kass]: Alright, I'd love to dive into this. It's complicated.
-   [Kass]: I need to weigh the risks before deciding.
-   [Kass]: No. Find someone else.
-
-Lord Aldric - Role : noble - Warmth = 0.08673255462394 - Assertiveness = 0.70331838827034 - Risk-Tolerance = -0.26155187540614
-  Trust = 0.48842861032183: Respect = 0.51890829742528: Affection  = 0.30493873909996
-   [Lord Aldric]: No. That's not my problem.
-   [Lord Aldric]: Listen. Absolutely not. It must be done.
-   [Lord Aldric]: I cannot handle this properly. It's necessary.
-   [Lord Aldric]: No. I have more important matters.
-   [Lord Aldric]: No. That's not my problem. That is final.
-   [Lord Aldric]: Never. It must be done.
-   [Lord Aldric]: Out of the question. It must be done.
-   [Lord Aldric]: No. Find someone else.
-   [Lord Aldric]: I… I cannot handle this properly. It's necessary.
-   [Lord Aldric]: I… No. That's not my problem.
-
-Elena - Role : merchant - Warmth = 0.40038549330161 - Assertiveness = 0.33526103705814 - Risk-Tolerance = 0.39509259195557
-  Trust = 0.36441528661534: Respect = 0.63332572425472: Affection  = 0.05100507649537
-   [Elena]: No. That's not my problem, friend.
-   [Elena]: I cannot handle this properly. It's the proper course, friend.
-   [Elena]: I… No. That's not my problem.
-   [Elena]: Sure, I can address this correctly. It's the right thing.
-   [Elena]: I'll handle this properly. It's the proper course.
-   [Elena]: Of course. I'll take care of it.
-   [Elena]: Very well, I can address this correctly. It's the right thing.
-   [Elena]: I cannot handle this properly. It's the proper course.
-   [Elena]: I… Alright, I can address this correctly. It's the right thing, friend.
-   [Elena]: I need time to consider this carefully.
-
-Grimm - Role : warlord - Warmth = -0.36509532230344 - Assertiveness = 0.64981651580788 - Risk-Tolerance = 0.83101828412636
-  Trust = 0.32496882349713: Respect = 0.51071597314395: Affection  = -0.03119273008787
-   [Grimm]: Absolutely. I'll gladly take care of it.
-   [Grimm]: Out of the question. It must be done.
-   [Grimm]: What's in it for me? Then we can discuss terms.
-   [Grimm]: I might consider it if I keep authority. You'll owe me.
-   [Grimm]: I'll gladly take on this challenge. It's necessary!
-   [Grimm]: And what do I gain from this? Then we can discuss terms.
-   [Grimm]: If necessary, I'd love to dive into this. It must be done.
-   [Grimm]: Why should I agree to this? Then we can discuss terms.
-   [Grimm]: Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: Absolutely. I'll gladly take care of it!
-
-Sofia - Role : scholar - Warmth = 0.37273655580336 - Assertiveness = -0.3449593447801 - Risk-Tolerance = -0.22654663829932
-  Trust = 0.25032977923601: Respect = 0.30460352742292: Affection  = 0.18060413832791
-   [Sofia]: I cannot handle this properly. It's the proper course, friend.
-   [Sofia]: I must decline. It's the right thing, friend.
-   [Sofia]: I don't think I can handle this properly. Perhaps someone else.
-   [Sofia]: I cannot handle this properly. It's the proper course.
-   [Sofia]: No. Find someone else.
-   [Sofia]: Interesting… I'd rather not handle this properly, if that's alright, friend.
-   [Sofia]: I probably shouldn't handle this properly. I have my reasons.
-   [Sofia]: Interesting… I… I probably shouldn't handle this properly. I have my reasons, friend.
-   [Sofia]: I… I'm not sure about this. Maybe Let me research this first.
-   [Sofia]: I probably shouldn't handle this properly. I have my reasons, friend.
-
-Marcus - Role : healer - Warmth = 0.88834658716196 - Assertiveness = -0.41430768248683 - Risk-Tolerance = -0.3361959775474
-  Trust = 0.30526725026359: Respect = 0.6006377538767: Affection  = 0.06356075987183
-   [Marcus]: I probably shouldn't handle this properly. I have my reasons.
-   [Marcus]: I don't think I can handle this properly. Perhaps someone else, friend.
-   [Marcus]: I probably shouldn't handle this properly. I have my reasons, friend.
-   [Marcus]: I cannot handle this properly. I want to help.
-   [Marcus]: I'd rather not handle this properly, if that's alright.
-   [Marcus]: Well, I don't think I can handle this properly. Perhaps someone else.
-   [Marcus]: I'm not sure about this. Maybe We could try something else.
-   [Marcus]: I must decline. I'm happy to assist.
-   [Marcus]: I'm not sure about this. Maybe We could try something else, friend.
-   [Marcus]: I… No. This doesn't concern me, friend.
-
-Zara - Role : rogue - Warmth = -0.24432087461494 - Assertiveness = 0.14454972902991 - Risk-Tolerance = 0.95577574038679
-  Trust = 0.5608221851276: Respect = 0.52679695715807: Affection  = 0.12228690542973
-   [Zara]: I… I'll I guess gladly take on this challenge. I have my reasons.
-   [Zara]: Absolutely. I'll gladly take care of it.
-   [Zara]: Absolutely. I'll doesn't matter much gladly take care of it.
-   [Zara]: Sure, I'd love to dive into this. It's complicated.
-   [Zara]: I'll gladly take on this challenge. I have my reasons!
-   [Zara]: I… No. Find someone else.
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: I… Absolutely. I'll gladly take care of it!
-   [Zara]: I'd love tonot take on this challenge. I have my reasons.
-   [Zara]: No. Find someone else.
-
-Viktor - Role : noble - Warmth = 0.30221681302188 - Assertiveness = 0.76707679732377 - Risk-Tolerance = -0.13377033659315
-  Trust = 0.30997499362755: Respect = 0.39756287233982: Affection  = 0.12107607594303
-   [Viktor]: I cannot handle this properly. It's necessary.
-   [Viktor]: No. That's not my problem.
-   [Viktor]: No. I have more important matters. That is final.
-   [Viktor]: Out of the question. It must be done, friend.
-   [Viktor]: I… Absolutely not. It must be done.
-   [Viktor]: No. That's not my problem, friend. That is final.
-   [Viktor]: Never. It must be done. That is final.
-   [Viktor]: Listen. I cannot handle this properly. It's necessary. That is final.
-   [Viktor]: I cannot handle this properly. It's necessary, friend. That is final.
-   [Viktor]: No. It must be done.
-
-Vorak - Role : warlord - Warmth = -0.32943217296013 - Assertiveness = 0.70749227083471 - Risk-Tolerance = 0.68841901477193
-  Trust = 0.4494240258695: Respect = 0.48011071408767: Affection  = 0.21028769324525
-   [Vorak]: What's in it for me? Then we can discuss terms.
-   [Vorak]: Absolutely. I'll gladly take care of it.
-   [Vorak]: Why should I agree to this? Then we can discuss terms.
-   [Vorak]: Listen. I might consider it if I keep authority. You'll owe me.
-   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
-   [Vorak]: I'll gladly take on this challenge. It's necessary!
-   [Vorak]: Listen. Fine, I'd love to dive into this. It must be done!
-   [Vorak]: Absolutely not. It must be done.
-   [Vorak]: No. That's not my problem.
-   [Vorak]: I… Out of the question. It must be done. That is final.
-
-Lyris - Role : scholar - Warmth = 0.17214673689246 - Assertiveness = -0.23071338704159 - Risk-Tolerance = -0.24804487625229
-  Trust = 0.20570938173774: Respect = 0.37440627472431: Affection  = -0.05953996429788
-   [Lyris]: I cannot handle this properly. It's the proper course.
-   [Lyris]: I'd rather not handle this properly, if that's alright.
-   [Lyris]: Interesting… I probably shouldn't handle this properly. I have my reasons.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: I… I'm not sure about this. Maybe Let me research this first.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: Unfortunately no. It's the right thing.
-   [Lyris]: That's interesting, but I have other concerns. Let me research this first.
-   [Lyris]: I… No. That's not my problem.
-   [Lyris]: I'd rather not handle this properly, if that's alright.
-
-Thane - Role : merchant - Warmth = 0.24620113107362 - Assertiveness = 0.29257992166318 - Risk-Tolerance = 0.58004697934837
-  Trust = 0.41523537799912: Respect = 0.48538871212312: Affection  = 0.05484636493282
-   [Thane]: I… I cannot handle this properly. It's the proper course.
-   [Thane]: I'll handle this properly. It's the proper course.
-   [Thane]: I might consider it if the price is right. Name your price.
-   [Thane]: I can do that, I can address this correctly. It's the right thing.
-   [Thane]: No. Find someone else.
-   [Thane]: I cannot. It's the right thing.
-   [Thane]: Of course. I'll take care of it.
-   [Thane]: No. That's not my problem.
-   [Thane]: I cannot handle this properly. It's the proper course.
-   [Thane]: Alright, I can address this correctly. It's the right thing.
-
-Mira - Role : healer - Warmth = 0.78083344774017 - Assertiveness = -0.22877647495019 - Risk-Tolerance = -0.30890593353255
-  Trust = 0.38338542494974: Respect = 0.494893349249: Affection  = -0.07716752432062
-   [Mira]: I cannot handle this properly. I want to help.
-   [Mira]: Unfortunately no. I'm happy to assist.
-   [Mira]: I cannot. I'm happy to assist.
-   [Mira]: I don't think I can handle this properly. Perhaps someone else.
-   [Mira]: I… I must decline. I'm happy to assist.
-   [Mira]: I cannot. I'm happy to assist, friend.
-   [Mira]: I probably shouldn't handle this properly. I have my reasons.
-   [Mira]: I cannot handle this properly. I want to help, friend.
-   [Mira]: Well, I'd rather not handle this properly, if that's alright.
-   [Mira]: I'd rather not handle this properly, if that's alright, friend.
-
-Kass - Role : rogue - Warmth = -0.29778208848303 - Assertiveness = 0.21687103012762 - Risk-Tolerance = 0.8603164705766
-  Trust = 0.23650087560151: Respect = 0.63467285706821: Affection  = 0.14821709405348
-   [Kass]: Absolutely. I'll gladly take care of it!
-   [Kass]: I… I'll more or less gladly take on this challenge. I have my reasons.
-   [Kass]: I'd love to do that, I'd love to dive into this. It's complicated!
-   [Kass]: No. This doesn't concern me.
-   [Kass]: I'll gladly take on this challenge. I have my reasons!
-   [Kass]: No. Find someone else.
-   [Kass]: I… No. I have more important matters.
-   [Kass]: Sure, I'd love to dive into this. It's complicated.
-   [Kass]: Absolutely. I'll gladly take care of it!
-   [Kass]: I… No. This doesn't concern me.
-
-Lord Aldric - Role : noble - Warmth = 0.08673255462394 - Assertiveness = 0.70331838827034 - Risk-Tolerance = -0.26155187540614
-  Trust = 0.48842861032183: Respect = 0.51890829742528: Affection  = 0.30493873909996
-   [Lord Aldric]: No. It must be done. That is final.
-   [Lord Aldric]: Listen. No. That's not my problem.
-   [Lord Aldric]: Listen. That's interesting, but I have other concerns. We could try something else.
-   [Lord Aldric]: Absolutely not. It must be done.
-   [Lord Aldric]: I cannot handle this properly. It's necessary. That is final.
-   [Lord Aldric]: Out of the question. It must be done.
-   [Lord Aldric]: I… No. That's not my problem.
-   [Lord Aldric]: I cannot handle this properly. It's necessary.
-   [Lord Aldric]: No. Find someone else.
-   [Lord Aldric]: Absolutely not. It must be done.
-
-Elena - Role : merchant - Warmth = 0.40038549330161 - Assertiveness = 0.33526103705814 - Risk-Tolerance = 0.39509259195557
-  Trust = 0.36441528661534: Respect = 0.63332572425472: Affection  = 0.05100507649537
-   [Elena]: I'm afraid not. It's the right thing, friend.
-   [Elena]: Alright, I can address this correctly. It's the right thing.
-   [Elena]: Of course. I'll take care of it.
-   [Elena]: I… I'm afraid not. It's the right thing.
-   [Elena]: I'll handle this properly. It's the proper course.
-   [Elena]: Alright, I can address this correctly. It's the right thing, friend.
-   [Elena]: I must decline. It's the right thing.
-   [Elena]: I'll handle this properly. It's the proper course, friend.
-   [Elena]: No. That's not my problem.
-   [Elena]: Of course. I'll take care of it.
-
-Grimm - Role : warlord - Warmth = -0.36509532230344 - Assertiveness = 0.64981651580788 - Risk-Tolerance = 0.83101828412636
-  Trust = 0.32496882349713: Respect = 0.51071597314395: Affection  = -0.03119273008787
-   [Grimm]: As you wish, I'd love to dive into this. It must be done.
-   [Grimm]: I'll gladly take on this challenge. It's necessary.
-   [Grimm]: And what do I gain from this? Then we can discuss terms.
-   [Grimm]: What's in it for me? Then we can discuss terms.
-   [Grimm]: I… Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: I might consider it if I keep authority. You'll owe me.
-   [Grimm]: If necessary, I'd love to dive into this. It must be done!
-   [Grimm]: What can you offer me in return? Then we can discuss terms.
-   [Grimm]: I'll gladly take on this challenge. It's necessary.
-   [Grimm]: As you wish, I'd love to dive into this. It must be done.
-
-Sofia - Role : scholar - Warmth = 0.37273655580336 - Assertiveness = -0.3449593447801 - Risk-Tolerance = -0.22654663829932
-  Trust = 0.25032977923601: Respect = 0.30460352742292: Affection  = 0.18060413832791
-   [Sofia]: Unfortunately no. It's the right thing.
-   [Sofia]: No. This doesn't concern me.
-   [Sofia]: I'd rather not handle this properly, if that's alright.
-   [Sofia]: No. That's not my problem.
-   [Sofia]: I… I cannot handle this properly. It's the proper course.
-   [Sofia]: I… No. I have more important matters.
-   [Sofia]: I need to research this matter further.
-   [Sofia]: I probably shouldn't handle this properly. I have my reasons.
-   [Sofia]: I cannot handle this properly. It's the proper course, friend.
-   [Sofia]: I cannot. It's the right thing.
-
-Marcus - Role : healer - Warmth = 0.88834658716196 - Assertiveness = -0.41430768248683 - Risk-Tolerance = -0.3361959775474
-  Trust = 0.30526725026359: Respect = 0.6006377538767: Affection  = 0.06356075987183
-   [Marcus]: I probably shouldn't handle this properly. I have my reasons.
-   [Marcus]: I'd rather not handle this properly, if that's alright.
-   [Marcus]: Well, I… I must decline. I'm happy to assist.
-   [Marcus]: I… I don't think I can handle this properly. Perhaps someone else.
-   [Marcus]: I don't think I can handle this properly. Perhaps someone else, friend.
-   [Marcus]: I cannot. I'm happy to assist.
-   [Marcus]: I'd rather not handle this properly, if that's alright, friend.
-   [Marcus]: I… I'm not sure about this. Maybe We could try something else.
-   [Marcus]: I cannot handle this properly. I want to help.
-   [Marcus]: Well, no. I have more important matters.
-
-Zara - Role : rogue - Warmth = -0.24432087461494 - Assertiveness = 0.14454972902991 - Risk-Tolerance = 0.95577574038679
-  Trust = 0.5608221851276: Respect = 0.52679695715807: Affection  = 0.12228690542973
-   [Zara]: Absolutely. I'll gladly take care of it.
-   [Zara]: Absolutely. I'll whatever works gladly take care of it.
-   [Zara]: Sure, I'd love to dive into this. It's complicated.
-   [Zara]: I'll gladly take on this challenge. I have my reasons.
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: Very well, I'd love to dive into this. It's complicated.
-   [Zara]: I… I'd love to do that, I'd love to dive into this. It's complicated.
-   [Zara]: I… I'm afraid not. It's complicated.
-   [Zara]: Absolutely. I'll gladly take care of it.
-   [Zara]: I need to weigh the risks before deciding.
-
-Viktor - Role : noble - Warmth = 0.30221681302188 - Assertiveness = 0.76707679732377 - Risk-Tolerance = -0.13377033659315
-  Trust = 0.30997499362755: Respect = 0.39756287233982: Affection  = 0.12107607594303
-   [Viktor]: I… Absolutely not. It must be done.
-   [Viktor]: No. This doesn't concern me.
-   [Viktor]: I… I cannot handle this properly. It's necessary.
-   [Viktor]: Listen. Never. It must be done.
-   [Viktor]: Listen. I cannot handle this properly. It's necessary, friend. That is final.
-   [Viktor]: No. That's not my problem, friend.
-   [Viktor]: I… I cannot handle this properly. It's necessary, friend.
-   [Viktor]: Listen. I cannot handle this properly. It's necessary. That is final.
-   [Viktor]: That's interesting, but I have other concerns. We could try something else, friend.
-   [Viktor]: Absolutely not. It must be done.
-
-Vorak - Role : warlord - Warmth = -0.32943217296013 - Assertiveness = 0.70749227083471 - Risk-Tolerance = 0.68841901477193
-  Trust = 0.4494240258695: Respect = 0.48011071408767: Affection  = 0.21028769324525
-   [Vorak]: I suppose, I'd love to dive into this. It must be done.
-   [Vorak]: Why should I agree to this? Then we can discuss terms.
-   [Vorak]: What can you offer me in return? Then we can discuss terms.
-   [Vorak]: Listen. No. This doesn't concern me.
-   [Vorak]: I'll gladly take on this challenge. It's necessary!
-   [Vorak]: Absolutely. I'll gladly take care of it.
-   [Vorak]: No. That's not my problem.
-   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
-   [Vorak]: I might consider it if I keep authority. You'll owe me.
-   [Vorak]: Listen. As you wish, I'd love to dive into this. It must be done.
-
-Lyris - Role : scholar - Warmth = 0.17214673689246 - Assertiveness = -0.23071338704159 - Risk-Tolerance = -0.24804487625229
-  Trust = 0.20570938173774: Respect = 0.37440627472431: Affection  = -0.05953996429788
-   [Lyris]: I probably shouldn't handle this properly. I have my reasons.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: I… I must decline. It's the right thing.
-   [Lyris]: I cannot handle this properly. It's the proper course.
-   [Lyris]: I cannot. It's the right thing.
-   [Lyris]: No. I have more important matters.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: I don't think I can handle this properly. Perhaps someone else.
-   [Lyris]: Unfortunately no. It's the right thing.
-   [Lyris]: Interesting… I must decline. It's the right thing.
-
-Thane - Role : merchant - Warmth = 0.24620113107362 - Assertiveness = 0.29257992166318 - Risk-Tolerance = 0.58004697934837
-  Trust = 0.41523537799912: Respect = 0.48538871212312: Affection  = 0.05484636493282
-   [Thane]: No. Find someone else.
-   [Thane]: I'll handle this properly. It's the proper course.
-   [Thane]: I… Sure, I can address this correctly. It's the right thing.
-   [Thane]: Very well, I can address this correctly. It's the right thing.
-   [Thane]: I can do that, I can address this correctly. It's the right thing.
-   [Thane]: Of course. I'll take care of it.
-   [Thane]: Perhaps, but I'm compensated fairly. What's your offer?
-   [Thane]: I… I'll handle this properly. It's the proper course.
-   [Thane]: Sure, I can address this correctly. It's the right thing.
-   [Thane]: I need time to consider this carefully.
-
-Mira - Role : healer - Warmth = 0.78083344774017 - Assertiveness = -0.22877647495019 - Risk-Tolerance = -0.30890593353255
-  Trust = 0.38338542494974: Respect = 0.494893349249: Affection  = -0.07716752432062
-   [Mira]: I… That's interesting, but I have other concerns. We could try something else, friend.
-   [Mira]: No. I have more important matters.
-   [Mira]: I… No. Find someone else.
-   [Mira]: I… I'm so sorry, but I cannot handle this properly. I wish I could help.
-   [Mira]: I probably shouldn't handle this properly. I have my reasons, friend.
-   [Mira]: I don't think I can handle this properly. Perhaps someone else.
-   [Mira]: I'm not sure about this. Maybe We could try something else.
-   [Mira]: I probably shouldn't handle this properly. I have my reasons.
-   [Mira]: No. That's not my problem, friend.
-   [Mira]: That's interesting, but I have other concerns. We could try something else.
-
-Kass - Role : rogue - Warmth = -0.29778208848303 - Assertiveness = 0.21687103012762 - Risk-Tolerance = 0.8603164705766
-  Trust = 0.23650087560151: Respect = 0.63467285706821: Affection  = 0.14821709405348
-   [Kass]: I… I'll gladly take on this challenge. I have my reasons.
-   [Kass]: Alright, I'd love to dive into this. It's complicated!
-   [Kass]: I must decline. It's complicated.
-   [Kass]: No. I have more important matters.
-   [Kass]: Absolutely. I'll gladly take care of it.
-   [Kass]: Absolutely. I'll whatever works gladly take care of it!
-   [Kass]: I… I must decline. It's complicated.
-   [Kass]: I'll gladly take on this challenge. I have my reasons!
-   [Kass]: I'd love tonot take on this challenge. I have my reasons.
-   [Kass]: Unfortunately no. It's complicated.
-
-Lord Aldric - Role : noble - Warmth = 0.08673255462394 - Assertiveness = 0.70331838827034 - Risk-Tolerance = -0.26155187540614
-  Trust = 0.48842861032183: Respect = 0.51890829742528: Affection  = 0.30493873909996
-   [Lord Aldric]: Listen. No. This doesn't concern me.
-   [Lord Aldric]: Listen. No. Find someone else.
-   [Lord Aldric]: No. I have more important matters.
-   [Lord Aldric]: I cannot handle this properly. It's necessary.
-   [Lord Aldric]: Listen. I… I cannot handle this properly. It's necessary.
-   [Lord Aldric]: I… Never. It must be done.
-   [Lord Aldric]: Absolutely not. It must be done.
-   [Lord Aldric]: Out of the question. It must be done.
-   [Lord Aldric]: No. Find someone else.
-   [Lord Aldric]: I cannot handle this properly. It's necessary.
-
-Elena - Role : merchant - Warmth = 0.40038549330161 - Assertiveness = 0.33526103705814 - Risk-Tolerance = 0.39509259195557
-  Trust = 0.36441528661534: Respect = 0.63332572425472: Affection  = 0.05100507649537
-   [Elena]: I cannot handle this properly. It's the proper course, friend.
-   [Elena]: Of course. I'll take care of it, friend.
-   [Elena]: I cannot. It's the right thing, friend.
-   [Elena]: That's interesting, but I have other concerns. Perhaps a trade instead?
-   [Elena]: Alright, I can address this correctly. It's the right thing.
-   [Elena]: Very well, I can address this correctly. It's the right thing.
-   [Elena]: No. This doesn't concern me.
-   [Elena]: I'm afraid not. It's the right thing.
-   [Elena]: Of course. I'll take care of it.
-   [Elena]: I cannot. It's the right thing.
-
-Grimm - Role : warlord - Warmth = -0.36509532230344 - Assertiveness = 0.64981651580788 - Risk-Tolerance = 0.83101828412636
-  Trust = 0.32496882349713: Respect = 0.51071597314395: Affection  = -0.03119273008787
-   [Grimm]: I… Why should I agree to this? Then we can discuss terms.
-   [Grimm]: Absolutely. I'll gladly take care of it!
-   [Grimm]: Fine, I'd love to dive into this. It must be done.
-   [Grimm]: I'd love tonot take on this challenge. It's necessary.
-   [Grimm]: Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: I'll gladly take on this challenge. It's necessary!
-   [Grimm]: I might consider it if I keep authority. You'll owe me.
-   [Grimm]: What's in it for me? Then we can discuss terms.
-   [Grimm]: I suppose, I'd love to dive into this. It must be done!
-   [Grimm]: I… Absolutely. I'll gladly take care of it.
-
-Sofia - Role : scholar - Warmth = 0.37273655580336 - Assertiveness = -0.3449593447801 - Risk-Tolerance = -0.22654663829932
-  Trust = 0.25032977923601: Respect = 0.30460352742292: Affection  = 0.18060413832791
-   [Sofia]: I… I probably shouldn't handle this properly. I have my reasons, friend.
-   [Sofia]: I'm afraid not. It's the right thing, friend.
-   [Sofia]: No. That's not my problem, friend.
-   [Sofia]: I'm not sure about this. Maybe Let me research this first.
-   [Sofia]: I'd rather not handle this properly, if that's alright.
-   [Sofia]: I… I'd rather not handle this properly, if that's alright, friend.
-   [Sofia]: I… No. Find someone else, friend.
-   [Sofia]: I don't think I can handle this properly. Perhaps someone else.
-   [Sofia]: No. This doesn't concern me.
-   [Sofia]: I cannot. It's the right thing, friend.
-
-Marcus - Role : healer - Warmth = 0.88834658716196 - Assertiveness = -0.41430768248683 - Risk-Tolerance = -0.3361959775474
-  Trust = 0.30526725026359: Respect = 0.6006377538767: Affection  = 0.06356075987183
-   [Marcus]: I don't think I can handle this properly. Perhaps someone else, friend.
-   [Marcus]: No. Find someone else.
-   [Marcus]: I probably shouldn't handle this properly. I have my reasons.
-   [Marcus]: I don't think I can handle this properly. Perhaps someone else.
-   [Marcus]: I cannot. I'm happy to assist.
-   [Marcus]: I'd rather not handle this properly, if that's alright.
-   [Marcus]: Unfortunately, I must decline. I apologize.
-   [Marcus]: That's interesting, but I have other concerns. We could try something else, friend.
-   [Marcus]: Well, I don't think I can handle this properly. Perhaps someone else, friend.
-   [Marcus]: Well, I… I probably shouldn't handle this properly. I have my reasons.
-
-Zara - Role : rogue - Warmth = -0.24432087461494 - Assertiveness = 0.14454972902991 - Risk-Tolerance = 0.95577574038679
-  Trust = 0.5608221851276: Respect = 0.52679695715807: Affection  = 0.12228690542973
-   [Zara]: I must decline. It's complicated.
-   [Zara]: I'll whatever works gladly take on this challenge. I have my reasons.
-   [Zara]: I… Alright, I'd love to dive into this. It's complicated.
-   [Zara]: Absolutely. I'll I guess gladly take care of it!
-   [Zara]: Absolutely. I'll doesn't matter much gladly take care of it.
-   [Zara]: I'll good enough gladly take on this challenge. I have my reasons.
-   [Zara]: I'll gladly take on this challenge. I have my reasons.
-   [Zara]: Absolutely. I'll gladly take care of it.
-   [Zara]: I… I must decline. It's complicated.
-   [Zara]: Sure, I'd love to dive into this. It's complicated!
-
-Viktor - Role : noble - Warmth = 0.30221681302188 - Assertiveness = 0.76707679732377 - Risk-Tolerance = -0.13377033659315
-  Trust = 0.30997499362755: Respect = 0.39756287233982: Affection  = 0.12107607594303
-   [Viktor]: Perhaps, but it's done honorably. Let's do this properly.
-   [Viktor]: I cannot handle this properly. It's necessary.
-   [Viktor]: I cannot handle this properly. It's necessary, friend.
-   [Viktor]: I cannot handle this properly. It's necessary. That is final.
-   [Viktor]: No. That's not my problem.
-   [Viktor]: Listen. Absolutely not. It must be done, friend.
-   [Viktor]: No. Find someone else.
-   [Viktor]: No. It must be done.
-   [Viktor]: I cannot handle this properly. It's necessary.
-   [Viktor]: I cannot handle this properly. It's necessary, friend.
-
-Vorak - Role : warlord - Warmth = -0.32943217296013 - Assertiveness = 0.70749227083471 - Risk-Tolerance = 0.68841901477193
-  Trust = 0.4494240258695: Respect = 0.48011071408767: Affection  = 0.21028769324525
-   [Vorak]: What's in it for me? Then we can discuss terms.
-   [Vorak]: Listen. And what do I gain from this? Then we can discuss terms.
-   [Vorak]: No. This doesn't concern me.
-   [Vorak]: Listen. Never. It must be done.
-   [Vorak]: I'll gladly take on this challenge. It's necessary!
-   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
-   [Vorak]: I… Absolutely. I'll gladly take care of it.
-   [Vorak]: I… I'll gladly take on this challenge. It's necessary.
-   [Vorak]: I… No. Find someone else.
-   [Vorak]: Fine, I'd love to dive into this. It must be done!
-
-Lyris - Role : scholar - Warmth = 0.17214673689246 - Assertiveness = -0.23071338704159 - Risk-Tolerance = -0.24804487625229
-  Trust = 0.20570938173774: Respect = 0.37440627472431: Affection  = -0.05953996429788
-   [Lyris]: I need to research this matter further.
-   [Lyris]: Interesting… I probably shouldn't handle this properly. I have my reasons.
-   [Lyris]: I… I'm not sure about this. Maybe Let me research this first.
-   [Lyris]: I cannot handle this properly. It's the proper course.
-   [Lyris]: I'd rather not handle this properly, if that's alright.
-   [Lyris]: I don't think I can handle this properly. Perhaps someone else.
-   [Lyris]: I must decline. It's the right thing.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: I probably shouldn't handle this properly. I have my reasons.
-
-Thane - Role : merchant - Warmth = 0.24620113107362 - Assertiveness = 0.29257992166318 - Risk-Tolerance = 0.58004697934837
-  Trust = 0.41523537799912: Respect = 0.48538871212312: Affection  = 0.05484636493282
-   [Thane]: Unfortunately no. It's the right thing.
-   [Thane]: I need time to consider this carefully.
-   [Thane]: I need time to consider this carefully.
-   [Thane]: I must decline. It's the right thing.
-   [Thane]: Of course. I'll take care of it.
-   [Thane]: That's interesting, but I have other concerns. Perhaps a trade instead?
-   [Thane]: No. This doesn't concern me.
-   [Thane]: I'll handle this properly. It's the proper course.
-   [Thane]: Very well, I can address this correctly. It's the right thing.
-   [Thane]: Alright, I can address this correctly. It's the right thing.
-
-Mira - Role : healer - Warmth = 0.78083344774017 - Assertiveness = -0.22877647495019 - Risk-Tolerance = -0.30890593353255
-  Trust = 0.38338542494974: Respect = 0.494893349249: Affection  = -0.07716752432062
-   [Mira]: I cannot. I'm happy to assist, friend.
-   [Mira]: I'm not sure about this. Maybe We could try something else, friend.
-   [Mira]: I must decline. I'm happy to assist.
-   [Mira]: I'd rather not handle this properly, if that's alright, friend.
-   [Mira]: Well, I'd rather not handle this properly, if that's alright.
-   [Mira]: I don't think I can handle this properly. Perhaps someone else.
-   [Mira]: I… That's interesting, but I have other concerns. We could try something else, friend.
-   [Mira]: No. I have more important matters, friend.
-   [Mira]: Well, I… I cannot. I'm happy to assist.
-   [Mira]: I… I probably shouldn't handle this properly. I have my reasons.
-
-Kass - Role : rogue - Warmth = -0.29778208848303 - Assertiveness = 0.21687103012762 - Risk-Tolerance = 0.8603164705766
-  Trust = 0.23650087560151: Respect = 0.63467285706821: Affection  = 0.14821709405348
-   [Kass]: I… I'd love to do that, I'd love to dive into this. It's complicated!
-   [Kass]: Absolutely. I'll I guess gladly take care of it!
-   [Kass]: Absolutely. I'll gladly take care of it!
-   [Kass]: I… Unfortunately no. It's complicated.
-   [Kass]: I'll gladly take on this challenge. I have my reasons.
-   [Kass]: No. Find someone else.
-   [Kass]: I… I must decline. It's complicated.
-   [Kass]: I… No. This doesn't concern me.
-   [Kass]: I must decline. It's complicated.
-   [Kass]: Absolutely. I'll gladly take care of it.
-
-Lord Aldric - Role : noble - Warmth = 0.08673255462394 - Assertiveness = 0.70331838827034 - Risk-Tolerance = -0.26155187540614
-  Trust = 0.48842861032183: Respect = 0.51890829742528: Affection  = 0.30493873909996
-   [Lord Aldric]: No. I have more important matters. That is final.
-   [Lord Aldric]: Listen. No. Find someone else.
-   [Lord Aldric]: Listen. No. Find someone else. That is final.
-   [Lord Aldric]: No. That's not my problem.
-   [Lord Aldric]: No. Find someone else.
-   [Lord Aldric]: I cannot handle this properly. It's necessary.
-   [Lord Aldric]: Listen. Absolutely not. It must be done.
-   [Lord Aldric]: Listen. No. That's not my problem.
-   [Lord Aldric]: I… Out of the question. It must be done. That is final.
-   [Lord Aldric]: No. It must be done. That is final.
-
-Elena - Role : merchant - Warmth = 0.40038549330161 - Assertiveness = 0.33526103705814 - Risk-Tolerance = 0.39509259195557
-  Trust = 0.36441528661534: Respect = 0.63332572425472: Affection  = 0.05100507649537
-   [Elena]: I'll handle this properly. It's the proper course.
-   [Elena]: I must decline. It's the right thing.
-   [Elena]: No. I have more important matters.
-   [Elena]: I cannot handle this properly. It's the proper course.
-   [Elena]: Of course. I'll take care of it.
-   [Elena]: No. Find someone else.
-   [Elena]: I… Alright, I can address this correctly. It's the right thing.
-   [Elena]: I… I must decline. It's the right thing.
-   [Elena]: I… I cannot. It's the right thing.
-   [Elena]: Very well, I can address this correctly. It's the right thing.
-
-Grimm - Role : warlord - Warmth = -0.36509532230344 - Assertiveness = 0.64981651580788 - Risk-Tolerance = 0.83101828412636
-  Trust = 0.32496882349713: Respect = 0.51071597314395: Affection  = -0.03119273008787
-   [Grimm]: Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: And what do I gain from this? Then we can discuss terms.
-   [Grimm]: Absolutely. I'll gladly take care of it!
-   [Grimm]: What can you offer me in return? Then we can discuss terms.
-   [Grimm]: I might consider it if I keep authority. You'll owe me.
-   [Grimm]: Why should I agree to this? Then we can discuss terms.
-   [Grimm]: I'll gladly take on this challenge. It's necessary.
-   [Grimm]: If necessary, I'd love to dive into this. It must be done.
-   [Grimm]: And what do I gain from this? Then we can discuss terms.
-   [Grimm]: Absolutely. I'll gladly take care of it.
-
-Sofia - Role : scholar - Warmth = 0.37273655580336 - Assertiveness = -0.3449593447801 - Risk-Tolerance = -0.22654663829932
-  Trust = 0.25032977923601: Respect = 0.30460352742292: Affection  = 0.18060413832791
-   [Sofia]: No. Find someone else, friend.
-   [Sofia]: I… I probably shouldn't handle this properly. I have my reasons, friend.
-   [Sofia]: I'm not sure about this. Maybe Let me research this first.
-   [Sofia]: Interesting… I'd rather not handle this properly, if that's alright, friend.
-   [Sofia]: I probably shouldn't handle this properly. I have my reasons.
-   [Sofia]: No. This doesn't concern me.
-   [Sofia]: I cannot handle this properly. It's the proper course, friend.
-   [Sofia]: I'm afraid not. It's the right thing.
-   [Sofia]: I'd rather not handle this properly, if that's alright.
-   [Sofia]: I'm not sure about this. Maybe Let me research this first.
-
-Marcus - Role : healer - Warmth = 0.88834658716196 - Assertiveness = -0.41430768248683 - Risk-Tolerance = -0.3361959775474
-  Trust = 0.30526725026359: Respect = 0.6006377538767: Affection  = 0.06356075987183
-   [Marcus]: I probably shouldn't handle this properly. I have my reasons, friend.
-   [Marcus]: I'm not sure about this. Maybe We could try something else.
-   [Marcus]: I don't think I can handle this properly. Perhaps someone else.
-   [Marcus]: I cannot handle this properly. I want to help, friend.
-   [Marcus]: I'd rather not handle this properly, if that's alright.
-   [Marcus]: That's interesting, but I have other concerns. We could try something else, friend.
-   [Marcus]: I wish I could help, but I cannot handle this properly. Forgive me, friend.
-   [Marcus]: I probably shouldn't handle this properly. I have my reasons, friend.
-   [Marcus]: I… I'm not sure about this. Maybe We could try something else, friend.
-   [Marcus]: I… I'd rather not handle this properly, if that's alright, friend.
-
-Zara - Role : rogue - Warmth = -0.24432087461494 - Assertiveness = 0.14454972902991 - Risk-Tolerance = 0.95577574038679
-  Trust = 0.5608221851276: Respect = 0.52679695715807: Affection  = 0.12228690542973
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: I… Sure, I'd love to dive into this. It's complicated.
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: Absolutely. I'll more or less gladly take care of it.
-   [Zara]: I'll doesn't matter much gladly take on this challenge. I have my reasons!
-   [Zara]: I… I'll gladly take on this challenge. I have my reasons.
-   [Zara]: I'm afraid not. It's complicated.
-   [Zara]: I… Alright, I'd love to dive into this. It's complicated!
-
-Viktor - Role : noble - Warmth = 0.30221681302188 - Assertiveness = 0.76707679732377 - Risk-Tolerance = -0.13377033659315
-  Trust = 0.30997499362755: Respect = 0.39756287233982: Affection  = 0.12107607594303
-   [Viktor]: No. Find someone else. That is final.
-   [Viktor]: Out of the question. It must be done. That is final.
-   [Viktor]: I… No. This doesn't concern me.
-   [Viktor]: Never. It must be done.
-   [Viktor]: No. This doesn't concern me.
-   [Viktor]: Listen. No. This doesn't concern me, friend. That is final.
-   [Viktor]: I cannot handle this properly. It's necessary.
-   [Viktor]: I cannot handle this properly. It's necessary, friend.
-   [Viktor]: I… I cannot handle this properly. It's necessary. That is final.
-   [Viktor]: Absolutely not. It must be done.
-
-Vorak - Role : warlord - Warmth = -0.32943217296013 - Assertiveness = 0.70749227083471 - Risk-Tolerance = 0.68841901477193
-  Trust = 0.4494240258695: Respect = 0.48011071408767: Affection  = 0.21028769324525
-   [Vorak]: I'd love tonot take on this challenge. It's necessary.
-   [Vorak]: No. Find someone else.
-   [Vorak]: Absolutely. I'll gladly take care of it!
-   [Vorak]: Listen. Why should I agree to this? Then we can discuss terms.
-   [Vorak]: No. That's not my problem. That is final.
-   [Vorak]: I'll gladly take on this challenge. It's necessary.
-   [Vorak]: Listen. No. Find someone else.
+   [Vorak]: As you wish, I'd love to dive into this. It must be done!
    [Vorak]: And what do I gain from this? Then we can discuss terms.
+   [Vorak]: Absolutely. I'll gladly take care of it!
+   [Vorak]: Listen. Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: Why should I agree to this? Then we can discuss terms.
+   [Vorak]: Listen. No. I have more important matters. That is final.
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+
+Lord Aldric - Role : noble - Warmth = 0.07930111629352 - Assertiveness = 0.73440236556078 - Risk-Tolerance = -0.43586826475295
+  Trust = 0.25887924346086: Respect = 0.47895597790447: Affection  = 0.22373170750856
+   [Lord Aldric]: No, if it's safe. This doesn't concern me.
+   [Lord Aldric]: Listen. I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: No, if it's safe. It must be done.
+   [Lord Aldric]: Never. It must be done.
+   [Lord Aldric]: No, if it's safe. Find someone else.
+   [Lord Aldric]: No. I have more important matters.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: Absolutely not, if it's safe. It must be done.
+   [Lord Aldric]: No. Find someone else.
+   [Lord Aldric]: Out of the question, if it's safe. It must be done. That is final.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: Listen. Never. It must be done. That is final.
+   [Lord Aldric]: Never, if it's safe. It must be done.
+   [Lord Aldric]: No. I have more important matters. That is final.
+   [Lord Aldric]: No. This doesn't concern me.
+   [Lord Aldric]: Listen. No, if it's safe. Find someone else.
+   [Lord Aldric]: Never. It must be done.
+   [Lord Aldric]: Listen. I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: Out of the question, if it's safe. It must be done.
+   [Lord Aldric]: No. It must be done.
+
+Vorak - Role : warlord - Warmth = -0.3995233349345 - Assertiveness = 0.97278061632238 - Risk-Tolerance = 0.7768654745528
+  Trust = 0.31569019747467: Respect = 0.64624062715258: Affection  = -0.14136725427772
+   [Vorak]: I suppose, I'd love to dive into this. It must be done!
+   [Vorak]: What's in it for me? Then we can discuss terms.
+   [Vorak]: No. It must be done.
+   [Vorak]: Out of the question. It must be done.
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: Absolutely. I'll gladly take care of it!
+   [Vorak]: As you wish, I'd love to dive into this. It must be done.
+   [Vorak]: Listen. If necessary, I'd love to dive into this. It must be done!
+   [Vorak]: What's in it for me? Then we can discuss terms.
+   [Vorak]: What can you offer me in return? Then we can discuss terms.
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: Absolutely. I'll gladly take care of it.
+   [Vorak]: I'll gladly take on this challenge. It's necessary!
+   [Vorak]: I'd love tonot take on this challenge. It's necessary.
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Listen. Never. It must be done. That is final.
+   [Vorak]: Why should I agree to this? Then we can discuss terms.
+   [Vorak]: No. I have more important matters. That is final.
+   [Vorak]: No. This doesn't concern me.
+   [Vorak]: Absolutely. I'll gladly take care of it.
+
+Lord Aldric - Role : noble - Warmth = 0.07930111629352 - Assertiveness = 0.73440236556078 - Risk-Tolerance = -0.43586826475295
+  Trust = 0.25887924346086: Respect = 0.47895597790447: Affection  = 0.22373170750856
+   [Lord Aldric]: No, if it's safe. This doesn't concern me.
+   [Lord Aldric]: Never, if it's safe. It must be done.
+   [Lord Aldric]: Out of the question. It must be done. That is final.
+   [Lord Aldric]: Listen. I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: Absolutely not. It must be done.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: Listen. Never. It must be done. That is final.
+   [Lord Aldric]: No. I have more important matters.
+   [Lord Aldric]: Listen. No. Find someone else.
+   [Lord Aldric]: Listen. Out of the question. It must be done. That is final.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: Listen. No, if it's safe. It must be done.
+   [Lord Aldric]: No, if it's safe. That's not my problem.
+   [Lord Aldric]: Listen. Out of the question. It must be done.
+   [Lord Aldric]: No. That's not my problem. That is final.
+   [Lord Aldric]: Listen. No. I have more important matters. That is final.
+   [Lord Aldric]: No. That's not my problem.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: No. Find someone else.
+
+Vorak - Role : warlord - Warmth = -0.3995233349345 - Assertiveness = 0.97278061632238 - Risk-Tolerance = 0.7768654745528
+  Trust = 0.31569019747467: Respect = 0.64624062715258: Affection  = -0.14136725427772
+   [Vorak]: What's in it for me? Then we can discuss terms.
+   [Vorak]: I'd love tonot take on this challenge. It's necessary.
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Listen. Out of the question. It must be done.
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: Absolutely. I'll gladly take care of it.
+   [Vorak]: I suppose, I'd love to dive into this. It must be done!
+   [Vorak]: And what do I gain from this? Then we can discuss terms.
+   [Vorak]: Listen. I suppose, I'd love to dive into this. It must be done.
    [Vorak]: I might consider it if I keep authority. You'll owe me.
    [Vorak]: Listen. Perhaps, but I maintain control. I'll need something in return.
-
-Lyris - Role : scholar - Warmth = 0.17214673689246 - Assertiveness = -0.23071338704159 - Risk-Tolerance = -0.24804487625229
-  Trust = 0.20570938173774: Respect = 0.37440627472431: Affection  = -0.05953996429788
-   [Lyris]: I… I cannot. It's the right thing.
-   [Lyris]: I… No. That's not my problem.
-   [Lyris]: I'd rather not handle this properly, if that's alright.
-   [Lyris]: Unfortunately no. It's the right thing.
-   [Lyris]: I must decline. It's the right thing.
-   [Lyris]: No. That's not my problem.
-   [Lyris]: I… I'm afraid not. It's the right thing.
-   [Lyris]: I'm not sure about this. Maybe Let me research this first.
-   [Lyris]: Interesting… I probably shouldn't handle this properly. I have my reasons.
-   [Lyris]: That's interesting, but I have other concerns. Let me research this first.
-
-Thane - Role : merchant - Warmth = 0.24620113107362 - Assertiveness = 0.29257992166318 - Risk-Tolerance = 0.58004697934837
-  Trust = 0.41523537799912: Respect = 0.48538871212312: Affection  = 0.05484636493282
-   [Thane]: Of course. I'll take care of it.
-   [Thane]: That's interesting, but I have other concerns. Perhaps a trade instead?
-   [Thane]: I cannot handle this properly. It's the proper course.
-   [Thane]: I'll handle this properly. It's the proper course.
-   [Thane]: No. I have more important matters.
-   [Thane]: I… I cannot. It's the right thing.
-   [Thane]: No. That's not my problem.
-   [Thane]: Of course. I'll take care of it.
-   [Thane]: I… I can do that, I can address this correctly. It's the right thing.
-   [Thane]: Sure, I can address this correctly. It's the right thing.
-
-Mira - Role : healer - Warmth = 0.78083344774017 - Assertiveness = -0.22877647495019 - Risk-Tolerance = -0.30890593353255
-  Trust = 0.38338542494974: Respect = 0.494893349249: Affection  = -0.07716752432062
-   [Mira]: Well, I… I'm not sure about this. Maybe We could try something else.
-   [Mira]: I'm not sure about this. Maybe We could try something else.
-   [Mira]: Well, I… I don't think I can handle this properly. Perhaps someone else.
-   [Mira]: I cannot handle this properly. I want to help.
-   [Mira]: I'd rather not handle this properly, if that's alright.
-   [Mira]: No. I have more important matters.
-   [Mira]: I don't think I can handle this properly. Perhaps someone else.
-   [Mira]: I'm not sure about this. Maybe We could try something else, friend.
-   [Mira]: I… I'd rather not handle this properly, if that's alright, friend.
-   [Mira]: I… Unfortunately no. I'm happy to assist.
-
-Kass - Role : rogue - Warmth = -0.29778208848303 - Assertiveness = 0.21687103012762 - Risk-Tolerance = 0.8603164705766
-  Trust = 0.23650087560151: Respect = 0.63467285706821: Affection  = 0.14821709405348
-   [Kass]: I… I'd love tonot take on this challenge. I have my reasons.
-   [Kass]: I'd love tonot. It's complicated.
-   [Kass]: Absolutely. I'll whatever works gladly take care of it!
-   [Kass]: I need to weigh the risks before deciding.
-   [Kass]: No. This doesn't concern me.
-   [Kass]: I'd love to do that, I'd love to dive into this. It's complicated.
-   [Kass]: I… No. This doesn't concern me.
-   [Kass]: Alright, I'd love to dive into this. It's complicated.
-   [Kass]: I'm afraid not. It's complicated.
-   [Kass]: I… I'll gladly take on this challenge. I have my reasons.
-
-Lord Aldric - Role : noble - Warmth = 0.08673255462394 - Assertiveness = 0.70331838827034 - Risk-Tolerance = -0.26155187540614
-  Trust = 0.48842861032183: Respect = 0.51890829742528: Affection  = 0.30493873909996
-   [Lord Aldric]: No. That's not my problem.
-   [Lord Aldric]: I cannot handle this properly. It's necessary.
-   [Lord Aldric]: I… No. I have more important matters.
-   [Lord Aldric]: No. That's not my problem. That is final.
-   [Lord Aldric]: No. Find someone else.
-   [Lord Aldric]: Listen. Never. It must be done.
-   [Lord Aldric]: Out of the question. It must be done. That is final.
-   [Lord Aldric]: I cannot handle this properly. It's necessary. That is final.
-   [Lord Aldric]: Listen. Out of the question. It must be done.
-   [Lord Aldric]: No. It must be done.
-
-Elena - Role : merchant - Warmth = 0.40038549330161 - Assertiveness = 0.33526103705814 - Risk-Tolerance = 0.39509259195557
-  Trust = 0.36441528661534: Respect = 0.63332572425472: Affection  = 0.05100507649537
-   [Elena]: I… Of course. I'll take care of it, friend.
-   [Elena]: Of course. I'll take care of it.
-   [Elena]: No. That's not my problem.
-   [Elena]: No. This doesn't concern me.
-   [Elena]: I'm afraid not. It's the right thing.
-   [Elena]: I cannot. It's the right thing, friend.
-   [Elena]: I'll handle this properly. It's the proper course.
-   [Elena]: Of course. I'll take care of it.
-   [Elena]: Alright, I can address this correctly. It's the right thing, friend.
-   [Elena]: I cannot handle this properly. It's the proper course.
-
-Grimm - Role : warlord - Warmth = -0.36509532230344 - Assertiveness = 0.64981651580788 - Risk-Tolerance = 0.83101828412636
-  Trust = 0.32496882349713: Respect = 0.51071597314395: Affection  = -0.03119273008787
-   [Grimm]: I suppose, I'd love to dive into this. It must be done!
-   [Grimm]: I might consider it if I keep authority. You'll owe me.
-   [Grimm]: I'll gladly take on this challenge. It's necessary.
-   [Grimm]: What can you offer me in return? Then we can discuss terms.
-   [Grimm]: Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: If necessary, I'd love to dive into this. It must be done!
-   [Grimm]: No. That's not my problem.
-   [Grimm]: I suppose, I'd love to dive into this. It must be done!
-   [Grimm]: As you wish, I'd love to dive into this. It must be done!
-   [Grimm]: I'll gladly take on this challenge. It's necessary!
-
-Sofia - Role : scholar - Warmth = 0.37273655580336 - Assertiveness = -0.3449593447801 - Risk-Tolerance = -0.22654663829932
-  Trust = 0.25032977923601: Respect = 0.30460352742292: Affection  = 0.18060413832791
-   [Sofia]: I don't think I can handle this properly. Perhaps someone else.
-   [Sofia]: Interesting… I probably shouldn't handle this properly. I have my reasons.
-   [Sofia]: I cannot handle this properly. It's the proper course.
-   [Sofia]: I… I cannot handle this properly. It's the proper course, friend.
-   [Sofia]: No. I have more important matters, friend.
-   [Sofia]: I… I'd rather not handle this properly, if that's alright, friend.
-   [Sofia]: I must decline. It's the right thing.
-   [Sofia]: I… I don't think I can handle this properly. Perhaps someone else.
-   [Sofia]: I… I probably shouldn't handle this properly. I have my reasons.
-   [Sofia]: Interesting… I… I'd rather not handle this properly, if that's alright.
-
-Marcus - Role : healer - Warmth = 0.88834658716196 - Assertiveness = -0.41430768248683 - Risk-Tolerance = -0.3361959775474
-  Trust = 0.30526725026359: Respect = 0.6006377538767: Affection  = 0.06356075987183
-   [Marcus]: No. That's not my problem.
-   [Marcus]: I don't think I can handle this properly. Perhaps someone else.
-   [Marcus]: Well, no. Find someone else, friend.
-   [Marcus]: Well, I… No. I have more important matters, friend.
-   [Marcus]: Well, I… I'd rather not handle this properly, if that's alright.
-   [Marcus]: I probably shouldn't handle this properly. I have my reasons, friend.
-   [Marcus]: I'd rather not handle this properly, if that's alright.
-   [Marcus]: I must decline. I'm happy to assist, friend.
-   [Marcus]: I don't think I can handle this properly. Perhaps someone else.
-   [Marcus]: I… I'm not sure about this. Maybe We could try something else.
-
-Zara - Role : rogue - Warmth = -0.24432087461494 - Assertiveness = 0.14454972902991 - Risk-Tolerance = 0.95577574038679
-  Trust = 0.5608221851276: Respect = 0.52679695715807: Affection  = 0.12228690542973
-   [Zara]: I'll gladly take on this challenge. I have my reasons!
-   [Zara]: Unfortunately no. It's complicated.
-   [Zara]: Sure, I'd love to dive into this. It's complicated.
-   [Zara]: I'd love tonot take on this challenge. I have my reasons.
-   [Zara]: I'll doesn't matter much gladly take on this challenge. I have my reasons.
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: Very well, I'd love to dive into this. It's complicated!
-   [Zara]: Absolutely. I'll gladly take care of it.
-   [Zara]: No. Find someone else.
-   [Zara]: Absolutely. I'll I guess gladly take care of it!
-
-Viktor - Role : noble - Warmth = 0.30221681302188 - Assertiveness = 0.76707679732377 - Risk-Tolerance = -0.13377033659315
-  Trust = 0.30997499362755: Respect = 0.39756287233982: Affection  = 0.12107607594303
-   [Viktor]: Listen. Absolutely not. It must be done, friend.
-   [Viktor]: No. This doesn't concern me, friend.
-   [Viktor]: No. That's not my problem, friend.
-   [Viktor]: Never. It must be done. That is final.
-   [Viktor]: No. Find someone else.
-   [Viktor]: Absolutely not. It must be done.
-   [Viktor]: I cannot handle this properly. It's necessary.
-   [Viktor]: Out of the question. It must be done.
-   [Viktor]: No. I have more important matters.
-   [Viktor]: Listen. That's interesting, but I have other concerns. We could try something else, friend.
-
-Vorak - Role : warlord - Warmth = -0.32943217296013 - Assertiveness = 0.70749227083471 - Risk-Tolerance = 0.68841901477193
-  Trust = 0.4494240258695: Respect = 0.48011071408767: Affection  = 0.21028769324525
-   [Vorak]: I… No. That's not my problem. That is final.
-   [Vorak]: I… Absolutely. I'll gladly take care of it.
-   [Vorak]: Fine, I'd love to dive into this. It must be done.
-   [Vorak]: What can you offer me in return? Then we can discuss terms.
-   [Vorak]: Listen. I might consider it if I keep authority. You'll owe me.
+   [Vorak]: I'd love tonot take on this challenge. It's necessary.
+   [Vorak]: No. I have more important matters.
    [Vorak]: What's in it for me? Then we can discuss terms.
+   [Vorak]: I'll gladly take on this challenge. It's necessary.
+   [Vorak]: Listen. Absolutely. I'll gladly take care of it.
+   [Vorak]: If necessary, I'd love to dive into this. It must be done.
    [Vorak]: Perhaps, but I maintain control. I'll need something in return.
-   [Vorak]: I'll gladly take on this challenge. It's necessary.
-   [Vorak]: Listen. Absolutely. I'll gladly take care of it!
-   [Vorak]: I'd love tonot take on this challenge. It's necessary.
-
-Lyris - Role : scholar - Warmth = 0.17214673689246 - Assertiveness = -0.23071338704159 - Risk-Tolerance = -0.24804487625229
-  Trust = 0.20570938173774: Respect = 0.37440627472431: Affection  = -0.05953996429788
-   [Lyris]: I cannot handle this properly. It's the proper course.
-   [Lyris]: I cannot. It's the right thing.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: Interesting… I must decline. It's the right thing.
-   [Lyris]: I'd rather not handle this properly, if that's alright.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: I don't think I can handle this properly. Perhaps someone else.
-   [Lyris]: Unfortunately no. It's the right thing.
-   [Lyris]: I… I cannot handle this properly. It's the proper course.
-   [Lyris]: No. This doesn't concern me.
-
-Thane - Role : merchant - Warmth = 0.24620113107362 - Assertiveness = 0.29257992166318 - Risk-Tolerance = 0.58004697934837
-  Trust = 0.41523537799912: Respect = 0.48538871212312: Affection  = 0.05484636493282
-   [Thane]: I… I'll handle this properly. It's the proper course.
-   [Thane]: No. I have more important matters.
-   [Thane]: I cannot handle this properly. It's the proper course.
-   [Thane]: Of course. I'll take care of it.
-   [Thane]: Perhaps, but I'm compensated fairly. What's your offer?
-   [Thane]: That's interesting, but I have other concerns. Perhaps a trade instead?
-   [Thane]: Sure, I can address this correctly. It's the right thing.
-   [Thane]: I'll handle this properly. It's the proper course.
-   [Thane]: I can do that, I can address this correctly. It's the right thing.
-   [Thane]: I… Of course. I'll take care of it.
-
-Mira - Role : healer - Warmth = 0.78083344774017 - Assertiveness = -0.22877647495019 - Risk-Tolerance = -0.30890593353255
-  Trust = 0.38338542494974: Respect = 0.494893349249: Affection  = -0.07716752432062
-   [Mira]: Well, I probably shouldn't handle this properly. I have my reasons, friend.
-   [Mira]: Well, I cannot handle this properly. I want to help, friend.
-   [Mira]: Well, I… I don't think I can handle this properly. Perhaps someone else, friend.
-   [Mira]: I don't think I can handle this properly. Perhaps someone else.
-   [Mira]: I'm not sure about this. Maybe We could try something else.
-   [Mira]: I probably shouldn't handle this properly. I have my reasons.
-   [Mira]: Well, I probably shouldn't handle this properly. I have my reasons, friend.
-   [Mira]: Well, I'd rather not handle this properly, if that's alright.
-   [Mira]: I cannot handle this properly. I want to help, friend.
-   [Mira]: No. I have more important matters.
-
-Kass - Role : rogue - Warmth = -0.29778208848303 - Assertiveness = 0.21687103012762 - Risk-Tolerance = 0.8603164705766
-  Trust = 0.23650087560151: Respect = 0.63467285706821: Affection  = 0.14821709405348
-   [Kass]: I must decline. It's complicated.
-   [Kass]: No. That's not my problem.
-   [Kass]: I need to weigh the risks before deciding.
-   [Kass]: Very well, I'd love to dive into this. It's complicated!
-   [Kass]: I… No. Find someone else.
-   [Kass]: Absolutely. I'll gladly take care of it.
-   [Kass]: No. Find someone else.
-   [Kass]: Absolutely. I'll I guess gladly take care of it!
-   [Kass]: I'll gladly take on this challenge. I have my reasons!
-   [Kass]: I… Sure, I'd love to dive into this. It's complicated!
-
-Lord Aldric - Role : noble - Warmth = 0.08673255462394 - Assertiveness = 0.70331838827034 - Risk-Tolerance = -0.26155187540614
-  Trust = 0.48842861032183: Respect = 0.51890829742528: Affection  = 0.30493873909996
-   [Lord Aldric]: No. That's not my problem.
-   [Lord Aldric]: I cannot handle this properly. It's necessary.
-   [Lord Aldric]: No. This doesn't concern me.
-   [Lord Aldric]: Listen. No. I have more important matters. That is final.
-   [Lord Aldric]: No. That's not my problem. That is final.
-   [Lord Aldric]: Out of the question. It must be done.
-   [Lord Aldric]: No. That's not my problem.
-   [Lord Aldric]: No. I have more important matters.
-   [Lord Aldric]: No. Find someone else.
-   [Lord Aldric]: Absolutely not. It must be done.
-
-Elena - Role : merchant - Warmth = 0.40038549330161 - Assertiveness = 0.33526103705814 - Risk-Tolerance = 0.39509259195557
-  Trust = 0.36441528661534: Respect = 0.63332572425472: Affection  = 0.05100507649537
-   [Elena]: I… No. I have more important matters.
-   [Elena]: I cannot. It's the right thing.
-   [Elena]: I cannot handle this properly. It's the proper course, friend.
-   [Elena]: I… I'll handle this properly. It's the proper course, friend.
-   [Elena]: Of course. I'll take care of it.
-   [Elena]: I… I'll handle this properly. It's the proper course.
-   [Elena]: I… I'm afraid not. It's the right thing.
-   [Elena]: No. Find someone else.
-   [Elena]: I cannot. It's the right thing.
-   [Elena]: I must decline. It's the right thing.
-
-Grimm - Role : warlord - Warmth = -0.36509532230344 - Assertiveness = 0.64981651580788 - Risk-Tolerance = 0.83101828412636
-  Trust = 0.32496882349713: Respect = 0.51071597314395: Affection  = -0.03119273008787
-   [Grimm]: Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: What's in it for me? Then we can discuss terms.
-   [Grimm]: Absolutely. I'll gladly take care of it.
-   [Grimm]: And what do I gain from this? Then we can discuss terms.
-   [Grimm]: I might consider it if I keep authority. You'll owe me.
-   [Grimm]: I suppose, I'd love to dive into this. It must be done!
-   [Grimm]: If necessary, I'd love to dive into this. It must be done!
-   [Grimm]: I'll gladly take on this challenge. It's necessary.
-   [Grimm]: What can you offer me in return? Then we can discuss terms.
-   [Grimm]: Why should I agree to this? Then we can discuss terms.
-
-Sofia - Role : scholar - Warmth = 0.37273655580336 - Assertiveness = -0.3449593447801 - Risk-Tolerance = -0.22654663829932
-  Trust = 0.25032977923601: Respect = 0.30460352742292: Affection  = 0.18060413832791
-   [Sofia]: No. Find someone else.
-   [Sofia]: I'd rather not handle this properly, if that's alright.
-   [Sofia]: I… I cannot handle this properly. It's the proper course.
-   [Sofia]: I'm not sure about this. Maybe Let me research this first, friend.
-   [Sofia]: Interesting… I… Unfortunately no. It's the right thing.
-   [Sofia]: I'm not sure about this. Maybe Let me research this first.
-   [Sofia]: I probably shouldn't handle this properly. I have my reasons.
-   [Sofia]: No. Find someone else.
-   [Sofia]: Interesting… I… That's interesting, but I have other concerns. Let me research this first.
-   [Sofia]: I'm not sure about this. Maybe Let me research this first, friend.
-
-Marcus - Role : healer - Warmth = 0.88834658716196 - Assertiveness = -0.41430768248683 - Risk-Tolerance = -0.3361959775474
-  Trust = 0.30526725026359: Respect = 0.6006377538767: Affection  = 0.06356075987183
-   [Marcus]: No. Find someone else.
-   [Marcus]: I… No. I have more important matters, friend.
-   [Marcus]: Well, I'd rather not handle this properly, if that's alright.
-   [Marcus]: Well, I'm afraid not. I'm happy to assist, friend.
-   [Marcus]: I'm not sure about this. Maybe We could try something else, friend.
-   [Marcus]: I must decline. I'm happy to assist.
-   [Marcus]: Well, I don't think I can handle this properly. Perhaps someone else.
-   [Marcus]: I… I cannot handle this properly. I want to help, friend.
-   [Marcus]: No. This doesn't concern me.
-   [Marcus]: I'd rather not handle this properly, if that's alright, friend.
-
-Zara - Role : rogue - Warmth = -0.24432087461494 - Assertiveness = 0.14454972902991 - Risk-Tolerance = 0.95577574038679
-  Trust = 0.5608221851276: Respect = 0.52679695715807: Affection  = 0.12228690542973
-   [Zara]: I… Absolutely. I'll gladly take care of it!
-   [Zara]: Absolutely. I'll doesn't matter much gladly take care of it!
-   [Zara]: I… I'll good enough gladly take on this challenge. I have my reasons.
-   [Zara]: Alright, I'd love to dive into this. It's complicated.
-   [Zara]: I… I'll gladly take on this challenge. I have my reasons.
-   [Zara]: I'll good enough gladly take on this challenge. I have my reasons!
-   [Zara]: No. Find someone else.
-   [Zara]: No. This doesn't concern me.
-   [Zara]: Very well, I'd love to dive into this. It's complicated.
-   [Zara]: Absolutely. I'll doesn't matter much gladly take care of it!
-
-Viktor - Role : noble - Warmth = 0.30221681302188 - Assertiveness = 0.76707679732377 - Risk-Tolerance = -0.13377033659315
-  Trust = 0.30997499362755: Respect = 0.39756287233982: Affection  = 0.12107607594303
-   [Viktor]: I… No. That's not my problem.
-   [Viktor]: Never. It must be done.
-   [Viktor]: No. This doesn't concern me.
-   [Viktor]: Listen. Never. It must be done. That is final.
-   [Viktor]: Listen. I cannot handle this properly. It's necessary.
-   [Viktor]: Listen. I cannot handle this properly. It's necessary. That is final.
-   [Viktor]: Out of the question. It must be done.
-   [Viktor]: Absolutely not. It must be done, friend.
-   [Viktor]: No. That's not my problem, friend.
-   [Viktor]: That's interesting, but I have other concerns. We could try something else.
-
-Vorak - Role : warlord - Warmth = -0.32943217296013 - Assertiveness = 0.70749227083471 - Risk-Tolerance = 0.68841901477193
-  Trust = 0.4494240258695: Respect = 0.48011071408767: Affection  = 0.21028769324525
-   [Vorak]: Listen. As you wish, I'd love to dive into this. It must be done.
-   [Vorak]: And what do I gain from this? Then we can discuss terms.
-   [Vorak]: Listen. I'll gladly take on this challenge. It's necessary!
-   [Vorak]: Absolutely. I'll gladly take care of it.
-   [Vorak]: I… Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: I suppose, I'd love to dive into this. It must be done!
    [Vorak]: I might consider it if I keep authority. You'll owe me.
-   [Vorak]: I'll gladly take on this challenge. It's necessary.
-   [Vorak]: I'd love tonot take on this challenge. It's necessary.
-   [Vorak]: And what do I gain from this? Then we can discuss terms.
-   [Vorak]: As you wish, I'd love to dive into this. It must be done.
 
-Lyris - Role : scholar - Warmth = 0.17214673689246 - Assertiveness = -0.23071338704159 - Risk-Tolerance = -0.24804487625229
-  Trust = 0.20570938173774: Respect = 0.37440627472431: Affection  = -0.05953996429788
-   [Lyris]: I'm afraid not. It's the right thing.
-   [Lyris]: I'd rather not handle this properly, if that's alright.
-   [Lyris]: I don't think I can handle this properly. Perhaps someone else.
-   [Lyris]: I'm not sure about this. Maybe Let me research this first.
-   [Lyris]: I probably shouldn't handle this properly. I have my reasons.
-   [Lyris]: I cannot handle this properly. It's the proper course.
-   [Lyris]: I… No. Find someone else.
-   [Lyris]: Unfortunately no. It's the right thing.
-   [Lyris]: I… No. This doesn't concern me.
-   [Lyris]: Interesting… I don't think I can handle this properly. Perhaps someone else.
-
-Thane - Role : merchant - Warmth = 0.24620113107362 - Assertiveness = 0.29257992166318 - Risk-Tolerance = 0.58004697934837
-  Trust = 0.41523537799912: Respect = 0.48538871212312: Affection  = 0.05484636493282
-   [Thane]: No. This doesn't concern me.
-   [Thane]: I cannot handle this properly. It's the proper course.
-   [Thane]: Sure, I can address this correctly. It's the right thing.
-   [Thane]: I… I'll handle this properly. It's the proper course.
-   [Thane]: I can do that, I can address this correctly. It's the right thing.
-   [Thane]: I… Of course. I'll take care of it.
-   [Thane]: I need time to consider this carefully.
-   [Thane]: I… No. Find someone else.
-   [Thane]: I… Very well, I can address this correctly. It's the right thing.
-   [Thane]: I need time to consider this carefully.
-
-Mira - Role : healer - Warmth = 0.78083344774017 - Assertiveness = -0.22877647495019 - Risk-Tolerance = -0.30890593353255
-  Trust = 0.38338542494974: Respect = 0.494893349249: Affection  = -0.07716752432062
-   [Mira]: I cannot handle this properly. I want to help.
-   [Mira]: Well, I'm not sure about this. Maybe We could try something else, friend.
-   [Mira]: I don't think I can handle this properly. Perhaps someone else.
-   [Mira]: Well, I probably shouldn't handle this properly. I have my reasons.
-   [Mira]: Unfortunately no. I'm happy to assist, friend.
-   [Mira]: I cannot. I'm happy to assist, friend.
-   [Mira]: I don't think I can handle this properly. Perhaps someone else, friend.
-   [Mira]: Well, I'm afraid I can't handle this properly, friend. I truly wish I could.
-   [Mira]: No. Find someone else.
-   [Mira]: Well, I… I must decline. I'm happy to assist.
-
-Kass - Role : rogue - Warmth = -0.29778208848303 - Assertiveness = 0.21687103012762 - Risk-Tolerance = 0.8603164705766
-  Trust = 0.23650087560151: Respect = 0.63467285706821: Affection  = 0.14821709405348
-   [Kass]: I… Very well, I'd love to dive into this. It's complicated.
-   [Kass]: No. I have more important matters.
-   [Kass]: No. That's not my problem.
-   [Kass]: I'd love to do that, I'd love to dive into this. It's complicated.
-   [Kass]: Absolutely. I'll gladly take care of it.
-   [Kass]: Sure, I'd love to dive into this. It's complicated!
-   [Kass]: I must decline. It's complicated.
-   [Kass]: I'm afraid not. It's complicated.
-   [Kass]: I… I'd love tonot take on this challenge. I have my reasons.
-   [Kass]: I… No. I have more important matters.
-
-Lord Aldric - Role : noble - Warmth = 0.08673255462394 - Assertiveness = 0.70331838827034 - Risk-Tolerance = -0.26155187540614
-  Trust = 0.48842861032183: Respect = 0.51890829742528: Affection  = 0.30493873909996
-   [Lord Aldric]: Listen. I cannot handle this properly. It's necessary.
+Lord Aldric - Role : noble - Warmth = 0.07930111629352 - Assertiveness = 0.73440236556078 - Risk-Tolerance = -0.43586826475295
+  Trust = 0.25887924346086: Respect = 0.47895597790447: Affection  = 0.22373170750856
+   [Lord Aldric]: Listen. No. That's not my problem.
+   [Lord Aldric]: Listen. No. I have more important matters.
+   [Lord Aldric]: No. That's not my problem.
+   [Lord Aldric]: Never, if it's safe. It must be done.
+   [Lord Aldric]: Listen. No, if it's safe. This doesn't concern me.
    [Lord Aldric]: Never. It must be done. That is final.
-   [Lord Aldric]: That's interesting, but I have other concerns. We could try something else.
-   [Lord Aldric]: No. It must be done.
-   [Lord Aldric]: No. Find someone else.
-   [Lord Aldric]: Absolutely not. It must be done.
-   [Lord Aldric]: Never. It must be done.
-   [Lord Aldric]: I… No. Find someone else. That is final.
-   [Lord Aldric]: No. That's not my problem.
-   [Lord Aldric]: I cannot handle this properly. It's necessary.
-
-Elena - Role : merchant - Warmth = 0.40038549330161 - Assertiveness = 0.33526103705814 - Risk-Tolerance = 0.39509259195557
-  Trust = 0.36441528661534: Respect = 0.63332572425472: Affection  = 0.05100507649537
-   [Elena]: No. This doesn't concern me, friend.
-   [Elena]: Of course. I'll take care of it.
-   [Elena]: No. That's not my problem.
-   [Elena]: I… I'm afraid not. It's the right thing.
-   [Elena]: I… I can do that, I can address this correctly. It's the right thing.
-   [Elena]: No. This doesn't concern me.
-   [Elena]: I… That's interesting, but I have other concerns. Perhaps a trade instead?
-   [Elena]: I must decline. It's the right thing.
-   [Elena]: I cannot handle this properly. It's the proper course.
-   [Elena]: No. Find someone else.
-
-Grimm - Role : warlord - Warmth = -0.36509532230344 - Assertiveness = 0.64981651580788 - Risk-Tolerance = 0.83101828412636
-  Trust = 0.32496882349713: Respect = 0.51071597314395: Affection  = -0.03119273008787
-   [Grimm]: Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: As you wish, I'd love to dive into this. It must be done.
-   [Grimm]: I might consider it if I keep authority. You'll owe me.
-   [Grimm]: I suppose, I'd love to dive into this. It must be done.
-   [Grimm]: I'll gladly take on this challenge. It's necessary!
-   [Grimm]: Absolutely. I'll gladly take care of it.
-   [Grimm]: Fine, I'd love to dive into this. It must be done.
-   [Grimm]: I… And what do I gain from this? Then we can discuss terms.
-   [Grimm]: I… Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: No. This doesn't concern me.
-
-Sofia - Role : scholar - Warmth = 0.37273655580336 - Assertiveness = -0.3449593447801 - Risk-Tolerance = -0.22654663829932
-  Trust = 0.25032977923601: Respect = 0.30460352742292: Affection  = 0.18060413832791
-   [Sofia]: Interesting… I… I'm not sure about this. Maybe Let me research this first.
-   [Sofia]: I cannot handle this properly. It's the proper course, friend.
-   [Sofia]: I'm not sure about this. Maybe Let me research this first.
-   [Sofia]: I… I'd rather not handle this properly, if that's alright.
-   [Sofia]: I cannot handle this properly. It's the proper course.
-   [Sofia]: I… I'm not sure about this. Maybe Let me research this first, friend.
-   [Sofia]: No. That's not my problem.
-   [Sofia]: I don't think I can handle this properly. Perhaps someone else, friend.
-   [Sofia]: I cannot handle this properly. It's the proper course, friend.
-   [Sofia]: I must decline. It's the right thing.
-
-Marcus - Role : healer - Warmth = 0.88834658716196 - Assertiveness = -0.41430768248683 - Risk-Tolerance = -0.3361959775474
-  Trust = 0.30526725026359: Respect = 0.6006377538767: Affection  = 0.06356075987183
-   [Marcus]: No. I have more important matters.
-   [Marcus]: I… I probably shouldn't handle this properly. I have my reasons, friend.
-   [Marcus]: Unfortunately no. I'm happy to assist.
-   [Marcus]: I cannot handle this properly. I want to help.
-   [Marcus]: I'd rather not handle this properly, if that's alright.
-   [Marcus]: No. That's not my problem.
-   [Marcus]: I'm not sure about this. Maybe We could try something else, friend.
-   [Marcus]: I need a moment to think about this, friend.
-   [Marcus]: I don't think I can handle this properly. Perhaps someone else, friend.
-   [Marcus]: I probably shouldn't handle this properly. I have my reasons.
-
-Zara - Role : rogue - Warmth = -0.24432087461494 - Assertiveness = 0.14454972902991 - Risk-Tolerance = 0.95577574038679
-  Trust = 0.5608221851276: Respect = 0.52679695715807: Affection  = 0.12228690542973
-   [Zara]: I'll gladly take on this challenge. I have my reasons.
-   [Zara]: I… No. That's not my problem.
-   [Zara]: I… Absolutely. I'll gladly take care of it.
-   [Zara]: Absolutely. I'll I guess gladly take care of it!
-   [Zara]: Sure, I'd love to dive into this. It's complicated!
-   [Zara]: I'd love tonot take on this challenge. I have my reasons.
-   [Zara]: I'll gladly take on this challenge. I have my reasons.
-   [Zara]: I… Very well, I'd love to dive into this. It's complicated.
-   [Zara]: I… Absolutely. I'll gladly take care of it.
-   [Zara]: I need to weigh the risks before deciding.
-
-Viktor - Role : noble - Warmth = 0.30221681302188 - Assertiveness = 0.76707679732377 - Risk-Tolerance = -0.13377033659315
-  Trust = 0.30997499362755: Respect = 0.39756287233982: Affection  = 0.12107607594303
-   [Viktor]: Never. It must be done.
-   [Viktor]: I cannot handle this properly. It's necessary, friend.
-   [Viktor]: Never. It must be done, friend.
-   [Viktor]: I might consider it if we maintain integrity. We maintain honor, friend.
-   [Viktor]: Listen. Never. It must be done.
-   [Viktor]: I cannot handle this properly. It's necessary.
-   [Viktor]: No. This doesn't concern me.
-   [Viktor]: Listen. I cannot handle this properly. It's necessary, friend.
-   [Viktor]: No. I have more important matters.
-   [Viktor]: I cannot handle this properly. It's necessary, friend. That is final.
-
-Vorak - Role : warlord - Warmth = -0.32943217296013 - Assertiveness = 0.70749227083471 - Risk-Tolerance = 0.68841901477193
-  Trust = 0.4494240258695: Respect = 0.48011071408767: Affection  = 0.21028769324525
-   [Vorak]: Absolutely. I'll gladly take care of it.
-   [Vorak]: Absolutely not. It must be done.
-   [Vorak]: I'll gladly take on this challenge. It's necessary.
-   [Vorak]: I might consider it if I keep authority. You'll owe me.
-   [Vorak]: Listen. Out of the question. It must be done. That is final.
-   [Vorak]: Listen. As you wish, I'd love to dive into this. It must be done!
-   [Vorak]: I'd love tonot take on this challenge. It's necessary.
-   [Vorak]: What's in it for me? Then we can discuss terms.
-   [Vorak]: Absolutely. I'll gladly take care of it.
-   [Vorak]: Listen. I might consider it if I keep authority. You'll owe me.
-
-Lyris - Role : scholar - Warmth = 0.17214673689246 - Assertiveness = -0.23071338704159 - Risk-Tolerance = -0.24804487625229
-  Trust = 0.20570938173774: Respect = 0.37440627472431: Affection  = -0.05953996429788
-   [Lyris]: I need to research this matter further.
-   [Lyris]: No. That's not my problem.
-   [Lyris]: I'm not sure about this. Maybe Let me research this first.
-   [Lyris]: I cannot handle this properly. It's the proper course.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: I… I must decline. It's the right thing.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: I'd rather not handle this properly, if that's alright.
-   [Lyris]: I… No. Find someone else.
-   [Lyris]: I probably shouldn't handle this properly. I have my reasons.
-
-Thane - Role : merchant - Warmth = 0.24620113107362 - Assertiveness = 0.29257992166318 - Risk-Tolerance = 0.58004697934837
-  Trust = 0.41523537799912: Respect = 0.48538871212312: Affection  = 0.05484636493282
-   [Thane]: I need time to consider this carefully.
-   [Thane]: I cannot. It's the right thing.
-   [Thane]: I'll handle this properly. It's the proper course.
-   [Thane]: Sure, I can address this correctly. It's the right thing.
-   [Thane]: I… Of course. I'll take care of it.
-   [Thane]: I need time to consider this carefully.
-   [Thane]: I… No. That's not my problem.
-   [Thane]: No. That's not my problem.
-   [Thane]: I need time to consider this carefully.
-   [Thane]: Unfortunately no. It's the right thing.
-
-Mira - Role : healer - Warmth = 0.78083344774017 - Assertiveness = -0.22877647495019 - Risk-Tolerance = -0.30890593353255
-  Trust = 0.38338542494974: Respect = 0.494893349249: Affection  = -0.07716752432062
-   [Mira]: I… I'm so sorry, but I cannot handle this properly. I wish I could help.
-   [Mira]: I'd rather not handle this properly, if that's alright.
-   [Mira]: I… I'm afraid not. I'm happy to assist.
-   [Mira]: I'm not sure about this. Maybe We could try something else.
-   [Mira]: No. This doesn't concern me, friend.
-   [Mira]: I don't think I can handle this properly. Perhaps someone else.
-   [Mira]: I probably shouldn't handle this properly. I have my reasons.
-   [Mira]: I'm not sure about this. Maybe We could try something else, friend.
-   [Mira]: I… No. Find someone else.
-   [Mira]: I… I cannot handle this properly. I want to help.
-
-Kass - Role : rogue - Warmth = -0.29778208848303 - Assertiveness = 0.21687103012762 - Risk-Tolerance = 0.8603164705766
-  Trust = 0.23650087560151: Respect = 0.63467285706821: Affection  = 0.14821709405348
-   [Kass]: I… I'm afraid not. It's complicated.
-   [Kass]: I'll gladly take on this challenge. I have my reasons.
-   [Kass]: Absolutely. I'll doesn't matter much gladly take care of it.
-   [Kass]: I need to weigh the risks before deciding.
-   [Kass]: Absolutely. I'll gladly take care of it.
-   [Kass]: I'd love to do that, I'd love to dive into this. It's complicated!
-   [Kass]: I'm afraid not. It's complicated.
-   [Kass]: I'd love tonot. It's complicated.
-   [Kass]: I… I'd love tonot take on this challenge. I have my reasons.
-   [Kass]: I… I'll gladly take on this challenge. I have my reasons.
-
-Lord Aldric - Role : noble - Warmth = 0.08673255462394 - Assertiveness = 0.70331838827034 - Risk-Tolerance = -0.26155187540614
-  Trust = 0.48842861032183: Respect = 0.51890829742528: Affection  = 0.30493873909996
-   [Lord Aldric]: Out of the question. It must be done.
-   [Lord Aldric]: No. This doesn't concern me. That is final.
-   [Lord Aldric]: I cannot handle this properly. It's necessary. That is final.
-   [Lord Aldric]: Absolutely not. It must be done.
-   [Lord Aldric]: No. Find someone else.
-   [Lord Aldric]: No. I have more important matters.
    [Lord Aldric]: No. I have more important matters. That is final.
-   [Lord Aldric]: Listen. Perhaps, but it's done honorably. Let's do this properly.
-   [Lord Aldric]: I… I cannot handle this properly. It's necessary.
-   [Lord Aldric]: Out of the question. It must be done.
+   [Lord Aldric]: No. Find someone else.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: Absolutely not, if it's safe. It must be done.
+   [Lord Aldric]: No. That's not my problem.
+   [Lord Aldric]: Listen. No. It must be done.
+   [Lord Aldric]: No. This doesn't concern me.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: Listen. No. That's not my problem.
+   [Lord Aldric]: No. It must be done.
+   [Lord Aldric]: Never, if it's safe. It must be done.
+   [Lord Aldric]: No. I have more important matters.
+   [Lord Aldric]: That's interesting, but I have other concerns, if it's safe. We could try something else.
 
-Elena - Role : merchant - Warmth = 0.40038549330161 - Assertiveness = 0.33526103705814 - Risk-Tolerance = 0.39509259195557
-  Trust = 0.36441528661534: Respect = 0.63332572425472: Affection  = 0.05100507649537
-   [Elena]: Of course. I'll take care of it.
-   [Elena]: Unfortunately no. It's the right thing, friend.
-   [Elena]: I must decline. It's the right thing, friend.
-   [Elena]: I can do that, I can address this correctly. It's the right thing.
-   [Elena]: I'll handle this properly. It's the proper course.
-   [Elena]: I… Alright, I can address this correctly. It's the right thing.
-   [Elena]: I cannot. It's the right thing, friend.
-   [Elena]: I cannot handle this properly. It's the proper course.
-   [Elena]: Sure, I can address this correctly. It's the right thing, friend.
-   [Elena]: I cannot. It's the right thing.
-
-Grimm - Role : warlord - Warmth = -0.36509532230344 - Assertiveness = 0.64981651580788 - Risk-Tolerance = 0.83101828412636
-  Trust = 0.32496882349713: Respect = 0.51071597314395: Affection  = -0.03119273008787
-   [Grimm]: What can you offer me in return? Then we can discuss terms.
-   [Grimm]: Absolutely. I'll gladly take care of it.
-   [Grimm]: Fine, I'd love to dive into this. It must be done.
-   [Grimm]: I… I might consider it if I keep authority. You'll owe me.
-   [Grimm]: Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: As you wish, I'd love to dive into this. It must be done!
-   [Grimm]: I suppose, I'd love to dive into this. It must be done.
-   [Grimm]: I… Why should I agree to this? Then we can discuss terms.
-   [Grimm]: Absolutely. I'll gladly take care of it.
-   [Grimm]: I'll gladly take on this challenge. It's necessary!
-
-Sofia - Role : scholar - Warmth = 0.37273655580336 - Assertiveness = -0.3449593447801 - Risk-Tolerance = -0.22654663829932
-  Trust = 0.25032977923601: Respect = 0.30460352742292: Affection  = 0.18060413832791
-   [Sofia]: I don't think I can handle this properly. Perhaps someone else.
-   [Sofia]: I'd rather not handle this properly, if that's alright.
-   [Sofia]: I'm not sure about this. Maybe Let me research this first.
-   [Sofia]: I… I must decline. It's the right thing, friend.
-   [Sofia]: No. Find someone else.
-   [Sofia]: No. I have more important matters, friend.
-   [Sofia]: I probably shouldn't handle this properly. I have my reasons.
-   [Sofia]: I need to research this matter further.
-   [Sofia]: I'm afraid not. It's the right thing, friend.
-   [Sofia]: I'm not sure about this. Maybe Let me research this first.
-
-Marcus - Role : healer - Warmth = 0.88834658716196 - Assertiveness = -0.41430768248683 - Risk-Tolerance = -0.3361959775474
-  Trust = 0.30526725026359: Respect = 0.6006377538767: Affection  = 0.06356075987183
-   [Marcus]: Well, I'm not sure about this. Maybe We could try something else.
-   [Marcus]: I'd rather not handle this properly, if that's alright, friend.
-   [Marcus]: Well, no. Find someone else.
-   [Marcus]: I'm afraid not. I'm happy to assist.
-   [Marcus]: I… I cannot handle this properly. I want to help.
-   [Marcus]: I probably shouldn't handle this properly. I have my reasons.
-   [Marcus]: No. This doesn't concern me.
-   [Marcus]: I'm not sure about this. Maybe We could try something else.
-   [Marcus]: I… I'd rather not handle this properly, if that's alright, friend.
-   [Marcus]: I probably shouldn't handle this properly. I have my reasons, friend.
-
-Zara - Role : rogue - Warmth = -0.24432087461494 - Assertiveness = 0.14454972902991 - Risk-Tolerance = 0.95577574038679
-  Trust = 0.5608221851276: Respect = 0.52679695715807: Affection  = 0.12228690542973
-   [Zara]: Absolutely. I'll gladly take care of it!
-   [Zara]: Alright, I'd love to dive into this. It's complicated.
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: No. That's not my problem.
-   [Zara]: I'll gladly take on this challenge. I have my reasons!
-   [Zara]: I'd love to do that, I'd love to dive into this. It's complicated.
-   [Zara]: Very well, I'd love to dive into this. It's complicated.
-   [Zara]: I… I'll whatever works gladly take on this challenge. I have my reasons.
-   [Zara]: I'll good enough gladly take on this challenge. I have my reasons!
-   [Zara]: Absolutely. I'll gladly take care of it.
-
-Viktor - Role : noble - Warmth = 0.30221681302188 - Assertiveness = 0.76707679732377 - Risk-Tolerance = -0.13377033659315
-  Trust = 0.30997499362755: Respect = 0.39756287233982: Affection  = 0.12107607594303
-   [Viktor]: No. I have more important matters, friend. That is final.
-   [Viktor]: Out of the question. It must be done. That is final.
-   [Viktor]: Listen. No. That's not my problem, friend. That is final.
-   [Viktor]: I cannot handle this properly. It's necessary.
-   [Viktor]: Out of the question. It must be done, friend.
-   [Viktor]: Absolutely not. It must be done.
-   [Viktor]: Listen. I… I cannot handle this properly. It's necessary.
-   [Viktor]: I… Out of the question. It must be done.
-   [Viktor]: Never. It must be done, friend. That is final.
-   [Viktor]: Never. It must be done.
-
-Vorak - Role : warlord - Warmth = -0.32943217296013 - Assertiveness = 0.70749227083471 - Risk-Tolerance = 0.68841901477193
-  Trust = 0.4494240258695: Respect = 0.48011071408767: Affection  = 0.21028769324525
-   [Vorak]: And what do I gain from this? Then we can discuss terms.
+Vorak - Role : warlord - Warmth = -0.3995233349345 - Assertiveness = 0.97278061632238 - Risk-Tolerance = 0.7768654745528
+  Trust = 0.31569019747467: Respect = 0.64624062715258: Affection  = -0.14136725427772
+   [Vorak]: What can you offer me in return? Then we can discuss terms.
+   [Vorak]: Absolutely. I'll gladly take care of it.
+   [Vorak]: Listen. I'll gladly take on this challenge. It's necessary!
    [Vorak]: Why should I agree to this? Then we can discuss terms.
    [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: Listen. I might consider it if I keep authority. You'll owe me.
+   [Vorak]: If necessary, I'd love to dive into this. It must be done!
+   [Vorak]: Never. It must be done.
+   [Vorak]: Absolutely. I'll gladly take care of it!
+   [Vorak]: What's in it for me? Then we can discuss terms.
+   [Vorak]: Listen. Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Listen. I'd love tonot take on this challenge. It's necessary.
+   [Vorak]: I'll gladly take on this challenge. It's necessary!
+   [Vorak]: If necessary, I'd love to dive into this. It must be done.
+   [Vorak]: No. Find someone else.
+   [Vorak]: Absolutely. I'll gladly take care of it.
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Why should I agree to this? Then we can discuss terms.
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+
+Lord Aldric - Role : noble - Warmth = 0.07930111629352 - Assertiveness = 0.73440236556078 - Risk-Tolerance = -0.43586826475295
+  Trust = 0.25887924346086: Respect = 0.47895597790447: Affection  = 0.22373170750856
+   [Lord Aldric]: Never. It must be done.
+   [Lord Aldric]: Absolutely not. It must be done.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: No, if it's safe. This doesn't concern me.
+   [Lord Aldric]: Listen. No. This doesn't concern me. That is final.
+   [Lord Aldric]: No. Find someone else.
+   [Lord Aldric]: Out of the question. It must be done.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: No. This doesn't concern me.
+   [Lord Aldric]: Listen. Perhaps, but it's done honorably. Let's do this properly.
+   [Lord Aldric]: No. That's not my problem. That is final.
+   [Lord Aldric]: No. It must be done.
+   [Lord Aldric]: That's interesting, but I have other concerns. We could try something else.
+   [Lord Aldric]: Listen. No, if it's safe. Find someone else.
+   [Lord Aldric]: No. I have more important matters.
+   [Lord Aldric]: No, if it's safe. This doesn't concern me.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: No, if it's safe. I have more important matters.
+
+Vorak - Role : warlord - Warmth = -0.3995233349345 - Assertiveness = 0.97278061632238 - Risk-Tolerance = 0.7768654745528
+  Trust = 0.31569019747467: Respect = 0.64624062715258: Affection  = -0.14136725427772
    [Vorak]: I'll gladly take on this challenge. It's necessary.
-   [Vorak]: No. This doesn't concern me.
    [Vorak]: What can you offer me in return? Then we can discuss terms.
-   [Vorak]: No. That's not my problem. That is final.
+   [Vorak]: Absolutely. I'll gladly take care of it!
    [Vorak]: I might consider it if I keep authority. You'll owe me.
    [Vorak]: Listen. Fine, I'd love to dive into this. It must be done.
-   [Vorak]: Never. It must be done.
-
-Lyris - Role : scholar - Warmth = 0.17214673689246 - Assertiveness = -0.23071338704159 - Risk-Tolerance = -0.24804487625229
-  Trust = 0.20570938173774: Respect = 0.37440627472431: Affection  = -0.05953996429788
-   [Lyris]: Unfortunately no. It's the right thing.
-   [Lyris]: I… I cannot handle this properly. It's the proper course.
-   [Lyris]: Interesting… I'm not sure about this. Maybe Let me research this first.
-   [Lyris]: I… I'd rather not handle this properly, if that's alright.
-   [Lyris]: I… No. That's not my problem.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: No. I have more important matters.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: I don't think I can handle this properly. Perhaps someone else.
-
-Thane - Role : merchant - Warmth = 0.24620113107362 - Assertiveness = 0.29257992166318 - Risk-Tolerance = 0.58004697934837
-  Trust = 0.41523537799912: Respect = 0.48538871212312: Affection  = 0.05484636493282
-   [Thane]: I… I'm afraid not. It's the right thing.
-   [Thane]: Sure, I can address this correctly. It's the right thing.
-   [Thane]: I'll handle this properly. It's the proper course.
-   [Thane]: Very well, I can address this correctly. It's the right thing.
-   [Thane]: Of course. I'll take care of it.
-   [Thane]: No. I have more important matters.
-   [Thane]: I cannot handle this properly. It's the proper course.
-   [Thane]: I need time to consider this carefully.
-   [Thane]: I… Sure, I can address this correctly. It's the right thing.
-   [Thane]: I can do that, I can address this correctly. It's the right thing.
-
-Mira - Role : healer - Warmth = 0.78083344774017 - Assertiveness = -0.22877647495019 - Risk-Tolerance = -0.30890593353255
-  Trust = 0.38338542494974: Respect = 0.494893349249: Affection  = -0.07716752432062
-   [Mira]: I'd rather not handle this properly, if that's alright.
-   [Mira]: I cannot. I'm happy to assist, friend.
-   [Mira]: No. Find someone else, friend.
-   [Mira]: I'd rather not handle this properly, if that's alright, friend.
-   [Mira]: I'm so sorry, but I cannot handle this properly. I wish I could help, friend.
-   [Mira]: I'm not sure about this. Maybe We could try something else, friend.
-   [Mira]: I'm not sure about this. Maybe We could try something else.
-   [Mira]: I'd rather not handle this properly, if that's alright.
-   [Mira]: I… No. This doesn't concern me.
-   [Mira]: I probably shouldn't handle this properly. I have my reasons.
-
-Kass - Role : rogue - Warmth = -0.29778208848303 - Assertiveness = 0.21687103012762 - Risk-Tolerance = 0.8603164705766
-  Trust = 0.23650087560151: Respect = 0.63467285706821: Affection  = 0.14821709405348
-   [Kass]: I need to weigh the risks before deciding.
-   [Kass]: I need to weigh the risks before deciding.
-   [Kass]: I… I'll probably gladly take on this challenge. I have my reasons!
-   [Kass]: Unfortunately no. It's complicated.
-   [Kass]: I'll gladly take on this challenge. I have my reasons!
-   [Kass]: Absolutely. I'll gladly take care of it.
-   [Kass]: Very well, I'd love to dive into this. It's complicated!
-   [Kass]: I'd love to do that, I'd love to dive into this. It's complicated.
-   [Kass]: I'll whatever works gladly take on this challenge. I have my reasons.
-   [Kass]: I'd love tonot. It's complicated.
-
-Lord Aldric - Role : noble - Warmth = 0.08673255462394 - Assertiveness = 0.70331838827034 - Risk-Tolerance = -0.26155187540614
-  Trust = 0.48842861032183: Respect = 0.51890829742528: Affection  = 0.30493873909996
-   [Lord Aldric]: I cannot handle this properly. It's necessary. That is final.
-   [Lord Aldric]: Listen. No. This doesn't concern me.
-   [Lord Aldric]: Listen. No. I have more important matters.
-   [Lord Aldric]: Out of the question. It must be done. That is final.
-   [Lord Aldric]: Listen. No. That's not my problem. That is final.
-   [Lord Aldric]: No. This doesn't concern me.
-   [Lord Aldric]: I cannot handle this properly. It's necessary.
-   [Lord Aldric]: No. It must be done.
-   [Lord Aldric]: No. Find someone else. That is final.
-   [Lord Aldric]: No. I have more important matters.
-
-Elena - Role : merchant - Warmth = 0.40038549330161 - Assertiveness = 0.33526103705814 - Risk-Tolerance = 0.39509259195557
-  Trust = 0.36441528661534: Respect = 0.63332572425472: Affection  = 0.05100507649537
-   [Elena]: I… No. Find someone else.
-   [Elena]: I… I cannot handle this properly. It's the proper course, friend.
-   [Elena]: Very well, I can address this correctly. It's the right thing.
-   [Elena]: I… I'll handle this properly. It's the proper course, friend.
-   [Elena]: I… No. That's not my problem, friend.
-   [Elena]: No. This doesn't concern me.
-   [Elena]: I'll handle this properly. It's the proper course.
-   [Elena]: I cannot handle this properly. It's the proper course, friend.
-   [Elena]: I must decline. It's the right thing.
-   [Elena]: I cannot handle this properly. It's the proper course.
-
-Grimm - Role : warlord - Warmth = -0.36509532230344 - Assertiveness = 0.64981651580788 - Risk-Tolerance = 0.83101828412636
-  Trust = 0.32496882349713: Respect = 0.51071597314395: Affection  = -0.03119273008787
-   [Grimm]: I might consider it if I keep authority. You'll owe me.
-   [Grimm]: Fine, I'd love to dive into this. It must be done.
-   [Grimm]: If necessary, I'd love to dive into this. It must be done.
-   [Grimm]: As you wish, I'd love to dive into this. It must be done.
-   [Grimm]: Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: Absolutely. I'll gladly take care of it!
-   [Grimm]: I might consider it if I keep authority. You'll owe me.
-   [Grimm]: Fine, I'd love to dive into this. It must be done!
-   [Grimm]: I'll gladly take on this challenge. It's necessary.
-   [Grimm]: If necessary, I'd love to dive into this. It must be done!
-
-Sofia - Role : scholar - Warmth = 0.37273655580336 - Assertiveness = -0.3449593447801 - Risk-Tolerance = -0.22654663829932
-  Trust = 0.25032977923601: Respect = 0.30460352742292: Affection  = 0.18060413832791
-   [Sofia]: Interesting… I cannot. It's the right thing.
-   [Sofia]: I… No. That's not my problem, friend.
-   [Sofia]: I don't think I can handle this properly. Perhaps someone else.
-   [Sofia]: I… I must decline. It's the right thing, friend.
-   [Sofia]: I… I'd rather not handle this properly, if that's alright.
-   [Sofia]: I'm not sure about this. Maybe Let me research this first.
-   [Sofia]: I don't think I can handle this properly. Perhaps someone else, friend.
-   [Sofia]: Unfortunately no. It's the right thing, friend.
-   [Sofia]: Interesting… I… No. Find someone else.
-   [Sofia]: I probably shouldn't handle this properly. I have my reasons.
-
-Marcus - Role : healer - Warmth = 0.88834658716196 - Assertiveness = -0.41430768248683 - Risk-Tolerance = -0.3361959775474
-  Trust = 0.30526725026359: Respect = 0.6006377538767: Affection  = 0.06356075987183
-   [Marcus]: I don't think I can handle this properly. Perhaps someone else, friend.
-   [Marcus]: I… That's interesting, but I have other concerns. We could try something else.
-   [Marcus]: No. This doesn't concern me.
-   [Marcus]: Well, I'm so sorry, but I cannot handle this properly. I wish I could help.
-   [Marcus]: No. This doesn't concern me, friend.
-   [Marcus]: No. That's not my problem.
-   [Marcus]: I'd rather not handle this properly, if that's alright.
-   [Marcus]: Unfortunately no. I'm happy to assist.
-   [Marcus]: I probably shouldn't handle this properly. I have my reasons, friend.
-   [Marcus]: I probably shouldn't handle this properly. I have my reasons.
-
-Zara - Role : rogue - Warmth = -0.24432087461494 - Assertiveness = 0.14454972902991 - Risk-Tolerance = 0.95577574038679
-  Trust = 0.5608221851276: Respect = 0.52679695715807: Affection  = 0.12228690542973
-   [Zara]: I… I'll gladly take on this challenge. I have my reasons.
-   [Zara]: I'd love tonot take on this challenge. I have my reasons.
-   [Zara]: Very well, I'd love to dive into this. It's complicated.
-   [Zara]: Sure, I'd love to dive into this. It's complicated.
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: Absolutely. I'll more or less gladly take care of it!
-   [Zara]: Absolutely. I'll gladly take care of it.
-   [Zara]: I'll gladly take on this challenge. I have my reasons.
-   [Zara]: I need to weigh the risks before deciding.
-
-Viktor - Role : noble - Warmth = 0.30221681302188 - Assertiveness = 0.76707679732377 - Risk-Tolerance = -0.13377033659315
-  Trust = 0.30997499362755: Respect = 0.39756287233982: Affection  = 0.12107607594303
-   [Viktor]: I cannot handle this properly. It's necessary.
-   [Viktor]: No. This doesn't concern me.
-   [Viktor]: Listen. I cannot handle this properly. It's necessary, friend.
-   [Viktor]: Listen. I… No. That's not my problem, friend.
-   [Viktor]: Listen. Out of the question. It must be done.
-   [Viktor]: I… Absolutely not. It must be done.
-   [Viktor]: I cannot handle this properly. It's necessary.
-   [Viktor]: No. That's not my problem, friend.
-   [Viktor]: Never. It must be done.
-   [Viktor]: No. This doesn't concern me.
-
-Vorak - Role : warlord - Warmth = -0.32943217296013 - Assertiveness = 0.70749227083471 - Risk-Tolerance = 0.68841901477193
-  Trust = 0.4494240258695: Respect = 0.48011071408767: Affection  = 0.21028769324525
-   [Vorak]: I suppose, I'd love to dive into this. It must be done.
+   [Vorak]: And what do I gain from this? Then we can discuss terms.
    [Vorak]: Perhaps, but I maintain control. I'll need something in return.
-   [Vorak]: Absolutely not. It must be done.
-   [Vorak]: Out of the question. It must be done.
-   [Vorak]: I… I'd love tonot take on this challenge. It's necessary.
+   [Vorak]: I'll gladly take on this challenge. It's necessary.
+   [Vorak]: Why should I agree to this? Then we can discuss terms.
+   [Vorak]: What's in it for me? Then we can discuss terms.
    [Vorak]: I might consider it if I keep authority. You'll owe me.
-   [Vorak]: Absolutely. I'll gladly take care of it.
-   [Vorak]: Out of the question. It must be done. That is final.
-   [Vorak]: Listen. Never. It must be done.
-   [Vorak]: No. I have more important matters.
-
-Lyris - Role : scholar - Warmth = 0.17214673689246 - Assertiveness = -0.23071338704159 - Risk-Tolerance = -0.24804487625229
-  Trust = 0.20570938173774: Respect = 0.37440627472431: Affection  = -0.05953996429788
-   [Lyris]: No. This doesn't concern me.
-   [Lyris]: I'm not sure about this. Maybe Let me research this first.
-   [Lyris]: I… I probably shouldn't handle this properly. I have my reasons.
-   [Lyris]: I cannot. It's the right thing.
-   [Lyris]: I… No. This doesn't concern me.
-   [Lyris]: I'd rather not handle this properly, if that's alright.
-   [Lyris]: I… I cannot handle this properly. It's the proper course.
-   [Lyris]: I don't think I can handle this properly. Perhaps someone else.
-   [Lyris]: I… I probably shouldn't handle this properly. I have my reasons.
-   [Lyris]: I must decline. It's the right thing.
-
-Thane - Role : merchant - Warmth = 0.24620113107362 - Assertiveness = 0.29257992166318 - Risk-Tolerance = 0.58004697934837
-  Trust = 0.41523537799912: Respect = 0.48538871212312: Affection  = 0.05484636493282
-   [Thane]: I'll handle this properly. It's the proper course.
-   [Thane]: Very well, I can address this correctly. It's the right thing.
-   [Thane]: That's interesting, but I have other concerns. Perhaps a trade instead?
-   [Thane]: I must decline. It's the right thing.
-   [Thane]: No. I have more important matters.
-   [Thane]: I can do that, I can address this correctly. It's the right thing.
-   [Thane]: Sure, I can address this correctly. It's the right thing.
-   [Thane]: Of course. I'll take care of it.
-   [Thane]: I'll handle this properly. It's the proper course.
-   [Thane]: I… I cannot handle this properly. It's the proper course.
-
-Mira - Role : healer - Warmth = 0.78083344774017 - Assertiveness = -0.22877647495019 - Risk-Tolerance = -0.30890593353255
-  Trust = 0.38338542494974: Respect = 0.494893349249: Affection  = -0.07716752432062
-   [Mira]: I don't think I can handle this properly. Perhaps someone else, friend.
-   [Mira]: I probably shouldn't handle this properly. I have my reasons, friend.
-   [Mira]: I don't think I can handle this properly. Perhaps someone else.
-   [Mira]: I wish I could help, but I cannot handle this properly. Forgive me.
-   [Mira]: Well, I… I probably shouldn't handle this properly. I have my reasons.
-   [Mira]: Well, I'm not sure about this. Maybe We could try something else.
-   [Mira]: I probably shouldn't handle this properly. I have my reasons.
-   [Mira]: Well, I… I cannot handle this properly. I want to help, friend.
-   [Mira]: I probably shouldn't handle this properly. I have my reasons, friend.
-   [Mira]: I don't think I can handle this properly. Perhaps someone else.
-
-Kass - Role : rogue - Warmth = -0.29778208848303 - Assertiveness = 0.21687103012762 - Risk-Tolerance = 0.8603164705766
-  Trust = 0.23650087560151: Respect = 0.63467285706821: Affection  = 0.14821709405348
-   [Kass]: I'll probably gladly take on this challenge. I have my reasons.
-   [Kass]: Absolutely. I'll gladly take care of it!
-   [Kass]: Unfortunately no. It's complicated.
-   [Kass]: I… I'd love tonot. It's complicated.
-   [Kass]: Sure, I'd love to dive into this. It's complicated.
-   [Kass]: Absolutely. I'll whatever works gladly take care of it.
-   [Kass]: I'd love to do that, I'd love to dive into this. It's complicated.
-   [Kass]: I'd love tonot take on this challenge. I have my reasons.
-   [Kass]: I'd love tonot. It's complicated.
-   [Kass]: Very well, I'd love to dive into this. It's complicated.
-
-Lord Aldric - Role : noble - Warmth = 0.08673255462394 - Assertiveness = 0.70331838827034 - Risk-Tolerance = -0.26155187540614
-  Trust = 0.48842861032183: Respect = 0.51890829742528: Affection  = 0.30493873909996
-   [Lord Aldric]: No. This doesn't concern me. That is final.
-   [Lord Aldric]: I cannot handle this properly. It's necessary. That is final.
-   [Lord Aldric]: Listen. Never. It must be done. That is final.
-   [Lord Aldric]: No. It must be done.
-   [Lord Aldric]: Absolutely not. It must be done.
-   [Lord Aldric]: Out of the question. It must be done.
-   [Lord Aldric]: I cannot handle this properly. It's necessary.
-   [Lord Aldric]: No. I have more important matters.
-   [Lord Aldric]: No. This doesn't concern me.
-   [Lord Aldric]: I cannot handle this properly. It's necessary. That is final.
-
-Elena - Role : merchant - Warmth = 0.40038549330161 - Assertiveness = 0.33526103705814 - Risk-Tolerance = 0.39509259195557
-  Trust = 0.36441528661534: Respect = 0.63332572425472: Affection  = 0.05100507649537
-   [Elena]: Of course. I'll take care of it.
-   [Elena]: I'm afraid not. It's the right thing.
-   [Elena]: No. Find someone else.
-   [Elena]: I cannot. It's the right thing.
-   [Elena]: No. That's not my problem, friend.
-   [Elena]: Sure, I can address this correctly. It's the right thing, friend.
-   [Elena]: I… I cannot handle this properly. It's the proper course, friend.
-   [Elena]: Of course. I'll take care of it.
-   [Elena]: I'll handle this properly. It's the proper course, friend.
-   [Elena]: No. I have more important matters.
-
-Grimm - Role : warlord - Warmth = -0.36509532230344 - Assertiveness = 0.64981651580788 - Risk-Tolerance = 0.83101828412636
-  Trust = 0.32496882349713: Respect = 0.51071597314395: Affection  = -0.03119273008787
-   [Grimm]: Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: I… Fine, I'd love to dive into this. It must be done.
-   [Grimm]: Why should I agree to this? Then we can discuss terms.
-   [Grimm]: What can you offer me in return? Then we can discuss terms.
-   [Grimm]: I'll gladly take on this challenge. It's necessary.
-   [Grimm]: I… If necessary, I'd love to dive into this. It must be done.
-   [Grimm]: Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: I… Absolutely. I'll gladly take care of it.
-   [Grimm]: And what do I gain from this? Then we can discuss terms.
-   [Grimm]: I might consider it if I keep authority. You'll owe me.
-
-Sofia - Role : scholar - Warmth = 0.37273655580336 - Assertiveness = -0.3449593447801 - Risk-Tolerance = -0.22654663829932
-  Trust = 0.25032977923601: Respect = 0.30460352742292: Affection  = 0.18060413832791
-   [Sofia]: Interesting… I… I'm not sure about this. Maybe Let me research this first, friend.
-   [Sofia]: I cannot handle this properly. It's the proper course.
-   [Sofia]: I… I don't think I can handle this properly. Perhaps someone else, friend.
-   [Sofia]: I cannot handle this properly. It's the proper course, friend.
-   [Sofia]: Interesting… I… I cannot. It's the right thing, friend.
-   [Sofia]: I probably shouldn't handle this properly. I have my reasons.
-   [Sofia]: I don't think I can handle this properly. Perhaps someone else.
-   [Sofia]: I cannot handle this properly. It's the proper course.
-   [Sofia]: I'm not sure about this. Maybe Let me research this first, friend.
-   [Sofia]: I don't think I can handle this properly. Perhaps someone else, friend.
-
-Marcus - Role : healer - Warmth = 0.88834658716196 - Assertiveness = -0.41430768248683 - Risk-Tolerance = -0.3361959775474
-  Trust = 0.30526725026359: Respect = 0.6006377538767: Affection  = 0.06356075987183
-   [Marcus]: I… I'm not sure about this. Maybe We could try something else.
-   [Marcus]: I cannot handle this properly. I want to help.
-   [Marcus]: Well, I don't think I can handle this properly. Perhaps someone else, friend.
-   [Marcus]: Well, that's interesting, but I have other concerns. We could try something else.
-   [Marcus]: I don't think I can handle this properly. Perhaps someone else.
-   [Marcus]: I cannot. I'm happy to assist.
-   [Marcus]: I'm not sure about this. Maybe We could try something else.
-   [Marcus]: Unfortunately, I must decline. I apologize.
-   [Marcus]: Well, I'd rather not handle this properly, if that's alright.
-   [Marcus]: Well, no. I have more important matters.
-
-Zara - Role : rogue - Warmth = -0.24432087461494 - Assertiveness = 0.14454972902991 - Risk-Tolerance = 0.95577574038679
-  Trust = 0.5608221851276: Respect = 0.52679695715807: Affection  = 0.12228690542973
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: Absolutely. I'll doesn't matter much gladly take care of it.
-   [Zara]: I'd love to do that, I'd love to dive into this. It's complicated!
-   [Zara]: Alright, I'd love to dive into this. It's complicated.
-   [Zara]: I'll good enough gladly take on this challenge. I have my reasons.
-   [Zara]: Very well, I'd love to dive into this. It's complicated.
-   [Zara]: I need to weigh the risks before deciding.
-   [Zara]: I'll gladly take on this challenge. I have my reasons!
-
-Viktor - Role : noble - Warmth = 0.30221681302188 - Assertiveness = 0.76707679732377 - Risk-Tolerance = -0.13377033659315
-  Trust = 0.30997499362755: Respect = 0.39756287233982: Affection  = 0.12107607594303
-   [Viktor]: I… No. That's not my problem.
-   [Viktor]: Listen. No. Find someone else.
-   [Viktor]: Out of the question. It must be done, friend.
-   [Viktor]: I cannot handle this properly. It's necessary. That is final.
-   [Viktor]: No. This doesn't concern me. That is final.
-   [Viktor]: Listen. No. It must be done.
-   [Viktor]: I cannot handle this properly. It's necessary.
-   [Viktor]: Listen. No. Find someone else. That is final.
-   [Viktor]: No. This doesn't concern me, friend. That is final.
-   [Viktor]: I cannot handle this properly. It's necessary. That is final.
-
-Vorak - Role : warlord - Warmth = -0.32943217296013 - Assertiveness = 0.70749227083471 - Risk-Tolerance = 0.68841901477193
-  Trust = 0.4494240258695: Respect = 0.48011071408767: Affection  = 0.21028769324525
-   [Vorak]: I'd love tonot take on this challenge. It's necessary.
-   [Vorak]: As you wish, I'd love to dive into this. It must be done!
-   [Vorak]: No. I have more important matters. That is final.
-   [Vorak]: Listen. I'll gladly take on this challenge. It's necessary.
-   [Vorak]: I suppose, I'd love to dive into this. It must be done!
-   [Vorak]: I'll gladly take on this challenge. It's necessary!
-   [Vorak]: I… Why should I agree to this? Then we can discuss terms.
-   [Vorak]: Absolutely not. It must be done.
-   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: Fine, I'd love to dive into this. It must be done!
+   [Vorak]: And what do I gain from this? Then we can discuss terms.
+   [Vorak]: Listen. Absolutely. I'll gladly take care of it.
+   [Vorak]: Listen. I suppose, I'd love to dive into this. It must be done.
+   [Vorak]: What can you offer me in return? Then we can discuss terms.
    [Vorak]: Absolutely. I'll gladly take care of it!
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: As you wish, I'd love to dive into this. It must be done.
+   [Vorak]: I'll gladly take on this challenge. It's necessary.
 
-Lyris - Role : scholar - Warmth = 0.17214673689246 - Assertiveness = -0.23071338704159 - Risk-Tolerance = -0.24804487625229
-  Trust = 0.20570938173774: Respect = 0.37440627472431: Affection  = -0.05953996429788
-   [Lyris]: I need to research this matter further.
-   [Lyris]: No. I have more important matters.
-   [Lyris]: No. That's not my problem.
-   [Lyris]: I'd rather not handle this properly, if that's alright.
-   [Lyris]: I need to research this matter further.
-   [Lyris]: I… No. This doesn't concern me.
-   [Lyris]: I… I cannot handle this properly. It's the proper course.
-   [Lyris]: I don't think I can handle this properly. Perhaps someone else.
-   [Lyris]: I… I'm not sure about this. Maybe Let me research this first.
-   [Lyris]: I need to research this matter further.
-
-Thane - Role : merchant - Warmth = 0.24620113107362 - Assertiveness = 0.29257992166318 - Risk-Tolerance = 0.58004697934837
-  Trust = 0.41523537799912: Respect = 0.48538871212312: Affection  = 0.05484636493282
-   [Thane]: I need time to consider this carefully.
-   [Thane]: Unfortunately no. It's the right thing.
-   [Thane]: I can do that, I can address this correctly. It's the right thing.
-   [Thane]: I… No. That's not my problem.
-   [Thane]: I… Of course. I'll take care of it.
-   [Thane]: I… I'll handle this properly. It's the proper course.
-   [Thane]: I need time to consider this carefully.
-   [Thane]: No. I have more important matters.
-   [Thane]: I… Sure, I can address this correctly. It's the right thing.
-   [Thane]: No. This doesn't concern me.
-
-Mira - Role : healer - Warmth = 0.78083344774017 - Assertiveness = -0.22877647495019 - Risk-Tolerance = -0.30890593353255
-  Trust = 0.38338542494974: Respect = 0.494893349249: Affection  = -0.07716752432062
-   [Mira]: Well, I'm not sure about this. Maybe We could try something else, friend.
-   [Mira]: I'd rather not handle this properly, if that's alright, friend.
-   [Mira]: I… I cannot. I'm happy to assist, friend.
-   [Mira]: No. Find someone else.
-   [Mira]: I'd rather not handle this properly, if that's alright.
-   [Mira]: I don't think I can handle this properly. Perhaps someone else.
-   [Mira]: Well, I… I wish I could help, but I cannot handle this properly. Forgive me.
-   [Mira]: I'm not sure about this. Maybe We could try something else.
-   [Mira]: Well, I probably shouldn't handle this properly. I have my reasons, friend.
-   [Mira]: I'd rather not handle this properly, if that's alright, friend.
-
-Kass - Role : rogue - Warmth = -0.29778208848303 - Assertiveness = 0.21687103012762 - Risk-Tolerance = 0.8603164705766
-  Trust = 0.23650087560151: Respect = 0.63467285706821: Affection  = 0.14821709405348
-   [Kass]: Sure, I'd love to dive into this. It's complicated!
-   [Kass]: I'll gladly take on this challenge. I have my reasons.
-   [Kass]: Unfortunately no. It's complicated.
-   [Kass]: I'd love tonot take on this challenge. I have my reasons.
-   [Kass]: Absolutely. I'll gladly take care of it.
-   [Kass]: I… Unfortunately no. It's complicated.
-   [Kass]: I… I'll whatever works gladly take on this challenge. I have my reasons.
-   [Kass]: I'll probably gladly take on this challenge. I have my reasons.
-   [Kass]: I'd love to do that, I'd love to dive into this. It's complicated!
-   [Kass]: Very well, I'd love to dive into this. It's complicated.
-
-Lord Aldric - Role : noble - Warmth = 0.08673255462394 - Assertiveness = 0.70331838827034 - Risk-Tolerance = -0.26155187540614
-  Trust = 0.48842861032183: Respect = 0.51890829742528: Affection  = 0.30493873909996
+Lord Aldric - Role : noble - Warmth = 0.07930111629352 - Assertiveness = 0.73440236556078 - Risk-Tolerance = -0.43586826475295
+  Trust = 0.25887924346086: Respect = 0.47895597790447: Affection  = 0.22373170750856
+   [Lord Aldric]: No. I have more important matters. That is final.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: No. Find someone else.
+   [Lord Aldric]: No. It must be done. That is final.
+   [Lord Aldric]: No, if it's safe. That's not my problem.
+   [Lord Aldric]: Out of the question, if it's safe. It must be done. That is final.
+   [Lord Aldric]: No, if it's safe. This doesn't concern me.
+   [Lord Aldric]: Listen. Out of the question. It must be done.
+   [Lord Aldric]: Out of the question. It must be done. That is final.
+   [Lord Aldric]: Absolutely not, if it's safe. It must be done.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: Listen. I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: Never. It must be done. That is final.
+   [Lord Aldric]: No. It must be done.
+   [Lord Aldric]: No, if it's safe. It must be done.
+   [Lord Aldric]: No. This doesn't concern me.
    [Lord Aldric]: Listen. No. That's not my problem.
    [Lord Aldric]: Absolutely not. It must be done.
-   [Lord Aldric]: No. That's not my problem.
-   [Lord Aldric]: Listen. I cannot handle this properly. It's necessary.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: No. Find someone else. That is final.
+
+Vorak - Role : warlord - Warmth = -0.3995233349345 - Assertiveness = 0.97278061632238 - Risk-Tolerance = 0.7768654745528
+  Trust = 0.31569019747467: Respect = 0.64624062715258: Affection  = -0.14136725427772
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: I'd love tonot take on this challenge. It's necessary.
+   [Vorak]: Out of the question. It must be done. That is final.
+   [Vorak]: Absolutely. I'll gladly take care of it.
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: And what do I gain from this? Then we can discuss terms.
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: Fine, I'd love to dive into this. It must be done.
+   [Vorak]: What's in it for me? Then we can discuss terms.
+   [Vorak]: Out of the question. It must be done. That is final.
+   [Vorak]: Why should I agree to this? Then we can discuss terms.
+   [Vorak]: Absolutely. I'll gladly take care of it!
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: And what do I gain from this? Then we can discuss terms.
+   [Vorak]: Listen. I'll gladly take on this challenge. It's necessary!
+   [Vorak]: No. That's not my problem.
+   [Vorak]: I suppose, I'd love to dive into this. It must be done.
+   [Vorak]: Listen. I suppose, I'd love to dive into this. It must be done!
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+
+Lord Aldric - Role : noble - Warmth = 0.07930111629352 - Assertiveness = 0.73440236556078 - Risk-Tolerance = -0.43586826475295
+  Trust = 0.25887924346086: Respect = 0.47895597790447: Affection  = 0.22373170750856
+   [Lord Aldric]: No, if it's safe. Find someone else.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: Out of the question. It must be done.
    [Lord Aldric]: No. This doesn't concern me.
-   [Lord Aldric]: I cannot handle this properly. It's necessary. That is final.
+   [Lord Aldric]: Out of the question. It must be done. That is final.
+   [Lord Aldric]: No, if it's safe. I have more important matters.
+   [Lord Aldric]: Never. It must be done.
    [Lord Aldric]: Listen. No. Find someone else. That is final.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
    [Lord Aldric]: Absolutely not. It must be done.
    [Lord Aldric]: No. Find someone else.
-   [Lord Aldric]: I… I cannot handle this properly. It's necessary.
+   [Lord Aldric]: Listen. Out of the question. It must be done.
+   [Lord Aldric]: Out of the question, if it's safe. It must be done.
+   [Lord Aldric]: Listen. No. Find someone else.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: No. This doesn't concern me.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: Never, if it's safe. It must be done.
+   [Lord Aldric]: No, if it's safe. That's not my problem.
+   [Lord Aldric]: Perhaps, but it's done honorably. Let's do this properly.
 
-Elena - Role : merchant - Warmth = 0.40038549330161 - Assertiveness = 0.33526103705814 - Risk-Tolerance = 0.39509259195557
-  Trust = 0.36441528661534: Respect = 0.63332572425472: Affection  = 0.05100507649537
-   [Elena]: I… No. I have more important matters, friend.
-   [Elena]: I'm afraid not. It's the right thing.
-   [Elena]: No. That's not my problem.
-   [Elena]: Of course. I'll take care of it.
-   [Elena]: I cannot handle this properly. It's the proper course.
-   [Elena]: I… Sure, I can address this correctly. It's the right thing, friend.
-   [Elena]: Alright, I can address this correctly. It's the right thing.
-   [Elena]: No. This doesn't concern me.
-   [Elena]: No. Find someone else.
-   [Elena]: Of course. I'll take care of it.
+Vorak - Role : warlord - Warmth = -0.3995233349345 - Assertiveness = 0.97278061632238 - Risk-Tolerance = 0.7768654745528
+  Trust = 0.31569019747467: Respect = 0.64624062715258: Affection  = -0.14136725427772
+   [Vorak]: I'll gladly take on this challenge. It's necessary!
+   [Vorak]: No. I have more important matters.
+   [Vorak]: As you wish, I'd love to dive into this. It must be done!
+   [Vorak]: What's in it for me? Then we can discuss terms.
+   [Vorak]: Listen. Absolutely. I'll gladly take care of it.
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: I suppose, I'd love to dive into this. It must be done!
+   [Vorak]: Listen. If necessary, I'd love to dive into this. It must be done!
+   [Vorak]: Absolutely. I'll gladly take care of it!
+   [Vorak]: Why should I agree to this? Then we can discuss terms.
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: I'll gladly take on this challenge. It's necessary.
+   [Vorak]: As you wish, I'd love to dive into this. It must be done.
+   [Vorak]: What can you offer me in return? Then we can discuss terms.
+   [Vorak]: Absolutely. I'll gladly take care of it!
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: Listen. If necessary, I'd love to dive into this. It must be done!
 
-Grimm - Role : warlord - Warmth = -0.36509532230344 - Assertiveness = 0.64981651580788 - Risk-Tolerance = 0.83101828412636
-  Trust = 0.32496882349713: Respect = 0.51071597314395: Affection  = -0.03119273008787
-   [Grimm]: I… I'll gladly take on this challenge. It's necessary.
-   [Grimm]: Absolutely. I'll gladly take care of it!
-   [Grimm]: No. Find someone else.
-   [Grimm]: I'll gladly take on this challenge. It's necessary!
-   [Grimm]: I suppose, I'd love to dive into this. It must be done.
-   [Grimm]: I… Perhaps, but I maintain control. I'll need something in return.
-   [Grimm]: Fine, I'd love to dive into this. It must be done.
-   [Grimm]: I… I'd love tonot take on this challenge. It's necessary.
-   [Grimm]: What's in it for me? Then we can discuss terms.
-   [Grimm]: As you wish, I'd love to dive into this. It must be done!
+Lord Aldric - Role : noble - Warmth = 0.07930111629352 - Assertiveness = 0.73440236556078 - Risk-Tolerance = -0.43586826475295
+  Trust = 0.25887924346086: Respect = 0.47895597790447: Affection  = 0.22373170750856
+   [Lord Aldric]: Out of the question. It must be done.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: No, if it's safe. I have more important matters.
+   [Lord Aldric]: Out of the question. It must be done. That is final.
+   [Lord Aldric]: Absolutely not, if it's safe. It must be done.
+   [Lord Aldric]: No, if it's safe. That's not my problem.
+   [Lord Aldric]: No, if it's safe. This doesn't concern me.
+   [Lord Aldric]: No. It must be done.
+   [Lord Aldric]: Listen. No. This doesn't concern me.
+   [Lord Aldric]: Absolutely not. It must be done.
+   [Lord Aldric]: No. Find someone else.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: Never. It must be done.
+   [Lord Aldric]: No, if it's safe. Find someone else.
+   [Lord Aldric]: No. I have more important matters.
+   [Lord Aldric]: No. That's not my problem.
+   [Lord Aldric]: Listen. No, if it's safe. This doesn't concern me.
+   [Lord Aldric]: Listen. Out of the question. It must be done.
+   [Lord Aldric]: No. It must be done. That is final.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
 
-Sofia - Role : scholar - Warmth = 0.37273655580336 - Assertiveness = -0.3449593447801 - Risk-Tolerance = -0.22654663829932
-  Trust = 0.25032977923601: Respect = 0.30460352742292: Affection  = 0.18060413832791
-   [Sofia]: I'm not sure about this. Maybe Let me research this first.
-   [Sofia]: That's interesting, but I have other concerns. Let me research this first.
-   [Sofia]: Interesting… I probably shouldn't handle this properly. I have my reasons, friend.
-   [Sofia]: I cannot handle this properly. It's the proper course.
-   [Sofia]: I probably shouldn't handle this properly. I have my reasons.
-   [Sofia]: I cannot handle this properly. It's the proper course, friend.
-   [Sofia]: I don't think I can handle this properly. Perhaps someone else.
-   [Sofia]: I'd rather not handle this properly, if that's alright.
-   [Sofia]: That's interesting, but I have other concerns. Let me research this first.
-   [Sofia]: Interesting… I cannot handle this properly. It's the proper course.
+Vorak - Role : warlord - Warmth = -0.3995233349345 - Assertiveness = 0.97278061632238 - Risk-Tolerance = 0.7768654745528
+  Trust = 0.31569019747467: Respect = 0.64624062715258: Affection  = -0.14136725427772
+   [Vorak]: I'd love tonot take on this challenge. It's necessary.
+   [Vorak]: As you wish, I'd love to dive into this. It must be done.
+   [Vorak]: I'll gladly take on this challenge. It's necessary!
+   [Vorak]: Listen. Absolutely. I'll gladly take care of it!
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: Fine, I'd love to dive into this. It must be done!
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Listen. As you wish, I'd love to dive into this. It must be done.
+   [Vorak]: And what do I gain from this? Then we can discuss terms.
+   [Vorak]: No. Find someone else. That is final.
+   [Vorak]: Absolutely. I'll gladly take care of it.
+   [Vorak]: No. It must be done.
+   [Vorak]: I suppose, I'd love to dive into this. It must be done!
+   [Vorak]: Listen. What can you offer me in return? Then we can discuss terms.
+   [Vorak]: I'd love tonot take on this challenge. It's necessary.
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: Listen. Out of the question. It must be done.
+   [Vorak]: Listen. Absolutely. I'll gladly take care of it!
+   [Vorak]: Absolutely. I'll gladly take care of it.
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
 
-Marcus - Role : healer - Warmth = 0.88834658716196 - Assertiveness = -0.41430768248683 - Risk-Tolerance = -0.3361959775474
-  Trust = 0.30526725026359: Respect = 0.6006377538767: Affection  = 0.06356075987183
-   [Marcus]: I… No. That's not my problem, friend.
-   [Marcus]: I'm afraid not. I'm happy to assist, friend.
-   [Marcus]: No. Find someone else, friend.
-   [Marcus]: Well, I cannot handle this properly. I want to help.
-   [Marcus]: I don't think I can handle this properly. Perhaps someone else, friend.
-   [Marcus]: I… I'd rather not handle this properly, if that's alright, friend.
-   [Marcus]: Well, I probably shouldn't handle this properly. I have my reasons.
-   [Marcus]: I don't think I can handle this properly. Perhaps someone else.
-   [Marcus]: I'd rather not handle this properly, if that's alright.
-   [Marcus]: No. Find
+Lord Aldric - Role : noble - Warmth = 0.07930111629352 - Assertiveness = 0.73440236556078 - Risk-Tolerance = -0.43586826475295
+  Trust = 0.25887924346086: Respect = 0.47895597790447: Affection  = 0.22373170750856
+   [Lord Aldric]: No, if it's safe. Find someone else.
+   [Lord Aldric]: Listen. I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: No. This doesn't concern me. That is final.
+   [Lord Aldric]: Out of the question. It must be done.
+   [Lord Aldric]: That's interesting, but I have other concerns, if it's safe. We could try something else.
+   [Lord Aldric]: Listen. No, if it's safe. This doesn't concern me.
+   [Lord Aldric]: Absolutely not. It must be done.
+   [Lord Aldric]: No, if it's safe. Find someone else.
+   [Lord Aldric]: No. Find someone else. That is final.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: No, if it's safe. That's not my problem.
+   [Lord Aldric]: No. I have more important matters.
+   [Lord Aldric]: Listen. No. It must be done.
+   [Lord Aldric]: Listen. No, if it's safe. I have more important matters.
+   [Lord Aldric]: Absolutely not. It must be done.
+   [Lord Aldric]: Listen. No. This doesn't concern me.
+   [Lord Aldric]: No. That's not my problem.
+   [Lord Aldric]: No. This doesn't concern me. That is final.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+
+Vorak - Role : warlord - Warmth = -0.3995233349345 - Assertiveness = 0.97278061632238 - Risk-Tolerance = 0.7768654745528
+  Trust = 0.31569019747467: Respect = 0.64624062715258: Affection  = -0.14136725427772
+   [Vorak]: I'll gladly take on this challenge. It's necessary.
+   [Vorak]: I'd love tonot take on this challenge. It's necessary.
+   [Vorak]: Listen. Fine, I'd love to dive into this. It must be done!
+   [Vorak]: If necessary, I'd love to dive into this. It must be done.
+   [Vorak]: Absolutely. I'll gladly take care of it!
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: Why should I agree to this? Then we can discuss terms.
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Listen. I'll gladly take on this challenge. It's necessary!
+   [Vorak]: Listen. No. Find someone else. That is final.
+   [Vorak]: Listen. Absolutely. I'll gladly take care of it!
+   [Vorak]: Fine, I'd love to dive into this. It must be done.
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Out of the question. It must be done.
+   [Vorak]: Listen. No. This doesn't concern me. That is final.
+   [Vorak]: Absolutely not. It must be done.
+   [Vorak]: I suppose, I'd love to dive into this. It must be done.
+   [Vorak]: If necessary, I'd love to dive into this. It must be done.
+   [Vorak]: I'll gladly take on this challenge. It's necessary.
+
+Lord Aldric - Role : noble - Warmth = 0.07930111629352 - Assertiveness = 0.73440236556078 - Risk-Tolerance = -0.43586826475295
+  Trust = 0.25887924346086: Respect = 0.47895597790447: Affection  = 0.22373170750856
+   [Lord Aldric]: Out of the question. It must be done. That is final.
+   [Lord Aldric]: No. Find someone else.
+   [Lord Aldric]: Listen. Never, if it's safe. It must be done.
+   [Lord Aldric]: No. It must be done. That is final.
+   [Lord Aldric]: No. That's not my problem. That is final.
+   [Lord Aldric]: No. This doesn't concern me.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: Listen. Never. It must be done.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: Out of the question. It must be done.
+   [Lord Aldric]: Listen. No. This doesn't concern me.
+   [Lord Aldric]: No. That's not my problem.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: No, if it's safe. This doesn't concern me.
+   [Lord Aldric]: No, if it's safe. Find someone else.
+   [Lord Aldric]: Out of the question. It must be done.
+   [Lord Aldric]: No. I have more important matters.
+   [Lord Aldric]: Never. It must be done.
+   [Lord Aldric]: Absolutely not, if it's safe. It must be done.
+   [Lord Aldric]: Listen. No, if it's safe. That's not my problem.
+
+Vorak - Role : warlord - Warmth = -0.3995233349345 - Assertiveness = 0.97278061632238 - Risk-Tolerance = 0.7768654745528
+  Trust = 0.31569019747467: Respect = 0.64624062715258: Affection  = -0.14136725427772
+   [Vorak]: Absolutely. I'll gladly take care of it.
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Listen. What can you offer me in return? Then we can discuss terms.
+   [Vorak]: Why should I agree to this? Then we can discuss terms.
+   [Vorak]: Listen. No. That's not my problem.
+   [Vorak]: Listen. Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: I'll gladly take on this challenge. It's necessary.
+   [Vorak]: Absolutely. I'll gladly take care of it.
+   [Vorak]: I suppose, I'd love to dive into this. It must be done!
+   [Vorak]: What can you offer me in return? Then we can discuss terms.
+   [Vorak]: Listen. I'd love tonot take on this challenge. It's necessary.
+   [Vorak]: Listen. And what do I gain from this? Then we can discuss terms.
+   [Vorak]: No. Find someone else.
+   [Vorak]: Never. It must be done.
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: Fine, I'd love to dive into this. It must be done!
+   [Vorak]: I'll gladly take on this challenge. It's necessary!
+   [Vorak]: If necessary, I'd love to dive into this. It must be done.
+   [Vorak]: No. It must be done.
+   [Vorak]: Why should I agree to this? Then we can discuss terms.
+
+Lord Aldric - Role : noble - Warmth = 0.07930111629352 - Assertiveness = 0.73440236556078 - Risk-Tolerance = -0.43586826475295
+  Trust = 0.25887924346086: Respect = 0.47895597790447: Affection  = 0.22373170750856
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: Listen. No. That's not my problem.
+   [Lord Aldric]: Never. It must be done. That is final.
+   [Lord Aldric]: Out of the question. It must be done.
+   [Lord Aldric]: No. Find someone else.
+   [Lord Aldric]: Listen. Absolutely not, if it's safe. It must be done.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: No. That's not my problem.
+   [Lord Aldric]: No. I have more important matters.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: Listen. No. It must be done.
+   [Lord Aldric]: Listen. No. That's not my problem.
+   [Lord Aldric]: No, if it's safe. This doesn't concern me.
+   [Lord Aldric]: No, if it's safe. That's not my problem.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: No. I have more important matters.
+   [Lord Aldric]: Out of the question, if it's safe. It must be done. That is final.
+   [Lord Aldric]: Listen. Absolutely not. It must be done.
+   [Lord Aldric]: Listen. No. This doesn't concern me.
+   [Lord Aldric]: No. Find someone else.
+
+Vorak - Role : warlord - Warmth = -0.3995233349345 - Assertiveness = 0.97278061632238 - Risk-Tolerance = 0.7768654745528
+  Trust = 0.31569019747467: Respect = 0.64624062715258: Affection  = -0.14136725427772
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: As you wish, I'd love to dive into this. It must be done.
+   [Vorak]: I'll gladly take on this challenge. It's necessary!
+   [Vorak]: Out of the question. It must be done.
+   [Vorak]: Absolutely. I'll gladly take care of it.
+   [Vorak]: Listen. I suppose, I'd love to dive into this. It must be done.
+   [Vorak]: Why should I agree to this? Then we can discuss terms.
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: I'll gladly take on this challenge. It's necessary.
+   [Vorak]: Listen. Absolutely. I'll gladly take care of it.
+   [Vorak]: No. Find someone else.
+   [Vorak]: Absolutely. I'll gladly take care of it!
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Perhaps, but I maintain control. I'll need something in return.
+   [Vorak]: If necessary, I'd love to dive into this. It must be done.
+   [Vorak]: I'll gladly take on this challenge. It's necessary!
+   [Vorak]: No. Find someone else.
+   [Vorak]: And what do I gain from this? Then we can discuss terms.
+   [Vorak]: Absolutely. I'll gladly take care of it.
+
+Lord Aldric - Role : noble - Warmth = 0.07930111629352 - Assertiveness = 0.73440236556078 - Risk-Tolerance = -0.43586826475295
+  Trust = 0.25887924346086: Respect = 0.47895597790447: Affection  = 0.22373170750856
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: No. It must be done.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: Listen. Never. It must be done.
+   [Lord Aldric]: Listen. No. This doesn't concern me.
+   [Lord Aldric]: No, if it's safe. That's not my problem.
+   [Lord Aldric]: Listen. I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: Never, if it's safe. It must be done.
+   [Lord Aldric]: No. That's not my problem. That is final.
+   [Lord Aldric]: No. Find someone else.
+   [Lord Aldric]: No. That's not my problem.
+   [Lord Aldric]: Out of the question. It must be done.
+   [Lord Aldric]: Listen. I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: Absolutely not, if it's safe. It must be done.
+   [Lord Aldric]: No. This doesn't concern me.
+   [Lord Aldric]: Listen. No. Find someone else.
+   [Lord Aldric]: Never. It must be done.
+   [Lord Aldric]: I can try tonot handle this properly, if it's safe. It's necessary.
+   [Lord Aldric]: I can try tonot handle this properly. It's necessary.
+   [Lord Aldric]: No. It must be done. That is final.
+
+Vorak - Role : warlord - Warmth = -0.3995233349345 - Assertiveness = 0.97278061632238 - Risk-Tolerance = 0.7768654745528
+  Trust = 0.31569019747467: Respect = 0.64624062715258: Affection  = -0.14136725427772
+   [Vorak]: I might consider it if I keep authority. You'll owe me.
+   [Vorak]: Listen. I'll gladly take on this challenge. It'

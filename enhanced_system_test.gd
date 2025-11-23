@@ -16,8 +16,7 @@ var test_requests = [
 	"Let's work together on this. What do you need from me?"
 ]
 
-var npcs : Array = ["Vorak", "Lyris", "Thane", "Mira", "Kass", "Lord Aldric",
-		"Elena", "Grimm", "Sofia", "Marcus", "Zara", "Viktor"]
+var npcs : Array = ["Vorak", "Lord Aldric"]
 
 var output_file := FileAccess.open("res://test_responses.txt", FileAccess.WRITE)
 # WRITE mode overwrites the file automatically
@@ -25,7 +24,7 @@ var output_file := FileAccess.open("res://test_responses.txt", FileAccess.WRITE)
 func _ready():
 	add_child(npc_system)
 # Test same request 5 times
-	multi_responses_test(npcs, test_requests, 10)
+	multi_responses_test(npcs, test_requests, 20)
 
 func multi_responses_test(npc_list : Array, request_list : Array, num_times : int):
 	for current_request in request_list:
