@@ -1,10 +1,12 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1763845966
+::res://::1763860178
 demonstration_script.gd::GDScript::4021725466540932629::1763834198::0::1::::<>Node<><>0<>0<><>::
 main.tscn::PackedScene::6015761283339533891::1763834211::0::1::::<><><>0<>0<><>::uid://bxkfh34oqse1b::::res://demonstration_script.gd
 mainOld.tscn::PackedScene::-1::1763829905::0::1::::<><><>0<>0<><>::
 npc_demo.gd::GDScript::8809968418602546939::1763833879::0::1::::<>Node<><>0<>0<><>::
 npc_system_architecture.gd::GDScript::9152733474177779368::1763833879::0::1::::NPCSystem<>Node<><>0<>0<><>::
-npc_test_scene.tscn::PackedScene::7046337700037544049::1763835313::0::1::::<><><>0<>0<><>::uid://nk26uctm4y2l::::res://test_npc_interface.gd
-npc_test_scene_2.tscn::PackedScene::-1::1763835231::0::1::::<><><>0<>0<><>::res://test_npc_interface.gd<>res://npc_system_architecture.gd
-test_npc_interface.gd::GDScript::934794517687854345::1763835348::0::1::::<>Control<><>0<>0<><>::
+npc_test_scene.tscn::PackedScene::1194648661258840111::1763846797::0::1::::<><><>0<>0<><>::uid://nk26uctm4y2l::::res://test_npc_interface.gd
+npc_system_enhanced.gd::GDScript::993101893827119254::1763860347::0::1::::NPCSystemEnhanced<>Node<><>0<>0<><>::
+enhancced_system_test.gd::GDScript::4300352586477826791::1763860347::0::1::::<>Node2D<><>0<>0<><>::
+enhanced_test.tscn::PackedScene::5201722408310170362::1763860346::0::1::::<><><>0<>0<><>::uid://b2jegcx7eit4b::::res://enhancced_system_test.gd
+test_npc_interface.gd::GDScript::934794517687854345::1763846956::0::1::::<>Control<><>0<>0<><>::

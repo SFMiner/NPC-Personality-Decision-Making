@@ -1,2 +1,6 @@
 res://test_npc_interface.gd
 res://npc_test_scene_2.tscn
+res://enhancced_system_test.gd
+res://npc_system_enhanced.gd
+res://enhanced_test.tscn
+res://enhanced_system_test.gd
