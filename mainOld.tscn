@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3]
-
-# External script resource used by the root node
-[ext_resource path="res://npc_demo.gd" type="Script" id=1]
-
-# Root node of the scene
-[node name="Main" type="Node"]
-script = ExtResource(1)
