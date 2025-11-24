@@ -311,8 +311,25 @@ class RequestParser:
 # ============================================================================
 
 class ResponseGenerator:
-
-	# NEW: Grammar compatibility constants
+	# Response type constants
+	const AGREE = "AGREE"
+	const AGREE_CONDITIONAL = "AGREE_CONDITIONAL"
+	const REFUSE = "REFUSE"
+	const REFUSE_SOFT = "REFUSE_SOFT"
+	const REFUSE_HEDGED = "REFUSE_HEDGED"
+	const NEGOTIATE = "NEGOTIATE"
+	const DEFLECT = "DEFLECT"
+	const CHALLENGE = "CHALLENGE"
+	
+	# Tag constants for phrase compatibility
+	const TAG_POSITIVE = ["AGREE", "AGREE_CONDITIONAL", "NEGOTIATE"]  # Acceptance/cooperation
+	const TAG_NEGATIVE = ["REFUSE", "REFUSE_SOFT", "REFUSE_HEDGED", "DEFLECT"]  # Rejection
+	const TAG_AGGRESSIVE = ["CHALLENGE", "REFUSE"]  # Confrontational
+	const TAG_COOPERATIVE = ["AGREE", "NEGOTIATE"]  # Working together
+	const TAG_UNCERTAIN = ["NEGOTIATE", "DEFLECT", "REFUSE_HEDGED"]  # Hesitant/conditional
+	const TAG_ALL = ["AGREE", "AGREE_CONDITIONAL", "REFUSE", "REFUSE_SOFT", "REFUSE_HEDGED", "NEGOTIATE", "DEFLECT", "CHALLENGE"]
+	
+	# Grammar compatibility constants
 	const DEFINITIVE_CORES = [
 		"Out of the question",
 		"Never",
@@ -320,7 +337,7 @@ class ResponseGenerator:
 		"Certainly",
 		"Of course"
 	]
-
+	
 	const INCOMPATIBLE_WITH_HESITATION = [
 		"Out of the question",
 		"Never",
@@ -329,88 +346,232 @@ class ResponseGenerator:
 		"Absolutely",
 		"Certainly"
 	]
-
-	const STRONG_ENDINGS = [
-		"That is final.",
-		"End of discussion.",
-		"No more debate."
-	]
-
+	
+	# Phrase pools with compatibility tags
 	var enthusiasm_phrases = {
-		"high": ["Absolutely", "Gladly", "With pleasure", "Certainly"],
-		"medium": ["Sure", "Alright", "I can do that", "Very well"],
-		"low": ["I suppose", "If necessary", "Fine", "As you wish"]
-	}
-
-	var dismissal_phrases = {
-		"harsh": ["No", "Absolutely not", "Out of the question", "Never"],
-		"polite": ["I'm afraid not", "I must decline", "Unfortunately no", "I cannot"]
-	}
-
-	var condition_questions = [
-		"What can you offer me in return?",
-		"What's in it for me?",
-		"And what do I gain from this?",
-		"Why should I agree to this?"
-	]
-
-	# NEW: Risk-tolerance phrases
-	var personality_phrases = {
-		"high_risk_accept": ["Let's do it!", "Sounds exciting!", "I'm in!", "Why not?", "Absolutely!"],
-		"high_risk_enthusiasm": ["gladly", "eagerly", "enthusiastically", "with excitement"],
-		"low_risk_accept": ["If we're careful…", "Cautiously, yes", "We must be safe", "Proceed slowly"],
-		"low_risk_hedging": ["carefully", "cautiously", "with great care", "if it's safe"]
+		"high": {
+			"phrases": ["Absolutely", "Gladly", "With pleasure", "Certainly"],
+			"compatible_with": TAG_POSITIVE
+		},
+		"medium": {
+			"phrases": ["Sure", "Alright", "I can do that", "Very well"],
+			"compatible_with": TAG_POSITIVE
+		},
+		"low": {
+			"phrases": ["I suppose", "If necessary", "Fine", "As you wish"],
+			"compatible_with": TAG_POSITIVE + TAG_UNCERTAIN
+		}
 	}
 	
+	var dismissal_phrases = {
+		"harsh": {
+			"phrases": ["No", "Absolutely not", "Out of the question", "Never"],
+			"compatible_with": TAG_NEGATIVE
+		},
+		"polite": {
+			"phrases": ["I'm afraid not", "I must decline", "Unfortunately no", "I cannot"],
+			"compatible_with": TAG_NEGATIVE
+		}
+	}
+	
+	var condition_questions = {
+		"phrases": [
+			"What can you offer me in return?",
+			"What's in it for me?",
+			"And what do I gain from this?",
+			"Why should I agree to this?"
+		],
+		"compatible_with": ["NEGOTIATE"]
+	}
+	
+	# Risk-tolerance phrases with tags
+	var risk_phrases = {
+		"high_risk_enthusiasm": {
+			"phrases": ["gladly", "eagerly", "enthusiastically", "with excitement"],
+			"compatible_with": TAG_POSITIVE,
+			"usage": "adverb_modifier"  # How to apply: modifies verbs
+		},
+		"high_risk_acceptance": {
+			"phrases": ["Let's do it!", "Sounds exciting!", "I'm in!", "Why not?", "Absolutely!"],
+			"compatible_with": TAG_POSITIVE,
+			"usage": "standalone"  # Replaces entire response
+		},
+		"high_risk_prefix_positive": {
+			"phrases": ["I'd love to", "I'd be thrilled to", "I'm eager to"],
+			"compatible_with": TAG_POSITIVE,
+			"usage": "verb_prefix"  # Prefix before main verb
+		},
+		"high_risk_prefix_negative": {
+			"phrases": ["I'd love to, but", "I'd be happy to, but", "I wish I could, but"],
+			"compatible_with": TAG_NEGATIVE,
+			"usage": "refusal_softener"  # Makes refusals less harsh
+		},
+		"low_risk_hedging": {
+			"phrases": ["carefully", "cautiously", "with great care", "if it's safe"],
+			"compatible_with": TAG_POSITIVE + TAG_UNCERTAIN,
+			"usage": "adverb_modifier"
+		},
+		"low_risk_acceptance": {
+			"phrases": ["If we're careful...", "Cautiously, yes", "We must be safe", "Proceed slowly"],
+			"compatible_with": TAG_POSITIVE + TAG_UNCERTAIN,
+			"usage": "standalone"
+		},
+		"low_risk_refusal_reason": {
+			"phrases": ["That's too dangerous", "Too risky for my taste", "I must be cautious", "It's too uncertain"],
+			"compatible_with": TAG_NEGATIVE,
+			"usage": "reason"  # Used in {reason} slot
+		},
+		"bold_refusal_reason": {
+			"phrases": ["Not worth my time", "Doesn't interest me", "I have better things to do", "Too mundane"],
+			"compatible_with": TAG_NEGATIVE,
+			"usage": "reason"
+		}
+	}
+	
+	# Conscientiousness phrases with tags
+	var conscientiousness_phrases = {
+		"high_precision": {
+			"phrases": ["correctly", "properly", "precisely", "according to protocol", "by the book", "as it should be done", "with proper procedure"],
+			"compatible_with": TAG_POSITIVE + TAG_UNCERTAIN,
+			"usage": "adverb_modifier"
+		},
+		"low_casual": {
+			"phrases": ["more or less", "I guess", "probably", "good enough", "doesn't matter much", "whatever works"],
+			"compatible_with": TAG_ALL,
+			"usage": "adverb_modifier"
+		}
+	}
+	
+	# Warmth phrases with tags
+	var warmth_phrases = {
+		"high_warmth_suffix": {
+			"phrases": [", friend", ", my friend"],
+			"compatible_with": TAG_ALL,  # Can be used with any response
+			"usage": "sentence_suffix"
+		},
+		"high_warmth_prefix": {
+			"phrases": ["Well,", "You see,"],
+			"compatible_with": TAG_ALL,
+			"usage": "sentence_prefix"
+		},
+		"soft_refusal_intro": {
+			"phrases": ["I'm so sorry, but", "I'm afraid", "Unfortunately", "I wish I could help, but"],
+			"compatible_with": TAG_NEGATIVE,
+			"usage": "refusal_softener"
+		}
+	}
+	
+	# Assertiveness phrases with tags
+	var assertiveness_phrases = {
+		"high_assertive_prefix": {
+			"phrases": ["Listen.", "Now listen.", "Understand this."],
+			"compatible_with": TAG_ALL,
+			"usage": "sentence_prefix"
+		},
+		"high_assertive_suffix": {
+			"phrases": [" That is final.", " End of discussion.", " No more debate."],
+			"compatible_with": TAG_NEGATIVE + ["CHALLENGE"],
+			"usage": "sentence_suffix"
+		}
+	}
+	
+	# Prefix phrases with tags (for _add_personality_flavor)
+	var personality_prefixes = {
+		"hesitation": {
+			"phrases": ["I… "],
+			"compatible_with": TAG_ALL,
+			"incompatible_with_cores": INCOMPATIBLE_WITH_HESITATION,
+			"conditions": {"max_assertiveness": -0.4, "max_stability": -0.3, "random_threshold": 0.92}
+		},
+		"curiosity": {
+			"phrases": ["Interesting… "],
+			"compatible_with": TAG_ALL,
+			"incompatible_with_cores": INCOMPATIBLE_WITH_HESITATION,
+			"conditions": {"min_curiosity": 0.7, "random_threshold": 0.85}
+		},
+		"assertiveness": {
+			"phrases": ["Listen. "],
+			"compatible_with": TAG_ALL,
+			"conditions": {"min_assertiveness": 0.7, "random_threshold": 0.8}
+		},
+		"warmth": {
+			"phrases": ["Well, "],
+			"compatible_with": TAG_ALL,
+			"conditions": {"min_warmth": 0.5, "random_threshold": 0.85}
+		}
+	}
+	
+	# Main generation function
 	func generate_response(npc: NPC, chosen_option: ResponseOption, request: Request) -> String:
-		var template = chosen_option.response_template
-		var response = template
-		var hesitation_ok = true
-		# Replace template variables with personality-driven variations
-		var response_complex = _apply_personality_modifiers(response, npc.personality, chosen_option.template_variant, hesitation_ok)
-		response = response_complex[0]
-		hesitation_ok = response_complex[1]
-		response = _apply_value_modifiers(response, npc.personality.values, chosen_option.template_variant)
-		response = _apply_context_modifiers(response, npc, request.context, hesitation_ok)
-		response = _apply_relationship_modifiers(response, 	
-			npc.get_relationship(request.context.requester_id),
-			hesitation_ok)
-		response = _add_personality_flavor(response, npc.personality)
-
+		var response = chosen_option.response_template
+		var response_type = chosen_option.response_type
+		
+		# Apply modifiers in order, passing response_type for tag checking
+		response = _apply_personality_modifiers(response, npc.personality, chosen_option.template_variant, response_type)
+		response = _apply_value_modifiers(response, npc.personality.values, chosen_option.template_variant, response_type)
+		response = _apply_context_modifiers(response, npc, request.context, response_type)
+		response = _apply_relationship_modifiers(response, npc.get_relationship(request.context.requester_id), npc.personality, response_type)
+		response = _add_personality_flavor(response, npc.personality, response_type)
+		
 		# Ensure response ends with punctuation before adding closings
 		if not response.ends_with(".") and not response.ends_with("!") and not response.ends_with("?"):
 			response = response + "."
- 
-		# Add closing punctuation variation
+		
+		# Add closing punctuation variation (tag-aware)
 		if npc.personality.warmth > 0.3 and randf() > 0.7:
-			response = response.trim_suffix(".") + ", friend."
-		# NEW: Use assertive ending function to check compatibility
-		response = _add_assertive_ending(response, npc.personality)
-
-		# NEW: High risk-tolerance adds excitement to acceptances
+			if _is_compatible(response_type, TAG_ALL):  # Friend suffix works with everything
+				response = response.trim_suffix(".") + ", friend."
+		
+		# Add assertive ending (only for negative responses)
+		response = _add_assertive_ending(response, npc.personality, response_type)
+		
+		# High risk-tolerance adds excitement to acceptances
 		if npc.personality.risk_tolerance > 0.6:
-			if chosen_option.response_type in ["AGREE", "AGREE_CONDITIONAL"]:
-				# Add excitement - replace period with exclamation
+			if _is_compatible(response_type, TAG_POSITIVE):
 				if response.ends_with(".") and randf() > 0.6:
 					response = response.trim_suffix(".") + "!"
-
+		
+		# Final cleanup - fix any standalone lowercase "i"
 		var re = RegEx.new()
 		re.compile("\\bi\\b")
 		response = re.sub(response, "I", true)
-		return response
+		
+		return "[" + npc.name + "]: " + response
 	
-	func _apply_personality_modifiers(template: String, personality: Personality, variant: int, hesitation_ok : bool) -> Array:
+	# Helper function to check if response_type is compatible with tag list
+	func _is_compatible(response_type: String, tag_list: Array) -> bool:
+		return response_type in tag_list
+	
+	# Helper function to check if response starts with incompatible core
+	func _has_incompatible_core(response: String, incompatible_list: Array) -> bool:
+		for phrase in incompatible_list:
+			if response.begins_with(phrase):
+				return true
+		return false
+	
+	# MODIFIED: Now accepts response_type for tag checking
+	func _apply_personality_modifiers(template: String, personality: Personality, variant: int, response_type: String) -> String:
 		var result = template
 		
-		# {action} variations
+		# {action} variations (tag-aware based on response_type)
 		if result.contains("{action}"):
 			var actions = []
-			if personality.conscientiousness > 0.5:
+			
+			# High conscientiousness: only for positive/cooperative responses
+			if personality.conscientiousness > 0.5 and _is_compatible(response_type, TAG_POSITIVE):
 				actions = ["handle this properly", "address this correctly", "deal with this responsibly"]
-			elif personality.risk_tolerance > 0.5:
+			
+			# High risk-tolerance: only for positive responses
+			elif personality.risk_tolerance > 0.5 and _is_compatible(response_type, TAG_POSITIVE):
 				actions = ["take on this challenge", "dive into this", "tackle this head-on"]
+			
+			# Generic actions work for all types
 			else:
-				actions = ["do that", "help with this", "assist you"]
+				if _is_compatible(response_type, TAG_POSITIVE):
+					actions = ["do that", "help with this", "assist you"]
+				else:
+					actions = ["get involved", "help", "assist"]
+			
 			result = result.replace("{action}", actions[variant % actions.size()])
 		
 		# {action_detail} variations
@@ -423,114 +584,141 @@ class ResponseGenerator:
 			]
 			result = result.replace("{action_detail}", details[variant % details.size()])
 		
-		# {enthusiasm} based on warmth
+		# {enthusiasm} based on warmth (tag-aware)
 		if result.contains("{enthusiasm}"):
 			var level = "medium"
 			if personality.warmth > 0.5:
 				level = "high"
 			elif personality.warmth < -0.3:
 				level = "low"
-			var phrases = enthusiasm_phrases[level]
-			result = result.replace("{enthusiasm}", phrases[randi() % phrases.size()])
-		
-		# {dismissal} based on assertiveness
-		if personality.assertiveness > 0.7:
-			hesitation_ok = false
 			
-		if result.contains("{dismissal}"):
-			var level = "polite"
-			if personality.assertiveness > 0.5:
-				level = "harsh"
-			var phrases = dismissal_phrases[level]
-			result = result.replace("{dismissal}", phrases[randi() % phrases.size()])
+			var pool = enthusiasm_phrases[level]
+			if _is_compatible(response_type, pool.compatible_with):
+				var phrases = pool.phrases
+				result = result.replace("{enthusiasm}", phrases[randi() % phrases.size()])
+			else:
+				# Fallback to neutral
+				result = result.replace("{enthusiasm}", "")
 		
-		# {reason} variations
+		# {dismissal} based on assertiveness (only for negative responses)
+		if result.contains("{dismissal}"):
+			if _is_compatible(response_type, TAG_NEGATIVE):
+				var level = "polite"
+				if personality.assertiveness > 0.5:
+					level = "harsh"
+				var pool = dismissal_phrases[level]
+				var phrases = pool.phrases
+				result = result.replace("{dismissal}", phrases[randi() % phrases.size()])
+		
+		# {reason} variations (context-aware)
 		if result.contains("{reason}"):
-			var reasons = _generate_reasons(personality)
+			var reasons = _generate_reasons(personality, response_type)
 			result = result.replace("{reason}", reasons[variant % reasons.size()])
 		
-		# {harsh_reason} for refusals
+		# {harsh_reason} for refusals only
 		if result.contains("{harsh_reason}"):
-			var harsh_reasons = [
-				"I have more important matters",
-				"This doesn't concern me",
-				"Find someone else",
-				"That's not my problem"
-			]
-			result = result.replace("{harsh_reason}", harsh_reasons[randi() % harsh_reasons.size()])
-
-		# NEW: Risk-Tolerance affects vocabulary
-		if personality.risk_tolerance > 0.6:
-			# High risk = enthusiastic, bold language
-			if result.contains("I'll ") and not result.contains("I'll gladly"):
-				result = result.replace("I'll ", "I'll gladly ")
-			result = result.replace("perhaps", "absolutely")
-			result = result.replace("I can", "I'd love to")
-
-			# Add enthusiasm markers
-			if result.begins_with("Of course"):
-				result = result.replace("Of course", "Absolutely")
-
-		elif personality.risk_tolerance < -0.4:
-			# Low risk = cautious, hedging language
-			if result.contains("I'll ") and not result.contains("carefully"):
-				result = result.replace("I'll ", "I'll carefully ")
-			elif result.contains("I can"):
-				result = result.replace("I can", "I can try to")
-
-			# Add safety qualifiers
-			if not result.contains("careful") and not result.contains("cautious"):
-				if randf() > 0.7:
-					result = result.replace(". ", ", if it's safe. ")
-
-		# NEW: Conscientiousness affects how they describe actions
-		if personality.conscientiousness > 0.6:
-			# High conscientiousness = precise language
-			# But ROTATE through different words, don't always use "properly"
-			var phrases = [
-				"correctly", "properly", "precisely",
-				"according to protocol", "by the book",
-				"as it should be done", "with proper procedure"
-			]
-			var chosen = phrases[randi() % phrases.size()]
-
-			# Only apply 30% of the time to avoid overuse
-			if randf() > 0.7:
-				if result.contains("I'll take care"):
-					result = result.replace("take care", "handle this " + chosen)
-				elif result.contains("I can do"):
-					result = result.replace("I can do", "I can execute this " + chosen)
-
-		elif personality.conscientiousness < -0.3:
-			# Low conscientiousness = casual language
-			if randf() > 0.75:
-				var phrases = [
-					"more or less", "I guess", "probably",
-					"good enough", "doesn't matter much", "whatever works"
+			if _is_compatible(response_type, TAG_NEGATIVE):
+				var harsh_reasons = [
+					"I have more important matters",
+					"This doesn't concern me",
+					"Find someone else",
+					"That's not my problem"
 				]
+				result = result.replace("{harsh_reason}", harsh_reasons[randi() % harsh_reasons.size()])
+		
+		# Risk-Tolerance vocabulary modifications (TAG-AWARE)
+		if personality.risk_tolerance > 0.6:
+			if _is_compatible(response_type, TAG_POSITIVE):
+				# High risk + positive = enthusiasm
+				if result.contains("I'll ") and not result.contains("I'll gladly"):
+					result = result.replace("I'll ", "I'll gladly ")
+				if result.contains("I can ") and not result.contains("I'd love to"):
+					result = result.replace("I can ", "I'd love to ")
+				result = result.replace("perhaps", "absolutely")
+				
+				# Add enthusiasm to acceptances
+				if result.begins_with("Of course"):
+					result = result.replace("Of course", "Absolutely")
+			
+			elif _is_compatible(response_type, TAG_NEGATIVE):
+				# High risk + negative = soften with "I'd love to, but"
+				if result.begins_with("I cannot") or result.begins_with("I can't"):
+					result = "I'd love to, but " + result.to_lower()
+				elif result.begins_with("I must decline"):
+					result = "I'd love to help, but I must decline"
+				elif result.begins_with("Unfortunately"):
+					result = "I'd love to assist, but unfortunately " + result.substr(15).to_lower()
+		
+		elif personality.risk_tolerance < -0.4:
+			if _is_compatible(response_type, TAG_POSITIVE + TAG_UNCERTAIN):
+				# Low risk = cautious language for positive/uncertain responses
+				if result.contains("I'll ") and not result.contains("carefully"):
+					result = result.replace("I'll ", "I'll carefully ")
+				elif result.contains("I can "):
+					result = result.replace("I can ", "I can try to ")
+				
+				# Add safety qualifiers
+				if not result.contains("careful") and not result.contains("cautious"):
+					if randf() > 0.7:
+						result = result.replace(". ", ", if it's safe. ")
+		
+		# Conscientiousness vocabulary (TAG-AWARE, with variety)
+		if personality.conscientiousness > 0.6:
+			if _is_compatible(response_type, TAG_POSITIVE):
+				# High conscientiousness + positive = precise language
+				var pool = conscientiousness_phrases["high_precision"]
+				var phrases = pool.phrases
+				var chosen = phrases[randi() % phrases.size()]
+				
+				# Only apply 30% of the time to avoid overuse
+				if randf() > 0.7:
+					if result.contains("I'll take care"):
+						result = result.replace("take care", "handle this " + chosen)
+					elif result.contains("I can do"):
+						result = result.replace("I can do", "I can execute this " + chosen)
+		
+		elif personality.conscientiousness < -0.3:
+			# Low conscientiousness = casual language (works with all types)
+			if randf() > 0.75:
+				var pool = conscientiousness_phrases["low_casual"]
+				var phrases = pool.phrases
 				var chosen = phrases[randi() % phrases.size()]
 				result = result.replace("I'll ", "I'll " + chosen + " ")
-
-		return [result, hesitation_ok]
+		
+		return result
 	
-	func _generate_reasons(personality: Personality) -> Array[String]:
+	func _generate_reasons(personality: Personality, response_type: String) -> Array[String]:
 		var reasons: Array[String] = []
 		
-		if personality.warmth > 0.5:
-			reasons.append_array(["I want to help.", "I'm happy to assist.", "I care about this."])
-		if personality.assertiveness > 0.5:
-			reasons.append_array(["It's necessary.", "It must be done.", "There's no other way."])
-		if personality.conscientiousness > 0.5:
-			reasons.append_array(["It's the proper course.", "It's the right thing.", "Protocol demands it."])
-		if personality.risk_tolerance < -0.3:
-			reasons.append_array(["It's too dangerous.", "The risk is too high.", "I must be cautious."])
+		# Positive responses get positive reasons
+		if _is_compatible(response_type, TAG_POSITIVE):
+			if personality.warmth > 0.5:
+				reasons.append_array(["I want to help.", "I'm happy to assist.", "I care about this."])
+			if personality.assertiveness > 0.5:
+				reasons.append_array(["It's necessary.", "It must be done.", "There's no other way."])
+			if personality.conscientiousness > 0.5:
+				reasons.append_array(["It's the proper course.", "It's the right thing.", "Protocol demands it."])
 		
+		# Negative responses get negative reasons
+		elif _is_compatible(response_type, TAG_NEGATIVE):
+			if personality.risk_tolerance < -0.3:
+				reasons.append_array(["It's too dangerous.", "The risk is too high.", "I must be cautious."])
+			if personality.assertiveness > 0.5:
+				reasons.append_array(["I have more important matters.", "This doesn't concern me.", "I'm not interested."])
+			if personality.warmth < -0.3:
+				reasons.append_array(["That's not my problem.", "Find someone else.", "I have better things to do."])
+		
+		# Fallback
 		if reasons.is_empty():
-			reasons = ["I have my reasons.", "It's complicated.", "Trust me on this."]
+			if _is_compatible(response_type, TAG_POSITIVE):
+				reasons = ["I have my reasons.", "It's complicated.", "Trust me on this."]
+			else:
+				reasons = ["I have my reasons.", "It's complicated.", "Not interested."]
 		
 		return reasons
 	
-	func _apply_value_modifiers(template: String, values: Dictionary, variant: int) -> String:
+	# MODIFIED: Now accepts response_type
+	func _apply_value_modifiers(template: String, values: Dictionary, variant: int, response_type: String) -> String:
 		var result = template
 		
 		var highest_value = ""
@@ -540,19 +728,22 @@ class ResponseGenerator:
 				highest_score = values[value]
 				highest_value = value
 		
-		# {condition} variations by value
+		# {condition} variations by value (only for negotiate/uncertain)
 		if result.contains("{condition}"):
-			var conditions = _generate_conditions(highest_value)
-			result = result.replace("{condition}", conditions[variant % conditions.size()])
+			if _is_compatible(response_type, TAG_UNCERTAIN):
+				var conditions = _generate_conditions(highest_value)
+				result = result.replace("{condition}", conditions[variant % conditions.size()])
 		
-		# {condition_question} variations
+		# {condition_question} variations (only for negotiate)
 		if result.contains("{condition_question}"):
-			result = result.replace("{condition_question}", condition_questions[randi() % condition_questions.size()])
+			if response_type == "NEGOTIATE":
+				result = result.replace("{condition_question}", condition_questions.phrases[randi() % condition_questions.phrases.size()])
 		
-		# {offer} variations by value
+		# {offer} variations by value (only for negotiate)
 		if result.contains("{offer}"):
-			var offers = _generate_offers(highest_value)
-			result = result.replace("{offer}", offers[variant % offers.size()])
+			if response_type == "NEGOTIATE":
+				var offers = _generate_offers(highest_value)
+				result = result.replace("{offer}", offers[variant % offers.size()])
 		
 		return result
 	
@@ -582,20 +773,21 @@ class ResponseGenerator:
 			_:
 				return ["What do you propose?", "What are your terms?", "What's the arrangement?", "Let's discuss."]
 	
-	func _apply_context_modifiers(template: String, npc, request_context: RequestContext, hesitation_ok : bool) -> String:
+	# MODIFIED: Now accepts response_type
+	func _apply_context_modifiers(template: String, npc: NPC, request_context: RequestContext, response_type: String) -> String:
 		var result = template
 		var personality = npc.personality
-		var npc_context : NPCContext = npc.context
-		var assertiveness = npc.personality.assertiveness
+		var npc_context: NPCContext = npc.context
+		var assertiveness = personality.assertiveness
 		var stress_level = npc_context.stress_level
-		# Stress hesitation
+		
+		# Stress hesitation (only if not definitive and assertiveness allows)
 		if (stress_level > 0.7 and randf() > 0.9 and assertiveness < 0.7) or (assertiveness < 0.4 and randf() > 0.85):
-			result = "I… " + result
-		elif assertiveness > 0.7:
-			hesitation_ok = true
-			
-		# Urgency modifications
-		if request_context.urgency > 0.8:
+			if not _has_incompatible_core(result, INCOMPATIBLE_WITH_HESITATION):
+				result = "I… " + result
+		
+		# Urgency modifications (only for positive/uncertain responses)
+		if request_context.urgency > 0.8 and _is_compatible(response_type, TAG_POSITIVE + TAG_UNCERTAIN):
 			result = result.replace("Perhaps", "Fine")
 			result = result.replace("I'll consider", "I'll do it")
 			result = result.replace("I might", "I will")
@@ -627,103 +819,106 @@ class ResponseGenerator:
 			_:
 				return "We could try something else"
 	
-	func _apply_relationship_modifiers(template: String, relationship: Relationship, hesitation_ok : bool) -> String:
+	# MODIFIED: Now accepts personality and response_type
+	func _apply_relationship_modifiers(template: String, relationship: Relationship, personality: Personality, response_type: String) -> String:
 		var result = template
 		
-		# High trust = more direct
-		if relationship.trust > 0.7:
+		# High trust = more direct (only for positive responses)
+		if relationship.trust > 0.7 and _is_compatible(response_type, TAG_POSITIVE):
 			result = result.replace("Perhaps", "Yes")
 			result = result.replace("I might", "I will")
 		
-		# Fear = cautious
-		if hesitation_ok:
-			if relationship.fear > 0.5:
+		# Fear = cautious (but NOT if high assertiveness)
+		if relationship.fear > 0.5 and personality.assertiveness < 0.70:
+			if not _has_incompatible_core(result, INCOMPATIBLE_WITH_HESITATION):
 				if not result.begins_with("I… "):
 					result = "I… " + result.to_lower()
 		
-		# Affection = warmth
+		# Affection = warmth (works with all types)
 		if relationship.affection > 0.6 and randf() > 0.7:
-			result = "Of course, " + result.to_lower()
+			if not result.begins_with("Of course, "):
+				result = "Of course, " + result.to_lower()
 		
-		# Replace {consequence}
+		# Replace {consequence} (only for challenge/aggressive responses)
 		if result.contains("{consequence}"):
-			if relationship.fear > 0.3:
-				result = result.replace("{consequence}", "Please, let's discuss this")
-			else:
-				result = result.replace("{consequence}", "You'll regret this")
+			if _is_compatible(response_type, TAG_AGGRESSIVE):
+				if relationship.fear > 0.3:
+					result = result.replace("{consequence}", "Please, let's discuss this")
+				else:
+					result = result.replace("{consequence}", "You'll regret this")
 		
 		return result
 	
-	func _add_personality_flavor(response: String, personality: Personality) -> String:
-		# Don't add flavor if already has flavor (avoid "Well, Well, …")
+	# MODIFIED: Now accepts response_type
+	func _add_personality_flavor(response: String, personality: Personality, response_type: String) -> String:
+		# Don't add flavor if already has flavor
 		if response.begins_with("Well, ") or response.begins_with("Listen. ") or response.begins_with("Interesting… "):
 			return response
-
-		# NEW: Check if response is incompatible with hesitation/uncertainty prefixes
-		var is_incompatible_with_hesitation = _starts_with_any(response, INCOMPATIBLE_WITH_HESITATION)
-
-		# Only add hesitation if response is NOT definitive/absolute
-		if not is_incompatible_with_hesitation:
-			# FIXED: Only trigger hesitation for VERY low assertiveness AND low stability (8% chance instead of 50%)
-			if personality.assertiveness < -0.4 and personality.stability < -0.3 and randf() > 0.92:
-				response = "I… " + response
-			# Similarly, reduce "Interesting…" prefix frequency
-			elif personality.curiosity > 0.7 and randf() > 0.85:
-				# But NOT if response already starts definitively
-				if not _starts_with_definitive(response):
-					response = "Interesting… " + _lowercase_first_char_safe(response)
-
-		# Assertive prefixes are OK with any content (they're strong markers)
-		if personality.assertiveness > 0.7 and randf() > 0.8:
-			response = "Listen. " + response
-		elif personality.warmth > 0.5 and randf() > 0.85:
-			response = "Well, " + _lowercase_first_char_safe(response)
-
+		
+		# Check each prefix type
+		for prefix_type in personality_prefixes:
+			var prefix_data = personality_prefixes[prefix_type]
+			
+			# Check if compatible with response type
+			if not _is_compatible(response_type, prefix_data.compatible_with):
+				continue
+			
+			# Check if response core is incompatible
+			if prefix_data.has("incompatible_with_cores"):
+				if _has_incompatible_core(response, prefix_data.incompatible_with_cores):
+					continue
+			
+			# Check personality conditions
+			var conditions_met = true
+			var conditions = prefix_data.conditions
+			
+			if conditions.has("max_assertiveness") and personality.assertiveness >= conditions.max_assertiveness:
+				conditions_met = false
+			if conditions.has("max_stability") and personality.stability >= conditions.max_stability:
+				conditions_met = false
+			if conditions.has("min_assertiveness") and personality.assertiveness <= conditions.min_assertiveness:
+				conditions_met = false
+			if conditions.has("min_curiosity") and personality.curiosity <= conditions.min_curiosity:
+				conditions_met = false
+			if conditions.has("min_warmth") and personality.warmth <= conditions.min_warmth:
+				conditions_met = false
+			
+			# Check random threshold
+			if conditions.has("random_threshold") and randf() <= conditions.random_threshold:
+				conditions_met = false
+			
+			# Apply prefix if all conditions met
+			if conditions_met:
+				var phrase = prefix_data.phrases[0]
+				if prefix_type == "warmth" or prefix_type == "curiosity":
+					response = phrase + _lowercase_first_char_safe(response)
+				else:
+					response = phrase + response
+				break  # Only apply one prefix
+		
 		return response
-
-	# NEW: Helper function to check if response starts with definitive statements
-	func _starts_with_definitive(response: String) -> bool:
-		var definitive_starts = [
-			"Out of the question",
-			"Never",
-			"Absolutely",
-			"Certainly",
-			"Of course",
-			"No."
-		]
-		for start in definitive_starts:
-			if response.begins_with(start):
-				return true
-		return false
-
-	# NEW: Helper to check if response starts with any item in array
-	func _starts_with_any(text: String, prefixes: Array) -> bool:
-		for prefix in prefixes:
-			if text.begins_with(prefix):
-				return true
-		return false
-
-	# NEW: Add assertive endings to strong refusals only
-	func _add_assertive_ending(response: String, personality: Personality) -> String:
+	
+	# MODIFIED: Now accepts response_type
+	func _add_assertive_ending(response: String, personality: Personality, response_type: String) -> String:
 		# Only high assertiveness (>0.7) can add "That is final"
+		# And only for negative/aggressive responses
 		if personality.assertiveness > 0.7 and randf() > 0.7:
-			if _is_negative_response(response):
-				response += " That is final."
-
+			if _is_compatible(response_type, TAG_NEGATIVE + ["CHALLENGE"]):
+				if _is_negative_response(response):
+					response += " That is final."
+		
 		return response
-
-	# NEW: Check if response is a negative/refusal statement
+	
 	func _is_negative_response(response: String) -> bool:
 		var negative_indicators = ["No.", "Never.", "Out of the question", "I cannot", "I must decline"]
 		for indicator in negative_indicators:
 			if response.contains(indicator):
 				return true
 		return false
-
-	# NEW: Apply personality-based constraints to filter options
+	
 	func apply_personality_constraints(options: Array[ResponseOption], personality: Personality) -> Array[ResponseOption]:
 		var filtered: Array[ResponseOption] = []
-
+		
 		var harsh_rejections = [
 			"No. Find someone else",
 			"No. This doesn't concern me",
@@ -731,8 +926,7 @@ class ResponseGenerator:
 			"Out of the question",
 			"Never."
 		]
-
-		# NEW: Define absolute language markers
+		
 		var absolute_language = [
 			"Never",
 			"Absolutely not",
@@ -740,41 +934,39 @@ class ResponseGenerator:
 			"That is final",
 			"End of discussion"
 		]
-
+		
 		for option in options:
 			var is_harsh = false
 			var is_absolute = false
-
+			
 			for harsh in harsh_rejections:
 				if option.response_template.contains(harsh):
 					is_harsh = true
 					break
-
+			
 			for absolute in absolute_language:
 				if option.response_template.contains(absolute):
 					is_absolute = true
 					break
-
+			
 			# High warmth (>0.7) characters CANNOT use harsh rejections
 			if personality.warmth > 0.7 and is_harsh:
-				continue  # Skip this option
-
-			# NEW: Low assertiveness constraint
-			# Characters with assertiveness < -0.2 should AVOID absolute language
+				continue
+			
+			# Low assertiveness (<-0.2) should AVOID absolute language
 			if personality.assertiveness < -0.2 and is_absolute:
-				continue  # Skip this option
-
+				continue
+			
 			filtered.append(option)
-
+		
 		return filtered
-
-	# NEW: Create soft refusal option for high-warmth characters
+	
 	func create_soft_refusal() -> ResponseOption:
 		var option = ResponseOption.new()
 		option.response_type = "REFUSE_SOFT"
 		option.base_score = 0.6
 		option.personality_tags = {"is_polite": true, "is_apologetic": true}
-
+		
 		var templates = [
 			"I'm so sorry, but I cannot {action}. I wish I could help",
 			"I'm afraid I can't {action}, friend. I truly wish I could",
@@ -782,16 +974,15 @@ class ResponseGenerator:
 			"I wish I could help, but I cannot {action}. Forgive me"
 		]
 		option.response_template = templates[randi() % templates.size()]
-
+		
 		return option
-
-	# NEW: Create hedged refusal option for low-assertiveness characters
+	
 	func create_hedged_refusal() -> ResponseOption:
 		var option = ResponseOption.new()
 		option.response_type = "REFUSE_HEDGED"
 		option.base_score = 0.6
 		option.personality_tags = {"is_uncertain": true, "is_cautious": true}
-
+		
 		var templates = [
 			"I don't think I can {action}. Perhaps someone else",
 			"I'm not sure about this. Maybe {alternative}",
@@ -799,71 +990,29 @@ class ResponseGenerator:
 			"I'd rather not {action}, if that's alright"
 		]
 		option.response_template = templates[randi() % templates.size()]
-
+		
 		return option
-
-	# NEW: Select refusal reason based on risk tolerance
-	func select_refusal_reason(personality: Personality) -> String:
-		if personality.risk_tolerance < -0.3:
-			# Low risk = safety concerns
-			var cautious_reasons = [
-				"That's too dangerous",
-				"Too risky for my taste",
-				"I must be cautious",
-				"It's too uncertain"
-			]
-			return cautious_reasons[randi() % cautious_reasons.size()]
-		elif personality.risk_tolerance > 0.6:
-			# High risk = boredom/disinterest
-			var bold_reasons = [
-				"Not worth my time",
-				"Doesn't interest me",
-				"I have better things to do",
-				"Too mundane"
-			]
-			return bold_reasons[randi() % bold_reasons.size()]
-		else:
-			# Neutral = practical concerns
-			return "I have more important matters"
-
-	# NEW: Select personality-specific fallback text
+	
 	func select_fallback_text(npc: NPC) -> String:
-		# Assertive characters are decisive
 		if npc.personality.assertiveness > 0.5:
 			return "I need to consider my position strategically"
-
-		# Scholars prioritize research
 		elif npc.context.role == "scholar":
 			return "I need to research this matter further"
-
-		# Rogues weigh risks
 		elif npc.context.role == "rogue":
 			return "I need to weigh the risks before deciding"
-
-		# Nobles consult others
 		elif npc.context.role == "noble":
 			return "I must consult my advisors first"
-
-		# Warm characters are apologetic
 		elif npc.personality.warmth > 0.5:
 			return "I need a moment to think about this, friend"
-
-		# Default
 		else:
 			return "I need time to consider this carefully"
-
-	# Helper to lowercase first character but preserve "I" as "I"
+	
 	func _lowercase_first_char_safe(text: String) -> String:
 		if text.is_empty():
 			return text
-		
-		# Don't lowercase if starts with "I " (pronoun)
 		if text.begins_with("I "):
 			return text
-		
-		# Lowercase just the first character
 		return text[0].to_lower() + text.substr(1)
-
 # ============================================================================
 # DECISION SYSTEM (Enhanced)
 # ============================================================================

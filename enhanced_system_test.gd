@@ -16,7 +16,7 @@ var test_requests = [
 	"Let's work together on this. What do you need from me?"
 ]
 
-var npcs : Array = ["Vorak", "Thane"]
+var npcs : Array = ["Vorak", "Lyris", "Thane", "Lord Aldric"]
 
 var output_file := FileAccess.open("res://test_responses.txt", FileAccess.WRITE)
 # WRITE mode overwrites the file automatically
