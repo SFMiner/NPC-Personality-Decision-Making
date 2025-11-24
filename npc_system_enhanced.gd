@@ -2,11 +2,13 @@ extends Node
 class_name NPCSystemEnhanced
 
 var debugging = true
+
 # Enhanced NPC System with fixes for:
 # 1. Response repetition
 # 2. Meaningful relationship changes
 # 3. Stress accumulation bug
 # 4. Response variety
+
 
 
 
@@ -61,7 +63,12 @@ class NPCContext:
 	var faction: String = ""
 	var role: String = ""
 	var recent_responses: Array[String] = []  # NEW: Track recent responses
-
+	# NEW: Resource tracking
+	var wealth: int = 100  # Current gold (0-1000+ scale)
+	var health: float = 1.0  # 0.0 = dying, 1.0 = full health
+	var hunger: float = 0.2  # 0.0 = fed, 1.0 = starving
+	var energy: float = 0.8  # 0.0 = exhausted, 1.0 = rested
+	
 class NPC:
 	var id: String
 	var name: String
@@ -70,6 +77,10 @@ class NPC:
 	var context: NPCContext
 	var archetype: String = ""
 	var memory: Array[Dictionary] = []
+		# NEW: Drive tracking
+	var baseline_drives: Array[Drive] = []  # Universal needs from archetype
+	var dynamic_drives: Array[Drive] = []   # Relationship-driven goals
+	
 	
 	func _init(npc_id: String, npc_name: String, pers: Personality):
 		id = npc_id
@@ -138,7 +149,13 @@ class ResponseOption:
 	var relationship_impact: Dictionary = {}
 	var response_template: String = ""
 	var template_variant: int = 0  # NEW: Track which variant
-
+	
+	# NEW: Action tags for drive evaluation
+	var action_tags: Dictionary = {}
+	# Examples:
+	# {"risky": 0.8, "money_reward": 50, "helps": "player", "harms": "bandits"}
+	
+	
 # ============================================================================
 # REQUEST PARSER (mostly same)
 # ============================================================================
@@ -242,17 +259,116 @@ class RequestParser:
 				intent["acknowledge"] = 0.5
 				intent["question"] = 0.5
 		return intent
+	func _infer_action_tags(request: Request) -> Dictionary:
+		var tags = {}
+		var lower_text = request.raw_text.to_lower()
+		
+		# Combat/Risk detection
+		if request.context.topic == "combat" or _contains_any(lower_text, ["fight", "battle", "attack", "combat"]):
+			tags["risky"] = 0.6 + request.context.urgency * 0.3
+			tags["combat"] = true
+			tags["helps"] = request.context.requester_id
+			
+			if _contains_any(lower_text, ["dangerous", "deadly", "lethal", "die", "death"]):
+				tags["lethal"] = true
+				tags["risky"] = 0.9
+		
+		# Money detection
+		if _contains_any(lower_text, ["gold", "coins", "pay", "reward", "treasure", "money"]):
+			# Try to extract amount
+			var amount = _extract_number(lower_text)
+			if amount > 0:
+				tags["money_reward"] = amount
+			else:
+				tags["money_reward"] = 50  # Default
+		
+		if _contains_any(lower_text, ["lend", "borrow", "loan", "cost"]):
+			var amount = _extract_number(lower_text)
+			if amount > 0:
+				tags["money_cost"] = amount
+			else:
+				tags["money_cost"] = 50
+		
+		# Gift detection
+		if _contains_any(lower_text, ["gift", "present", "offering"]):
+			tags["gift_received"] = true
+			tags["money_reward"] = 30  # Gifts have monetary value
+		
+		# Protection/Help detection
+		if _contains_any(lower_text, ["help", "protect", "save", "rescue", "assist"]):
+			tags["helps"] = request.context.requester_id
+			
+			# Check if protecting someone else
+			if _contains_any(lower_text, ["protect", "save"]):
+				var protected = _extract_protected_entity(lower_text)
+				if protected:
+					tags["helps"] = protected  # Override to the actual target
+		
+		# Harm detection
+		if _contains_any(lower_text, ["kill", "murder", "harm", "hurt", "assassinate", "attack"]):
+			var target = _extract_target_entity(lower_text)
+			if target:
+				tags["harms"] = target
+		
+		# Status/Prestige detection
+		if _contains_any(lower_text, ["glory", "honor", "fame", "reputation", "prestige"]):
+			tags["prestige"] = 0.7
+		
+		# Knowledge detection
+		if _contains_any(lower_text, ["teach", "learn", "know", "information", "secret"]):
+			tags["knowledge_gain"] = true
+		
+		return tags
+	
+
+	func _contains_any(text: String, keywords: Array) -> bool:
+		for keyword in keywords:
+			if keyword in text:
+				return true
+		return false
+
+	func _extract_number(text: String) -> int:
+		var regex = RegEx.new()
+		regex.compile("\\b(\\d+)\\b")
+		var result = regex.search(text)
+		if result:
+			return result.get_string().to_int()
+		return 0
+
+	func _extract_protected_entity(text: String) -> String:
+		# Simple pattern matching for now
+		if "princess" in text:
+			return "princess"
+		if "prince" in text:
+			return "prince"
+		if "child" in text or "children" in text:
+			return "children"
+		if "king" in text:
+			return "king"
+		if "queen" in text:
+			return "queen"
+		# Could expand with more sophisticated parsing
+		return ""
+
+	func _extract_target_entity(text: String) -> String:
+		# Similar to _extract_protected_entity
+		return _extract_protected_entity(text)
+
 	
 	func _generate_response_options(request: Request) -> Array[ResponseOption]:
 		var options: Array[ResponseOption] = []
 		
+		# NEW: Infer action tags from request
+		var inferred_tags = _infer_action_tags(request)
+		
 		# AGREE options with variants
-		for i in range(3):  # Generate 3 variants
+		for i in range(3):
 			var agree = ResponseOption.new()
 			agree.response_type = "AGREE"
 			agree.base_score = 0.5
 			agree.personality_tags = {"is_helpful": true, "is_cooperative": true}
 			agree.template_variant = i
+			agree.action_tags = inferred_tags.duplicate()  # NEW: Add tags
 			match i:
 				0: agree.response_template = "I'll {action}. {reason}"
 				1: agree.response_template = "{enthusiasm}, I can {action}. {reason}"
@@ -266,6 +382,8 @@ class RequestParser:
 			refuse.base_score = 0.5
 			refuse.personality_tags = {"is_assertive": true, "is_cautious": true}
 			refuse.template_variant = i
+			# NEW: Refusing removes most action consequences
+			refuse.action_tags = {"safe": true}  # Refusing is usually safer
 			match i:
 				0: refuse.response_template = "I cannot {action}. {reason}"
 				1: refuse.response_template = "{dismissal}. {reason}"
@@ -279,6 +397,10 @@ class RequestParser:
 			negotiate.base_score = 0.5
 			negotiate.personality_tags = {"is_strategic": true, "is_calculating": true}
 			negotiate.template_variant = i
+			# NEW: Negotiation reduces risk but maintains other tags
+			negotiate.action_tags = inferred_tags.duplicate()
+			if negotiate.action_tags.has("risky"):
+				negotiate.action_tags["risky"] *= 0.5  # Negotiation reduces risk
 			match i:
 				0: negotiate.response_template = "Perhaps, but {condition}. {offer}"
 				1: negotiate.response_template = "I might consider it if {condition}. {offer}"
@@ -291,6 +413,7 @@ class RequestParser:
 		deflect.base_score = 0.4
 		deflect.personality_tags = {"is_evasive": true, "is_cautious": true}
 		deflect.response_template = "That's interesting, but {redirect}. {alternative}"
+		deflect.action_tags = {"safe": true}  # NEW: Deflecting is safe
 		options.append(deflect)
 		
 		# CHALLENGE option for threats
@@ -300,11 +423,13 @@ class RequestParser:
 			challenge.base_score = 0.5
 			challenge.personality_tags = {"is_aggressive": true, "is_brave": true}
 			challenge.response_template = "You dare threaten me? {consequence}"
+			challenge.action_tags = {"risky": 0.5, "prestige": 0.6}  # NEW: Standing up has risks but gains respect
 			options.append(challenge)
 
 		assert(options.size() >= 9, "Not enough response options generated!")
-	
+
 		return options
+	
 
 # ============================================================================
 # ENHANCED RESPONSE GENERATOR
@@ -1018,28 +1143,29 @@ class ResponseGenerator:
 # ============================================================================
 
 class DecisionEngine:
-	func evaluate_response(npc: NPC, option: ResponseOption, request: Request) -> float:
+	func evaluate_response(npc: NPC, option: ResponseOption, request: Request, system: NPCSystemEnhanced) -> float:
 		var score = option.base_score
 		
-		# Apply personality modifiers
+		# Apply personality modifiers (existing)
 		score *= _calculate_personality_modifier(npc.personality, option)
 		
-		# Apply value alignment
+		# Apply value alignment (existing)
 		score *= _calculate_value_modifier(npc.personality.values, option)
 		
-		# Apply relationship influence (NOW STRONGER)
+		# Apply relationship influence (existing)
 		var relationship = npc.get_relationship(request.context.requester_id)
 		score *= _calculate_relationship_modifier(relationship, request.context)
 		
-		# Apply context modifiers
+		# Apply context modifiers (existing)
 		score *= _calculate_context_modifier(npc.context, request.context)
 		
-		# INCREASED randomness to break ties
+		# NEW: Apply drive modifiers (additive)
+		score += _calculate_drive_modifier(npc, option, system)
+		
+		# INCREASED randomness to break ties (existing)
 		score += randf_range(-0.2, 0.2)
 		
-		# Penalize if response would be repetitive
-		# We can't fully generate the response here, but we can penalize
-		# by response type if it was used recently
+		# Penalize if response would be repetitive (existing)
 		if npc.context.recent_responses.size() > 0:
 			var last_response = npc.context.recent_responses[-1]
 			if last_response.contains(option.response_type):
@@ -1145,6 +1271,501 @@ class DecisionEngine:
 			modifier *= 1.1
 		return max(0.1, modifier)
 
+	func _calculate_drive_modifier(npc, option, system):
+		var total_score = 0.0
+		var action_tags = option.action_tags
+		
+		# Collect all drive influences
+		var drive_influences: Array[Dictionary] = []
+		
+		# Evaluate baseline drives
+		for drive in npc.baseline_drives:
+			var influence = _evaluate_drive_against_action(drive, action_tags, npc, system)
+			if influence.score != 0.0:
+				drive_influences.append(influence)
+		
+		# Evaluate dynamic drives
+		for drive in npc.dynamic_drives:
+			var influence = _evaluate_drive_against_action(drive, action_tags, npc, system)
+			if influence.score != 0.0:
+				drive_influences.append(influence)
+		
+		# Check for conflicts in THIS specific action
+		var resolved_score = _resolve_drive_conflicts(drive_influences, action_tags)
+		
+		return resolved_score
+		
+	func _evaluate_drive_against_action(drive, action_tags: Dictionary, npc, system) -> Dictionary:
+		var effective_weight = system.get_effective_drive_weight(drive, npc)
+		var score = 0.0
+		var reasoning = ""
+		
+		match drive.drive_type:
+			"SELF_PRESERVATION":
+				if action_tags.has("risky"):
+					score = -effective_weight * action_tags["risky"]
+					reasoning = "avoid_risk"
+				if action_tags.has("lethal"):
+					score = -effective_weight * 3.0
+					reasoning = "avoid_death"
+				if action_tags.has("safe"):
+					score = effective_weight * 0.3
+					reasoning = "prefer_safety"
+			
+			"SEEK_WEALTH":
+				if action_tags.has("money_reward"):
+					var reward_value = action_tags["money_reward"]
+					# Normalize reward (100 gold = 1.0 score point)
+					score = effective_weight * (reward_value / 100.0)
+					reasoning = "gain_wealth"
+				if action_tags.has("money_cost"):
+					var cost = action_tags["money_cost"]
+					score = -effective_weight * (cost / 100.0)
+					reasoning = "spend_wealth"
+			
+			"SEEK_GIFTS":
+				if action_tags.has("gift_received"):
+					score = effective_weight * 0.6
+					reasoning = "receive_gift"
+			
+			"SEEK_STATUS":
+				if action_tags.has("prestige"):
+					score = effective_weight * action_tags["prestige"]
+					reasoning = "gain_status"
+			
+			"SEEK_KNOWLEDGE":
+				if action_tags.has("knowledge_gain"):
+					score = effective_weight * 0.8
+					reasoning = "gain_knowledge"
+			
+			"AVOID_PAIN":
+				if action_tags.has("painful"):
+					score = -effective_weight * action_tags["painful"]
+					reasoning = "avoid_pain"
+				if action_tags.has("risky"):
+					score -= effective_weight * action_tags["risky"] * 0.3
+					reasoning = "avoid_pain"
+			
+			"PROTECT_X":
+				if action_tags.has("helps") and action_tags["helps"] == drive.target_id:
+					score = effective_weight * 2.0
+					reasoning = "protect_target"
+				if action_tags.has("harms") and action_tags["harms"] == drive.target_id:
+					score = -effective_weight * 3.0
+					reasoning = "harm_target"
+			
+			"AVOID_X":
+				if action_tags.has("involves") and action_tags["involves"] == drive.target_id:
+					score = -effective_weight * 1.5
+					reasoning = "avoid_target"
+		
+		return {
+			"drive_type": drive.drive_type,
+			"target": drive.target_id,
+			"score": score,
+			"reasoning": reasoning
+		}
+
+	func _resolve_drive_conflicts(influences, action_tags) -> float:
+		var final_score = 0.0
+		
+		# Check for direct conflicts (same target, opposite intent)
+		# Example: PROTECT_princess + action harms princess + SEEK_WEALTH + action gives money
+		var protection_score = 0.0
+		var harm_score = 0.0
+		
+		for influence in influences:
+			if influence.reasoning == "protect_target":
+				protection_score += influence.score
+			elif influence.reasoning == "harm_target":
+				harm_score += influence.score
+		
+		# If both exist, they conflict
+		if protection_score != 0.0 and harm_score != 0.0:
+			# The stronger drive wins, but is reduced by the weaker
+			var net_protection = protection_score + harm_score  # harm_score is negative
+			final_score += net_protection
+			
+			# Remove these from further consideration
+			var filtered: Array[Dictionary] = []
+			for inf in influences:
+				if inf.reasoning not in ["protect_target", "harm_target"]:
+					filtered.append(inf)
+			influences = filtered
+		else:
+			# No conflict, add protection/harm scores
+			final_score += protection_score + harm_score
+		
+		# Add all other non-conflicting drives
+		for influence in influences:
+			if influence.reasoning not in ["protect_target", "harm_target"]:
+				final_score += influence.score
+		
+		return final_score
+		
+# ============================================================================
+# NEW CLASSES FOR DRIVE SYSTEM
+# Add these after the existing Relationship class and before RequestContext
+# ============================================================================
+
+class Drive:
+	var drive_type: String  # "SEEK_WEALTH", "PROTECT_character", "SELF_PRESERVATION", etc.
+	var weight: float  # 0.0 to 1.0 (can go higher in extreme situations)
+	var target_id: String = ""  # For personal drives like "PROTECT_Mira"
+	var urgency: float = 0.5  # How pressing is this drive right now?
+	var last_satisfied: int = 0  # Timestamp for future decay/urgency systems
+	
+	func _init(type: String = "", w: float = 0.5, target: String = "", urg: float = 0.5):
+		drive_type = type
+		weight = w
+		target_id = target
+		urgency = urg
+		last_satisfied = Time.get_ticks_msec()
+
+class ArchetypeTemplate:
+	var name: String
+	var description: String
+	
+	# Personality defaults
+	var warmth: float
+	var assertiveness: float
+	var conscientiousness: float
+	var curiosity: float
+	var risk_tolerance: float
+	var stability: float
+	var values: Dictionary
+	
+	# Baseline drives (type → weight)
+	var baseline_drives: Dictionary = {}
+	# Example: {"SELF_PRESERVATION": 0.6, "SEEK_WEALTH": 0.9}
+	
+	# Resource defaults
+	var wealth_range: Vector2i  # min/max
+	var health: float = 1.0
+	var hunger: float = 0.2
+	var energy: float = 0.8
+	
+	# Variance allowed for randomization
+	var personality_variance: float = 0.15
+	var drive_variance: float = 0.15
+	var wealth_variance: float = 0.2  # ±20% of range
+	
+	func _init(archetype_name: String = ""):
+		name = archetype_name
+
+class ArchetypeLibrary:
+	var templates: Dictionary = {}
+	
+	func _init():
+		_define_archetypes()
+	
+	func _define_archetypes():
+		# MERCHANT
+		var merchant = ArchetypeTemplate.new("merchant")
+		merchant.description = "Profit-focused trader"
+		merchant.warmth = 0.4
+		merchant.assertiveness = 0.2
+		merchant.conscientiousness = 0.6
+		merchant.curiosity = 0.3
+		merchant.risk_tolerance = 0.4
+		merchant.stability = 0.5
+		merchant.values = {"WEALTH": 0.8, "COMMUNITY": 0.4, "KNOWLEDGE": 0.3}
+		merchant.baseline_drives = {
+			"SELF_PRESERVATION": 0.6,
+			"SEEK_WEALTH": 0.9,
+			"SEEK_GIFTS": 0.7,
+			"AVOID_PAIN": 0.7
+		}
+		merchant.wealth_range = Vector2i(300, 700)
+		templates["merchant"] = merchant
+		
+		# WARLORD
+		var warlord = ArchetypeTemplate.new("warlord")
+		warlord.description = "Battle-hardened leader"
+		warlord.warmth = -0.3
+		warlord.assertiveness = 0.8
+		warlord.conscientiousness = 0.2
+		warlord.curiosity = -0.1
+		warlord.risk_tolerance = 0.7
+		warlord.stability = 0.3
+		warlord.values = {"POWER": 0.8, "HONOR": 0.4, "WEALTH": 0.3}
+		warlord.baseline_drives = {
+			"SELF_PRESERVATION": 0.4,
+			"SEEK_STATUS": 0.9,
+			"SEEK_WEALTH": 0.5,
+			"AVOID_PAIN": 0.3
+		}
+		warlord.wealth_range = Vector2i(200, 500)
+		templates["warlord"] = warlord
+		
+		# HEALER
+		var healer = ArchetypeTemplate.new("healer")
+		healer.description = "Compassionate caregiver"
+		healer.warmth = 0.8
+		healer.assertiveness = -0.3
+		healer.conscientiousness = 0.7
+		healer.curiosity = 0.4
+		healer.risk_tolerance = -0.4
+		healer.stability = 0.7
+		healer.values = {"COMMUNITY": 0.9, "HONOR": 0.6, "KNOWLEDGE": 0.4}
+		healer.baseline_drives = {
+			"SELF_PRESERVATION": 0.9,
+			"AVOID_PAIN": 0.9,
+			"SEEK_WEALTH": 0.3,
+			"SEEK_GIFTS": 0.4
+		}
+		healer.wealth_range = Vector2i(100, 300)
+		templates["healer"] = healer
+		
+		# SCHOLAR
+		var scholar = ArchetypeTemplate.new("scholar")
+		scholar.description = "Knowledge seeker"
+		scholar.warmth = 0.3
+		scholar.assertiveness = -0.2
+		scholar.conscientiousness = 0.8
+		scholar.curiosity = 0.9
+		scholar.risk_tolerance = -0.2
+		scholar.stability = 0.6
+		scholar.values = {"KNOWLEDGE": 0.9, "HONOR": 0.5, "POWER": 0.2}
+		scholar.baseline_drives = {
+			"SELF_PRESERVATION": 0.7,
+			"SEEK_KNOWLEDGE": 0.9,
+			"SEEK_WEALTH": 0.4,
+			"AVOID_PAIN": 0.6
+		}
+		scholar.wealth_range = Vector2i(150, 400)
+		templates["scholar"] = scholar
+		
+		# ROGUE
+		var rogue = ArchetypeTemplate.new("rogue")
+		rogue.description = "Independent opportunist"
+		rogue.warmth = -0.1
+		rogue.assertiveness = 0.3
+		rogue.conscientiousness = -0.4
+		rogue.curiosity = 0.5
+		rogue.risk_tolerance = 0.8
+		rogue.stability = 0.2
+		rogue.values = {"FREEDOM": 0.9, "WEALTH": 0.6, "POWER": 0.3}
+		rogue.baseline_drives = {
+			"SELF_PRESERVATION": 0.5,
+			"SEEK_WEALTH": 0.8,
+			"SEEK_STATUS": 0.4,
+			"AVOID_PAIN": 0.5
+		}
+		rogue.wealth_range = Vector2i(50, 250)
+		templates["rogue"] = rogue
+		
+		# NOBLE
+		var noble = ArchetypeTemplate.new("noble")
+		noble.description = "High-born authority"
+		noble.warmth = 0.2
+		noble.assertiveness = 0.6
+		noble.conscientiousness = 0.7
+		noble.curiosity = 0.1
+		noble.risk_tolerance = -0.3
+		noble.stability = 0.8
+		noble.values = {"HONOR": 0.8, "POWER": 0.7, "TRADITION": 0.6}
+		noble.baseline_drives = {
+			"SELF_PRESERVATION": 0.7,
+			"SEEK_STATUS": 0.9,
+			"SEEK_WEALTH": 0.6,
+			"SEEK_GIFTS": 0.8
+		}
+		noble.wealth_range = Vector2i(800, 1500)
+		templates["noble"] = noble
+	
+	func get_template(archetype: String) -> ArchetypeTemplate:
+		if templates.has(archetype):
+			return templates[archetype]
+		push_error("Unknown archetype: " + archetype)
+		return templates["merchant"]  # Safe fallback
+
+class RoleModifier:
+	# For special contextual roles that override certain values
+	var role_name: String
+	var health_override: float = -1.0  # -1 = no override
+	var wealth_override: Vector2i = Vector2i(-1, -1)
+	var stress_override: float = -1.0
+	var hunger_override: float = -1.0
+	var energy_override: float = -1.0
+	var drive_modifiers: Dictionary = {}  # Drive type → multiplier
+	
+	func _init(name: String = ""):
+		role_name = name
+
+class RoleLibrary:
+	var modifiers: Dictionary = {}
+	
+	func _init():
+		_define_roles()
+	
+	func _define_roles():
+		# WOUNDED_SOLDIER
+		var wounded = RoleModifier.new("wounded_soldier")
+		wounded.health_override = randf_range(0.2, 0.4)
+		wounded.drive_modifiers = {
+			"SELF_PRESERVATION": 1.5,  # Even more cautious
+			"AVOID_PAIN": 1.8
+		}
+		modifiers["wounded_soldier"] = wounded
+		
+		# BEATING_VICTIM
+		var beaten = RoleModifier.new("beating_victim")
+		beaten.health_override = randf_range(0.3, 0.5)
+		beaten.stress_override = 0.8
+		beaten.drive_modifiers = {
+			"SELF_PRESERVATION": 1.6,
+			"AVOID_PAIN": 2.0
+		}
+		modifiers["beating_victim"] = beaten
+		
+		# STARVING_REFUGEE
+		var starving = RoleModifier.new("starving_refugee")
+		starving.hunger_override = 0.9
+		starving.wealth_override = Vector2i(0, 10)
+		starving.drive_modifiers = {
+			"SEEK_FOOD": 3.0,  # Desperate
+			"SEEK_WEALTH": 1.5
+		}
+		modifiers["starving_refugee"] = starving
+		
+		# EXHAUSTED_MESSENGER
+		var exhausted = RoleModifier.new("exhausted_messenger")
+		exhausted.energy_override = 0.2
+		exhausted.drive_modifiers = {
+			"SEEK_REST": 2.0
+		}
+		modifiers["exhausted_messenger"] = exhausted
+	
+	func get_modifier(role: String) -> RoleModifier:
+		return modifiers.get(role, null)
+
+# ============================================================================
+# NEW FUNCTIONS FOR NPCSystemEnhanced CLASS
+# Add these to the main NPCSystemEnhanced class
+# ============================================================================
+
+func get_effective_drive_weight(npc, drive) -> float:
+	var effective_weight = drive.weight
+	
+	match drive.drive_type:
+		"SEEK_WEALTH":
+			# Poor NPCs are more desperate for wealth
+			if npc.context.wealth < 100:
+				effective_weight *= 2.5
+			elif npc.context.wealth < 300:
+				effective_weight *= 1.5
+			elif npc.context.wealth > 1000:
+				effective_weight *= 0.4
+			elif npc.context.wealth > 600:
+				effective_weight *= 0.6
+		
+		"SELF_PRESERVATION":
+			# Wounded NPCs much more cautious
+			if npc.context.health < 0.3:
+				effective_weight *= 2.8
+			elif npc.context.health < 0.5:
+				effective_weight *= 1.8
+		
+		"AVOID_PAIN":
+			# Wounded NPCs more sensitive to pain
+			if npc.context.health < 0.5:
+				effective_weight *= 1.5
+		
+		"SEEK_GIFTS":
+			# Poor NPCs value gifts more
+			if npc.context.wealth < 200:
+				effective_weight *= 1.5
+			elif npc.context.wealth > 800:
+				effective_weight *= 0.5
+	
+	return effective_weight
+
+func create_npc_from_template(
+	npc_id, 
+	npc_name, 
+	archetype,
+	contextual_role = ""
+):
+	
+	var template = archetype_library.get_template(archetype)
+	
+	# Create personality from template with variance
+	var personality = Personality.new(
+		template.warmth + randf_range(-template.personality_variance, template.personality_variance),
+		template.assertiveness + randf_range(-template.personality_variance, template.personality_variance),
+		template.conscientiousness + randf_range(-template.personality_variance, template.personality_variance),
+		template.curiosity + randf_range(-template.personality_variance, template.personality_variance),
+		template.risk_tolerance + randf_range(-template.personality_variance, template.personality_variance),
+		template.stability + randf_range(-template.personality_variance, template.personality_variance),
+		template.values.duplicate()
+	)
+	
+	# Create NPC
+	var npc = NPC.new(npc_id, npc_name, personality)
+	npc.archetype = archetype
+	npc.context.role = contextual_role if contextual_role else archetype
+	
+	# Initialize resources from template
+	npc.context.wealth = randi_range(template.wealth_range.x, template.wealth_range.y)
+	npc.context.health = template.health
+	npc.context.hunger = template.hunger
+	npc.context.energy = template.energy
+	
+	# Initialize baseline drives from template
+	for drive_type in template.baseline_drives:
+		var base_weight = template.baseline_drives[drive_type]
+		var varied_weight = base_weight + randf_range(-template.drive_variance, template.drive_variance)
+		varied_weight = clamp(varied_weight, 0.0, 1.0)
+		
+		var drive = Drive.new(drive_type, varied_weight)
+		npc.baseline_drives.append(drive)
+	
+	# Apply contextual role modifiers if present
+	if contextual_role:
+		var role_mod = role_library.get_modifier(contextual_role)
+		if role_mod:
+			_apply_role_modifier(npc, role_mod)
+	
+	return npc
+
+func _apply_role_modifier(npc, modifier):
+	# Override resources
+	if modifier.health_override >= 0.0:
+		npc.context.health = modifier.health_override
+	if modifier.wealth_override.x >= 0:
+		npc.context.wealth = randi_range(modifier.wealth_override.x, modifier.wealth_override.y)
+	if modifier.stress_override >= 0.0:
+		npc.context.stress_level = modifier.stress_override
+	if modifier.hunger_override >= 0.0:
+		npc.context.hunger = modifier.hunger_override
+	if modifier.energy_override >= 0.0:
+		npc.context.energy = modifier.energy_override
+	
+	# Modify drive weights
+	for drive in npc.baseline_drives:
+		if modifier.drive_modifiers.has(drive.drive_type):
+			drive.weight *= modifier.drive_modifiers[drive.drive_type]
+			drive.weight = clamp(drive.weight, 0.0, 2.0)  # Can go above 1.0 for extreme situations
+
+# ============================================================================
+# NEW FUNCTIONS FOR DecisionEngine CLASS
+# Add these to the DecisionEngine class
+# ============================================================================
+
+
+
+
+
+# ============================================================================
+# NEW HELPER FUNCTIONS FOR RequestParser CLASS
+# Add these to the RequestParser class
+# ============================================================================
+
+
+
+
+
 # ============================================================================
 # MAIN NPC SYSTEM
 # ============================================================================
@@ -1154,47 +1775,43 @@ var parser: RequestParser
 var generator: ResponseGenerator
 var decision_engine: DecisionEngine
 var tick_count: int = 0  # NEW: Track ticks for stress decay
+# NEW: Template libraries
+var archetype_library: ArchetypeLibrary
+var role_library: RoleLibrary
 
 func _ready():
 	parser = RequestParser.new()
 	generator = ResponseGenerator.new()
 	decision_engine = DecisionEngine.new()
+	# NEW: Initialize template libraries
+	archetype_library = ArchetypeLibrary.new()
+	role_library = RoleLibrary.new()
 	_create_sample_npcs()
 
 func _create_sample_npcs():
-	var archetypes = {
-		"warlord": Personality.new(-0.3, 0.8, 0.2, -0.1, 0.7, 0.3,
-			{"POWER": 0.8, "HONOR": 0.4, "WEALTH": 0.3}),
-		"scholar": Personality.new(0.3, -0.2, 0.8, 0.9, -0.2, 0.6,
-			{"KNOWLEDGE": 0.9, "HONOR": 0.5, "POWER": 0.2}),
-		"merchant": Personality.new(0.4, 0.2, 0.6, 0.3, 0.4, 0.5,
-			{"WEALTH": 0.8, "COMMUNITY": 0.4, "KNOWLEDGE": 0.3}),
-		"healer": Personality.new(0.8, -0.3, 0.7, 0.4, -0.4, 0.7,
-			{"COMMUNITY": 0.9, "HONOR": 0.6, "KNOWLEDGE": 0.4}),
-		"rogue": Personality.new(-0.1, 0.3, -0.4, 0.5, 0.8, 0.2,
-			{"FREEDOM": 0.9, "WEALTH": 0.6, "POWER": 0.3}),
-		"noble": Personality.new(0.2, 0.6, 0.7, 0.1, -0.3, 0.8,
-			{"HONOR": 0.8, "POWER": 0.7, "TRADITION": 0.6})
-	}
+	var npc_configs = [
+		{"id": "npc_0", "name": "Vorak", "archetype": "warlord"},
+		{"id": "npc_1", "name": "Lyris", "archetype": "scholar"},
+		{"id": "npc_2", "name": "Thane", "archetype": "merchant"},
+		{"id": "npc_3", "name": "Mira", "archetype": "healer"},
+		{"id": "npc_4", "name": "Kass", "archetype": "rogue"},
+		{"id": "npc_5", "name": "Lord Aldric", "archetype": "noble"},
+		{"id": "npc_6", "name": "Elena", "archetype": "merchant"},
+		{"id": "npc_7", "name": "Grimm", "archetype": "warlord"},
+		{"id": "npc_8", "name": "Sofia", "archetype": "scholar"},
+		{"id": "npc_9", "name": "Marcus", "archetype": "healer"},
+		{"id": "npc_10", "name": "Zara", "archetype": "rogue"},
+		{"id": "npc_11", "name": "Viktor", "archetype": "noble"},
+	]
 	
-	var names = ["Vorak", "Lyris", "Thane", "Mira", "Kass", "Lord Aldric",
-		"Elena", "Grimm", "Sofia", "Marcus", "Zara", "Viktor"]
-	var roles = ["warlord", "scholar", "merchant", "healer", "rogue", "noble",
-		"merchant", "warlord", "scholar", "healer", "rogue", "noble"]
-	
-	for i in range(12):
-		var npc_name = names[i]
-		var role = roles[i]
-		var personality = archetypes[role].clone()
+	for config in npc_configs:
+		var npc = create_npc_from_template(
+			config.id,
+			config.name,
+			config.archetype
+		)
 		
-		personality.warmth += randf_range(-0.2, 0.2)
-		personality.assertiveness += randf_range(-0.2, 0.2)
-		personality.risk_tolerance += randf_range(-0.2, 0.2)
-		
-		var npc = NPC.new("npc_" + str(i), npc_name, personality)
-		npc.archetype = role
-		npc.context.role = role
-		
+		# Initialize player relationship
 		var player_rel = npc.get_relationship("player")
 		player_rel.trust = randf_range(0.2, 0.6)
 		player_rel.respect = randf_range(0.3, 0.7)
@@ -1206,19 +1823,19 @@ func _create_sample_npcs():
 func process_request(npc_id: String, request_text: String) -> String:
 	if not npcs.has(npc_id):
 		return "Unknown NPC"
-	var decision_engine = DecisionEngine.new()
+	
 	var npc = npcs[npc_id]
 	var request = parser.parse_request(request_text)
 
-	# NEW: Add soft refusal option for high-warmth characters
+	# Add soft refusal option for high-warmth characters
 	if npc.personality.warmth > 0.7:
 		request.response_options.append(generator.create_soft_refusal())
 
-	# NEW: Add hedged refusal option for low-assertiveness characters
+	# Add hedged refusal option for low-assertiveness characters
 	if npc.personality.assertiveness < -0.2:
 		request.response_options.append(generator.create_hedged_refusal())
 
-	# NEW: Apply personality constraints to filter harsh options
+	# Apply personality constraints to filter harsh options
 	request.response_options = generator.apply_personality_constraints(request.response_options, npc.personality)
 
 	# Evaluate options and pick best (with anti-repetition)
@@ -1233,7 +1850,8 @@ func process_request(npc_id: String, request_text: String) -> String:
 		best_score = -INF
 		
 		for option in request.response_options:
-			var score = decision_engine.evaluate_response(npc, option, request)
+			# NEW: Pass 'self' (system) reference for drive evaluation
+			var score = decision_engine.evaluate_response(npc, option, request, self)
 			if score > best_score:
 				best_score = score
 				best_option = option
@@ -1245,23 +1863,14 @@ func process_request(npc_id: String, request_text: String) -> String:
 			if not npc.is_response_repetitive(response):
 				npc.remember_response(response)
 				_update_npc_after_response(npc, best_option, request)
-				return "[" + npc.name + "]: " + response
+				return response
 		
 		# Penalize this option and try again
 		if best_option:
 			best_option.base_score *= 0.5
 		attempts += 1
 
-	# NEW: Check fallback threshold before triggering fallback
-#	if best_score >= fallback_threshold and best_option:
-		# Score is good enough - use it even if repetitive
-#		var response = generator.generate_response(npc, best_option, request)
-#		npc.remember_response(response)
-#		_update_npc_after_response(npc, best_option, request)
-#		return "[" + npc.name + "]: " + response
-
-	# NEW: Personality-specific fallback
-	var fallback_text = generator.select_fallback_text(npc)
+	# Personality-specific fallback
 	return decision_engine._generate_fallback(npc)
 
 func _get_max_attempts(npc: NPC) -> int:

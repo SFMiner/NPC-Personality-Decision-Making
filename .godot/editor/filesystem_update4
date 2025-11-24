@@ -7,3 +7,5 @@ res://enhanced_system_test.gd
 res://test_personality_fixes.gd
 res://test_request_parser.gd
 res://test_responses.txt
+res://test_drive_system.gd
+res://test_drive_system.tscn
