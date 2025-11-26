@@ -1,14 +1,7 @@
 extends Node
-class_name NPCSystemEnhanced
+class_name NPCSystemEnhanced_last_working
 
 var debugging = true
-
-# Enhanced NPC System with fixes for:
-# 1. Response repetition
-# 2. Meaningful relationship changes
-# 3. Stress accumulation bug
-# 4. Response variety
-
 
 
 

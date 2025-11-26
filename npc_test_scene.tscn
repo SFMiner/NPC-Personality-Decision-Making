@@ -1,13 +1,13 @@
 [gd_scene load_steps=2 format=3 uid="uid://raxxom7ajfgh"]
 
-[ext_resource type="Script" uid="uid://nk26uctm4y2l" path="res://test_npc_interface.gd" id="1"]
+[ext_resource type="Script" uid="uid://nk26uctm4y2l" path="res://unused_scripts/test_npc_interface.gd" id="1_5ierb"]
 
 [node name="NPCTestScene" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource("1")
+script = ExtResource("1_5ierb")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0

@@ -1,6 +1,6 @@
 extends Node2D
 
-var npc_system = preload("res://npc_system_enhanced.gd").new()
+var npc_system = preload("res://scripts/npc_system_enhanced.gd").new()
 var test_requests = [
 	"Help me fight these bandits.",
 	"Lend me 200 credits. I promise I'll pay you back.",
@@ -46,11 +46,11 @@ func test_responses_old(npc_name : String, request : String, num_times : int):
 func test_responses(npc_name : String, request : String, num_times : int):
 	# Header for this NPC section
 	var info = npc_system.get_npc_info(npc_name)
-	var personality  = info.personality
-	var relationship = info.relationship
-	var trust = relationship.trust
-	var respect = relationship.respect
-	var affection = relationship.affection
+	var personality  = info["personality"]
+	var relationship = info["relationship"]
+	var trust = relationship["trust"]
+	var respect = relationship["respect"]
+	var affection = relationship["affection"]
 
 	output_file.store_line("\n" + npc_name + " - Role : " + info.role + 
 		" - Warmth = " + str(personality.warmth) + 
