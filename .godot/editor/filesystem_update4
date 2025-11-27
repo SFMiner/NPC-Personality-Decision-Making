@@ -29,3 +29,4 @@ res://scripts/test_driver.gd
 res://scripts/knowledge_system_test_debug.gd
 res://scripts/seeding_test.gd
 res://scripts/minimal_response_request.gd
+res://scripts/test_template_variety.gd

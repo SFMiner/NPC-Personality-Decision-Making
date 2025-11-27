@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bnfyaqjjdlqp2"]
 
-[ext_resource type="Script" uid="uid://cbn7k35v455im" path="res://scripts/minimal_response_request.gd" id="1_fym5b"]
+[ext_resource type="Script" uid="uid://drgmicnui3jxy" path="res://scripts/test_template_variety.gd" id="1_fym5b"]
 
 [node name="DriveSystemTest" type="Node"]
 script = ExtResource("1_fym5b")

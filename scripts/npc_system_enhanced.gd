@@ -1419,7 +1419,7 @@ class ResponseGenerator:
 		return true
 		
 		
-	func _select_knowledge_template(response_type: String, confidence: String, personality: Personality) -> String:
+	func _select_knowledge_template_old(response_type: String, confidence: String, personality: Personality) -> String:
 		# Templates organized by response type and confidence
 		if debugging: print("Template selection: type=%s, conf=%s, assert=%.2f" % [response_type, confidence, personality.assertiveness])
 
@@ -1475,6 +1475,103 @@ class ResponseGenerator:
 			index = confidence_templates.size() - 1  # Cautious phrasing
 		
 		return confidence_templates[index]
+
+	func _select_knowledge_template(response_type: String, confidence: String, personality: Personality) -> String:
+		var knowledge_templates = {
+			"SHARE_KNOWLEDGE": {
+				"high": [
+					"{subject} {predicate} {object}.",
+					"I can tell you that {subject} {predicate} {object}.",
+					"{object}. Everyone knows that."
+				],
+				"medium": [
+					"I believe {subject} {predicate} {object}.",
+					"If I recall correctly, {subject} {predicate} {object}.",
+					"From what I understand, {subject} {predicate} {object}."
+				],
+				"low": [
+					"I think {subject} might be {object}... but I'm not certain.",
+					"If memory serves, {subject} {predicate} {object}... though don't quote me."
+				]
+			},
+			"SHARE_CAUTIOUS": {
+				"high": [
+					"Well... {subject} {predicate} {object}.",
+					"I suppose I can tell you: {subject} {predicate} {object}."
+				],
+				"medium": [
+					"I've heard that {subject} {predicate} {object}.",
+					"Some say {subject} {predicate} {object}."
+				],
+				"low": [
+					"I've heard rumors that {subject} might be {object}.",
+					"There are whispers about {subject}... something about {object}."
+				]
+			}
+		}
+		
+		var type_templates = knowledge_templates.get(response_type, knowledge_templates["SHARE_KNOWLEDGE"])
+		var confidence_templates = type_templates.get(confidence, type_templates["medium"])
+		
+		if confidence_templates.is_empty():
+			return "{subject} {predicate} {object}."
+		
+		# Calculate weights for each template based on personality
+		var weights: Array[float] = []
+		for i in range(confidence_templates.size()):
+			var weight = _calculate_template_weight(i, confidence_templates.size(), personality, confidence)
+			weights.append(weight)
+		
+		# DEBUG: Print weights
+		print("DEBUG template weights: %s" % str(weights))
+		
+		# Weighted random selection
+		var index = _weighted_random_select(weights)
+		
+		# DEBUG: Print selection
+		print("DEBUG selected index: %d -> '%s'" % [index, confidence_templates[index].substr(0, 40)])
+		
+		return confidence_templates[index]
+
+
+	func _calculate_template_weight(index: int, total: int, personality: Personality, confidence: String) -> float:
+		var weight = 0.2
+		
+		if index == 0:
+			weight += max(0.0, personality.assertiveness) * 0.5
+			weight += max(0.0, personality.conscientiousness) * 0.2
+		
+		if index > 0 and index < total - 1:
+			weight += max(0.0, personality.warmth) * 0.6
+			weight += max(0.0, personality.curiosity) * 0.2
+		
+		if index == total - 1:
+			weight += max(0.0, -personality.assertiveness) * 0.3
+			if confidence == "high":
+				weight += 0.3
+				weight += max(0.0, personality.assertiveness) * 0.2
+		
+		return max(0.1, weight)
+
+
+	func _weighted_random_select(weights: Array[float]) -> int:
+		var total = 0.0
+		for w in weights:
+			total += w
+		
+		if total <= 0:
+			return randi() % weights.size()
+		
+		var roll = randf() * total
+		var cumulative = 0.0
+		for i in range(weights.size()):
+			cumulative += weights[i]
+			if roll < cumulative:
+				return i
+		
+		return weights.size() - 1
+
+
 # ============================================================================
 # DECISION SYSTEM
 # ============================================================================
