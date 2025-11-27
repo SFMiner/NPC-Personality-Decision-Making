@@ -25,3 +25,7 @@ res://npc_test_scene.tscn
 res://test_request_parser.tscn
 res://unused_scripts/npc_system_enhanced_old.gd
 res://unused_scripts/npc_enhanced_last-working.gd
+res://scripts/test_driver.gd
+res://scripts/knowledge_system_test_debug.gd
+res://scripts/seeding_test.gd
+res://scripts/minimal_response_request.gd

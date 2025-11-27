@@ -11,6 +11,10 @@ class Seeder:
 	func seed_npc(knowledge: KnowledgeIndex, archetype: String):
 		# Default skills based on archetype
 		match archetype:
+			# Warlords should know about blacksmiths (military supplies)
+			"warlord": 
+				knowledge.skills = {"warfare": 0.8, "politics": 0.5}
+				_seed_tags(knowledge, ["location", "blacksmith", "trade", "politics", "royalty"])
 			"merchant":
 				knowledge.skills = {"trade": 0.7, "geography": 0.5}
 				_seed_tags(knowledge, ["trade", "city"])

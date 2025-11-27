@@ -56,7 +56,6 @@ class NPCContext:
 	var faction: String = ""
 	var role: String = ""
 	var recent_responses: Array[String] = []  # NEW: Track recent responses
-	# NEW: Resource tracking
 	var wealth: int = 100  # Current gold (0-1000+ scale)
 	var health: float = 1.0  # 0.0 = dying, 1.0 = full health
 	var hunger: float = 0.2  # 0.0 = fed, 1.0 = starving
@@ -1844,7 +1843,8 @@ func process_request(npc_id: String, request_text: String) -> String:
 		
 		for option in request.response_options:
 			# NEW: Pass 'self' (system) reference for drive evaluation
-			var score = decision_engine.evaluate_response(npc, option, request, self)
+			var score = 1
+#		var score = decision_engine.evaluate_response(npc, option, request, self)
 			if score > best_score:
 				best_score = score
 				best_option = option

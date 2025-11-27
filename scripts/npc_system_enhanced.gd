@@ -61,15 +61,6 @@ class NPCContext:
 	var hunger: float = 0.2
 	var energy: float = 0.8
 
-
-	func get_influence_multiplier() -> float:
-		var mult = 1.0
-		mult += affection * 0.5  # INCREASED from 0.3
-		mult += trust * 0.6      # INCREASED from 0.4
-		mult += respect * 0.5    # INCREASED from 0.4
-		mult += fear * 0.3       # INCREASED from 0.2
-		return max(0.1, mult)
-
 class NPC:
 	var id: String
 	var name: String
@@ -151,6 +142,8 @@ class ResponseOption:
 	var response_template: String = ""
 	var template_variant: int = 0
 	var action_tags: Dictionary = {}
+	var knowledge_result: KnowledgeQuery.QueryResult = null  # NEW: Store query result
+
 
 class Drive:
 	var drive_type: String  # "SEEK_WEALTH", "PROTECT_character", "SELF_PRESERVATION", etc.
@@ -499,6 +492,7 @@ class RequestParser:
 			options.append(challenge)
 
 		assert(options.size() >= 9, "Not enough response options generated!")
+		
 
 		return options
 	
@@ -696,12 +690,62 @@ class ResponseGenerator:
 			"conditions": {"min_warmth": 0.5, "random_threshold": 0.85}
 		}
 	}
-	
+
+	func _add_personality_flavor(response: String, personality: Personality, response_type: String) -> String:
+		# Don't add flavor if already has flavor
+		if response.begins_with("Well, ") or response.begins_with("Listen. ") or response.begins_with("Interesting… "):
+			return response
+		
+		# Check each prefix type
+		for prefix_type in personality_prefixes:
+			var prefix_data = personality_prefixes[prefix_type]
+			
+			# Check if compatible with response type
+			if not _is_compatible(response_type, prefix_data.compatible_with):
+				continue
+			
+			# Check if response core is incompatible
+			if prefix_data.has("incompatible_with_cores"):
+				if _has_incompatible_core(response, prefix_data.incompatible_with_cores):
+					continue
+			
+			# Check personality conditions
+			var conditions_met = true
+			var conditions = prefix_data.conditions
+			
+			if conditions.has("max_assertiveness") and personality.assertiveness >= conditions.max_assertiveness:
+				conditions_met = false
+			if conditions.has("max_stability") and personality.stability >= conditions.max_stability:
+				conditions_met = false
+			if conditions.has("min_assertiveness") and personality.assertiveness <= conditions.min_assertiveness:
+				conditions_met = false
+			if conditions.has("min_curiosity") and personality.curiosity <= conditions.min_curiosity:
+				conditions_met = false
+			if conditions.has("min_warmth") and personality.warmth <= conditions.min_warmth:
+				conditions_met = false
+			
+			# Check random threshold
+			if conditions.has("random_threshold") and randf() <= conditions.random_threshold:
+				conditions_met = false
+			
+			# Apply prefix if all conditions met
+			if conditions_met:
+				var phrase = prefix_data.phrases[0]
+				if prefix_type == "warmth" or prefix_type == "curiosity":
+					response = phrase + _lowercase_first_char_safe(response)
+				else:
+					response = phrase + response
+				break  # Only apply one prefix
+		
+		return response
+
 	# Main generation function
 	func generate_response(npc: NPC, chosen_option: ResponseOption, request: Request) -> String:
 		var response = chosen_option.response_template
 		var response_type = chosen_option.response_type
-		
+		if chosen_option.response_type in ["SHARE_KNOWLEDGE", "SHARE_CAUTIOUS"]:
+			return _format_knowledge_response(npc, chosen_option)
+
 		# Apply modifiers in order, passing response_type for tag checking
 		response = _apply_personality_modifiers(response, npc.personality, chosen_option.template_variant, response_type)
 		response = _apply_value_modifiers(response, npc.personality.values, chosen_option.template_variant, response_type)
@@ -726,6 +770,9 @@ class ResponseGenerator:
 			if _is_compatible(response_type, TAG_POSITIVE):
 				if response.ends_with(".") and randf() > 0.6:
 					response = response.trim_suffix(".") + "!"
+		
+		if chosen_option.response_type in ["SHARE_KNOWLEDGE", "SHARE_CAUTIOUS"]:
+			return _format_knowledge_response(npc, chosen_option)
 		
 		# Final cleanup - fix any standalone lowercase "i"
 		var re = RegEx.new()
@@ -1045,54 +1092,6 @@ class ResponseGenerator:
 		
 		return result
 	
-	# MODIFIED: Now accepts response_type
-	func _add_personality_flavor(response: String, personality: Personality, response_type: String) -> String:
-		# Don't add flavor if already has flavor
-		if response.begins_with("Well, ") or response.begins_with("Listen. ") or response.begins_with("Interesting… "):
-			return response
-		
-		# Check each prefix type
-		for prefix_type in personality_prefixes:
-			var prefix_data = personality_prefixes[prefix_type]
-			
-			# Check if compatible with response type
-			if not _is_compatible(response_type, prefix_data.compatible_with):
-				continue
-			
-			# Check if response core is incompatible
-			if prefix_data.has("incompatible_with_cores"):
-				if _has_incompatible_core(response, prefix_data.incompatible_with_cores):
-					continue
-			
-			# Check personality conditions
-			var conditions_met = true
-			var conditions = prefix_data.conditions
-			
-			if conditions.has("max_assertiveness") and personality.assertiveness >= conditions.max_assertiveness:
-				conditions_met = false
-			if conditions.has("max_stability") and personality.stability >= conditions.max_stability:
-				conditions_met = false
-			if conditions.has("min_assertiveness") and personality.assertiveness <= conditions.min_assertiveness:
-				conditions_met = false
-			if conditions.has("min_curiosity") and personality.curiosity <= conditions.min_curiosity:
-				conditions_met = false
-			if conditions.has("min_warmth") and personality.warmth <= conditions.min_warmth:
-				conditions_met = false
-			
-			# Check random threshold
-			if conditions.has("random_threshold") and randf() <= conditions.random_threshold:
-				conditions_met = false
-			
-			# Apply prefix if all conditions met
-			if conditions_met:
-				var phrase = prefix_data.phrases[0]
-				if prefix_type == "warmth" or prefix_type == "curiosity":
-					response = phrase + _lowercase_first_char_safe(response)
-				else:
-					response = phrase + response
-				break  # Only apply one prefix
-		
-		return response
 	
 	# MODIFIED: Now accepts response_type
 	func _add_assertive_ending(response: String, personality: Personality, response_type: String) -> String:
@@ -1209,6 +1208,137 @@ class ResponseGenerator:
 		if text.begins_with("I "):
 			return text
 		return text[0].to_lower() + text.substr(1)
+
+	func _format_knowledge_response(npc: NPC, option: ResponseOption) -> String:
+		# Safety check: ensure we have valid knowledge result
+		if not option.knowledge_result or not option.knowledge_result.success:
+			return "[" + npc.name + "]: I don't know anything about that."
+		
+		var k_result = option.knowledge_result
+		
+		# Safety check: ensure we have facts
+		if k_result.facts.is_empty():
+			return "[" + npc.name + "]: I don't know anything about that."
+		
+		var fact = k_result.facts[0].data
+		
+		# NEW: Safety check - verify fact data has required fields
+		if not fact.has("subject") or not fact.has("predicate") or not fact.has("object"):
+			push_warning("Malformed fact data: %s" % str(fact))
+			return "[" + npc.name + "]: I can't quite recall the details."
+		
+		# NEW: Validate that the fact is actually relevant
+		# (This prevents using tavern facts for blacksmith queries)
+		if not _is_fact_relevant_to_response(fact, option.response_type):
+			push_warning("Irrelevant fact selected for response: %s" % str(fact))
+			return "[" + npc.name + "]: Hmm, I'm not sure about that."
+		
+		# Get confidence level
+		var confidence_level = "high"
+		if k_result.confidence < 0.4:
+			confidence_level = "low"
+		elif k_result.confidence < 0.7:
+			confidence_level = "medium"
+		
+		# Select template based on type and personality
+		var template = _select_knowledge_template(
+			option.response_type,
+			confidence_level,
+			npc.personality
+		)
+		
+		# Fill template with fact data
+		var response = template \
+			.replace("{subject}", fact.get("subject", "it")) \
+			.replace("{predicate}", fact.get("predicate", "is")) \
+			.replace("{object}", fact.get("object", "unknown"))
+		
+		# Apply personality flavor
+		response = _add_personality_flavor(response, npc.personality, option.response_type)
+		
+		return "[" + npc.name + "]: " + response
+
+	# NEW HELPER FUNCTION: Validate fact relevance
+	func _is_fact_relevant_to_response(fact_data: Dictionary, response_type: String) -> bool:
+		# For knowledge sharing responses, verify the fact has meaningful content
+		if response_type in ["SHARE_KNOWLEDGE", "SHARE_CAUTIOUS"]:
+			var subject = str(fact_data.get("subject", ""))
+			var predicate = str(fact_data.get("predicate", ""))
+			var obj = str(fact_data.get("object", ""))
+			
+			# Check for empty or placeholder values
+			if subject.is_empty() or obj.is_empty():
+				return false
+			
+			if subject == "unknown" or obj == "unknown":
+				return false
+			
+			# Fact should have actual content
+			if subject.length() < 3 or obj.length() < 3:
+				return false
+			
+			return true
+		
+		# Other response types are always valid
+		return true
+
+	# OPTIONAL: Enhanced version that checks query-fact alignment
+	# Add this if you want even stricter validation
+	func _fact_matches_query_intent(fact_data: Dictionary, query_tags: Array[String]) -> bool:
+		# This would require passing query_tags through to the response generator
+		# For now, the tag matching in QueryExecutor handles this
+		# But you could add additional checks here if needed
+		return true
+		
+		
+	func _select_knowledge_template(response_type: String, confidence: String, personality: Personality) -> String:
+		# Templates organized by response type and confidence
+			var templates = {
+				"SHARE_KNOWLEDGE": {
+					"high": [
+						"{subject} {predicate} {object}.",
+						"I can tell you that {subject} {predicate} {object}.",
+						"{object}. Everyone knows that."
+					],
+					"medium": [
+						"I believe {subject} {predicate} {object}.",
+						"If I recall correctly, {subject} {predicate} {object}.",
+						"From what I understand, {subject} {predicate} {object}."
+					],
+					"low": [
+						"I think {subject} might be {object}... but I'm not certain.",
+						"If memory serves, {subject} {predicate} {object}... though don't quote me."
+					]
+				},
+				"SHARE_CAUTIOUS": {
+					"high": [
+						"Well... {subject} {predicate} {object}.",
+						"I suppose I can tell you: {subject} {predicate} {object}."
+					],
+					"medium": [
+						"I've heard that {subject} {predicate} {object}.",
+						"Some say {subject} {predicate} {object}."
+					],
+					"low": [
+						"I've heard rumors that {subject} might be {object}.",
+						"There are whispers about {subject}... something about {object}."
+					]
+				}
+			}
+			
+			var type_templates = templates.get(response_type, templates["SHARE_KNOWLEDGE"])
+			var confidence_templates = type_templates.get(confidence, type_templates["medium"])
+			
+			# Pick template based on personality
+			var index = 0
+			if personality.assertiveness > 0.5:
+				index = 0  # Direct statements
+			elif personality.warmth > 0.5:
+				index = min(1, confidence_templates.size() - 1)  # Helpful phrasing
+			else:
+				index = confidence_templates.size() - 1  # Cautious phrasing
+			
+			return confidence_templates[index]
 # ============================================================================
 # DECISION SYSTEM
 # ============================================================================
@@ -1519,7 +1649,6 @@ func _create_sample_npcs():
 		{"id": "npc_10", "name": "Zara", "archetype": "rogue"},
 		{"id": "npc_11", "name": "Viktor", "archetype": "noble"},
 	]
-	
 	for config in configs:
 		var npc = create_npc_from_template(config.id, config.name, config.archetype)
 		npcs[npc.id] = npc
@@ -1546,36 +1675,126 @@ func create_npc_from_template(npc_id, npc_name, archetype, contextual_role = "")
 	return npc
 
 func process_request(npc_id: String, request_text: String) -> String:
-	if not npcs.has(npc_id): return "Unknown NPC"
+	if not npcs.has(npc_id):
+		return "Unknown NPC"
+	
 	var npc = npcs[npc_id]
 	
-	# 1. PARSE
+	# 1. PARSE REQUEST
 	var request = parser.parse_request(request_text)
 	
-	# 2. CHECK FOR KNOWLEDGE QUERY
-	# We use the specific KnowledgeQuery parser here
+	# 2. CHECK IF THIS IS A KNOWLEDGE QUERY AND ADD KNOWLEDGE OPTIONS
 	var k_query = KnowledgeQuery.parse(request_text)
-	if k_query.query_type != KnowledgeQuery.QueryType.GENERAL or request.context.request_type == "QUERY":
+	if k_query.query_type != KnowledgeQuery.QueryType.GENERAL:
+		# This is a knowledge query - add knowledge-based response options
 		var k_executor = KnowledgeQuery.QueryExecutor.new(world_knowledge)
 		var k_result = k_executor.execute(npc.knowledge, k_query)
 		
-		if k_result.success:
-			var tmpl = KnowledgeHelpers.ResponseTemplates.get_template(k_result.confidence, k_query.query_type)
-			var fact = k_result.facts[0].data
-			# Simple formatting
-			var resp = tmpl.replace("{subject}", fact.get("subject", "it")) \
-				.replace("{predicate}", fact.get("predicate", "is")) \
-				.replace("{object}", fact.get("object", "unknown"))
-			
-			npc.remember_response(resp)
-			return "[" + npc.name + "]: " + resp
-		elif k_result.partial_knowledge:
-			return "[" + npc.name + "]: It feels familiar, but I've forgotten the details."
+		# Add knowledge response options to the existing options
+		request.response_options.append_array(_create_knowledge_options(k_result))
 	
-	# 3. FALLBACK TO STANDARD BEHAVIOR
-	# (In a full implementation, you'd generate ResponseOptions here as in the original script)
-	# For brevity in this response, we just return a placeholder or standard fallback
+	# 3. ADD PERSONALITY-SPECIFIC OPTIONS
+	if npc.personality.warmth > 0.7:
+		request.response_options.append(generator.create_soft_refusal())
+	
+	if npc.personality.assertiveness < -0.2:
+		request.response_options.append(generator.create_hedged_refusal())
+	
+	# 4. APPLY PERSONALITY CONSTRAINTS
+	request.response_options = generator.apply_personality_constraints(
+		request.response_options, npc.personality
+	)
+	
+	# 5. EVALUATE ALL OPTIONS AND PICK BEST (with anti-repetition)
+	var best_option: ResponseOption = null
+	var best_score = -INF
+	var attempts = 0
+	var max_attempts = _get_max_attempts(npc)
+	
+	while attempts < max_attempts:
+		best_option = null
+		best_score = -INF
+		
+		# Score all options
+		for option in request.response_options:
+			var score = decision_engine.evaluate_response(npc, option, request, self)
+			if score > best_score:
+				best_score = score
+				best_option = option
+		
+		if best_option:
+			var response = generator.generate_response(npc, best_option, request)
+			
+			# Check if repetitive
+			if not npc.is_response_repetitive(response):
+				npc.remember_response(response)
+				_update_npc_after_response(npc, best_option, request)
+				return response
+		
+		# Penalize this option and try again
+		if best_option:
+			best_option.base_score *= 0.5
+		attempts += 1
+	
+	# 6. FALLBACK (only as last resort)
 	return decision_engine._generate_fallback(npc)
+
+func _create_knowledge_options(k_result: KnowledgeQuery.QueryResult) -> Array[ResponseOption]:
+	var options: Array[ResponseOption] = []
+	
+	if k_result.success:
+		# SHARE_KNOWLEDGE - High confidence answer
+		var share = ResponseOption.new()
+		share.response_type = "SHARE_KNOWLEDGE"
+		share.base_score = 0.6 + (k_result.confidence * 0.2)
+		share.personality_tags = {"is_helpful": true, "is_knowledgeable": true}
+		share.action_tags = {"knowledge_sharing": true}
+		share.knowledge_result = k_result
+		share.response_template = "{knowledge_response}"
+		options.append(share)
+		
+		# SHARE_CAUTIOUSLY - For secretive/careful characters
+		var cautious = ResponseOption.new()
+		cautious.response_type = "SHARE_CAUTIOUS"
+		cautious.base_score = 0.5
+		cautious.personality_tags = {"is_cautious": true, "is_secretive": true}
+		cautious.action_tags = {"knowledge_sharing": true}
+		cautious.knowledge_result = k_result
+		cautious.response_template = "{knowledge_response_cautious}"
+		options.append(cautious)
+	
+	elif k_result.partial_knowledge:
+		# ADMIT_FORGOTTEN - Honest about forgetting
+		var forgotten = ResponseOption.new()
+		forgotten.response_type = "ADMIT_FORGOTTEN"
+		forgotten.base_score = 0.45
+		forgotten.personality_tags = {"is_honest": true}
+		forgotten.response_template = "That sounds familiar, but I can't quite remember..."
+		options.append(forgotten)
+	
+	# Always add DENY_KNOWLEDGE as an option (secretive NPCs might choose this even if they know)
+	var deny = ResponseOption.new()
+	deny.response_type = "DENY_KNOWLEDGE"
+	deny.base_score = 0.3
+	deny.personality_tags = {"is_secretive": true, "is_protective": true}
+	deny.response_template = "I don't know anything about that"
+	options.append(deny)
+	
+	return options
+
+func _get_max_attempts(npc: NPC) -> int:
+	# Decisive roles try more times before giving up
+	if npc.context.role in ["warlord", "noble"]:
+		return 5
+	elif npc.personality.assertiveness > 0.7:
+		return 4
+	# Thoughtful roles give up sooner
+	elif npc.context.role in ["scholar", "rogue"]:
+		return 2
+	elif npc.personality.conscientiousness > 0.7:
+		return 2
+	else:
+		return 3
 
 func _process(delta: float):
 	tick_count += 1
@@ -1588,11 +1807,84 @@ func _process(delta: float):
 			# Decay Knowledge
 			knowledge_decay.process_decay(npc.knowledge, time)
 
+func _update_npc_after_response(npc: NPC, option: ResponseOption, request: Request) -> void:
+	# Update relationship based on response
+	var rel = npc.get_relationship(request.context.requester_id)
+	
+	if option.response_type in ["AGREE", "SHARE_KNOWLEDGE"]:
+		rel.trust += 0.05
+		rel.affection += 0.03
+	elif option.response_type in ["REFUSE", "DENY_KNOWLEDGE"]:
+		rel.trust -= 0.02
+		rel.affection -= 0.01
+	elif option.response_type == "NEGOTIATE":
+		rel.respect += 0.02
+	
+	# Update stress based on action tags
+	if option.action_tags.get("risky", 0.0) > 0.5:
+		npc.context.stress_level += 0.1
+	
+	# Clamp values
+	rel.trust = clamp(rel.trust, -1.0, 1.0)
+	rel.affection = clamp(rel.affection, -1.0, 1.0)
+	rel.respect = clamp(rel.respect, -1.0, 1.0)
+	npc.context.stress_level = clamp(npc.context.stress_level, 0.0, 1.0)
+
+func _generate_knowledge_options(
+	npc: NPC, 
+	query: KnowledgeQuery, 
+	query_result: KnowledgeQuery.QueryResult) -> Array[ResponseOption]:
+	var options: Array[ResponseOption] = []
+	
+	if query_result.success:
+		# SHARE_KNOWLEDGE - High confidence
+		var share = ResponseOption.new()
+		share.response_type = "SHARE_KNOWLEDGE"
+		share.base_score = 0.6 + (query_result.confidence * 0.2)
+		share.personality_tags = {"is_helpful": true, "is_knowledgeable": true}
+		share.action_tags = {"knowledge_sharing": true}
+		share.knowledge_data = query_result  # Store for later formatting
+		options.append(share)
+		
+		# SHARE_CAUTIOUSLY - Medium confidence or secretive NPCs
+		var cautious = ResponseOption.new()
+		cautious.response_type = "SHARE_CAUTIOUS"
+		cautious.base_score = 0.5
+		cautious.personality_tags = {"is_cautious": true, "is_secretive": true}
+		cautious.action_tags = {"knowledge_sharing": true}
+		cautious.knowledge_data = query_result
+		options.append(cautious)
+	
+	elif query_result.partial_knowledge:
+		# ADMIT_FORGOTTEN
+		var forgotten = ResponseOption.new()
+		forgotten.response_type = "ADMIT_FORGOTTEN"
+		forgotten.base_score = 0.4
+		forgotten.personality_tags = {"is_honest": true}
+		forgotten.response_template = "That sounds familiar, but I can't quite remember..."
+		options.append(forgotten)
+	
+	# Always include DENY_KNOWLEDGE as an option
+	var deny = ResponseOption.new()
+	deny.response_type = "DENY_KNOWLEDGE"
+	deny.base_score = 0.3
+	deny.personality_tags = {"is_secretive": true, "is_protective": true}
+	deny.response_template = "I don't know anything about that"
+	options.append(deny)
+	
+	return options
+
 func send_request_to_npc(npc_name: String, text: String) -> String:
 	for id in npcs:
 		if npcs[id].name == npc_name:
 			return process_request(id, text)
 	return "I don't know anyone named " + npc_name
+
+func get_npc_list() -> Array[String]:
+	var names: Array[String] = []
+	for id in npcs:
+		names.append(npcs[id].name)
+	return names
 
 func get_npc_info(npc_name: String) -> Dictionary:
 	for id in npcs:

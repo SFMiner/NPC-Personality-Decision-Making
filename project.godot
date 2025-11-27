@@ -18,3 +18,4 @@ config/features=PackedStringArray("4.5")
 
 WoldKNowledge="*res://scripts/world_knowledge.gd"
 WorldDB="*res://scripts/world_knowledge.gd"
+NpcManager="*res://scripts/npc_system_enhanced.gd"

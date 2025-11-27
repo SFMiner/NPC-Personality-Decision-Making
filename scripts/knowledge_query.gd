@@ -85,93 +85,142 @@ func _extract_subject(text: String) -> String:
 class QueryExecutor:
 	var world: WorldKnowledge
 	var min_strength_threshold: float = 0.2
+
 	
 	func _init(world_ref: WorldKnowledge):
 		world = world_ref
+
 	
 	func execute(npc_knowledge: KnowledgeIndex, query: KnowledgeQuery) -> QueryResult:
 		var result = QueryResult.new()
 		
-		# 1. Early Reject
+		# 1. Early Reject - NPC doesn't have ANY relevant tags
 		if not npc_knowledge.has_any_tag(query.extracted_tags):
 			result.success = false
-			# Check partial/forgotten
+			# Check if forgotten
 			for tag in query.extracted_tags:
 				if tag in npc_knowledge.forgotten_tags:
 					result.partial_knowledge = true
 					break
 			return result
-			
-		# 2. Candidate Lookup
+		
+		# 2. Candidate Lookup - find all facts matching ANY tag
 		var candidate_ids = world.get_facts_by_tags(query.extracted_tags, false)
 		if candidate_ids.is_empty():
 			result.success = false
 			return result
-			
-		# 3. Filter Knowledge
-		var known_candidates: Array[Dictionary] = []
-		var current_time = Time.get_unix_time_from_system()
 		
-		for fid in candidate_ids:
-			if not npc_knowledge.known_facts.has(fid):
-				continue
-				
-			var k_fact = npc_knowledge.known_facts[fid]
-			var eff_strength = k_fact.calculate_effective_strength(current_time, npc_knowledge.forgetfulness_rate)
-			
-			if eff_strength < min_strength_threshold:
+		# 3. Filter candidates NPC actually knows AND score by tag match quality
+		var known_candidates: Array = []
+		
+		for fact_id in candidate_ids:
+			if not npc_knowledge.known_facts.has(fact_id):
 				continue
 			
-			var f_data = world.get_fact(fid)
+			var known_fact = npc_knowledge.known_facts[fact_id]
+			var fact_data = world.get_fact(fact_id)
 			
-			# Check Prereqs
-			var missing = false
-			for p_id in f_data.prerequisites:
-				if not npc_knowledge.known_facts.has(p_id):
-					result.missing_prerequisites.append(p_id)
-					missing = true
-			if missing: continue
+			if not fact_data:
+				continue
 			
-			# Check Skills
-			var skill_issue = false
-			for s_name in f_data.skill_requirements:
-				var req = f_data.skill_requirements[s_name]
-				var level = npc_knowledge.skills.get(s_name, 0.0)
-				if level < req:
-					skill_issue = true
+			# Check prerequisites
+			var has_prereqs = true
+			for prereq_id in fact_data.prerequisites:
+				if not npc_knowledge.known_facts.has(prereq_id):
+					has_prereqs = false
+					result.missing_prerequisites.append(prereq_id)
 					break
-			if skill_issue and f_data.granularity == FactData.Granularity.EXPERT:
-				continue
-				
-			known_candidates.append({
-				"fact": f_data,
-				"known": k_fact,
-				"strength": eff_strength
-			})
 			
+			if not has_prereqs:
+				continue
+			
+			# NEW: Calculate tag match quality score
+			var match_score = _calculate_tag_match_score(fact_data.tags, query.extracted_tags)
+			
+			# NEW: Require minimum match quality (at least 2 matching tags OR 1 exact important tag)
+			if match_score < 1.0:
+				continue
+			
+			# Apply strength threshold
+			var effective_strength = known_fact.calculate_effective_strength(
+				Time.get_unix_time_from_system(),
+				npc_knowledge.forgetfulness_rate
+			)
+			
+			if effective_strength < min_strength_threshold:
+				result.partial_knowledge = true
+				continue
+			
+			# Store with match score for sorting
+			known_candidates.append({
+				"fact_id": fact_id,
+				"fact_data": fact_data,
+				"known_fact": known_fact,
+				"strength": effective_strength,
+				"match_score": match_score  # NEW: Store match quality
+			})
+		
+		# 4. Sort by MATCH QUALITY first, then strength
+		known_candidates.sort_custom(func(a, b): 
+			if abs(a.match_score - b.match_score) > 0.1:
+				return a.match_score > b.match_score  # Better match wins
+			return a.strength > b.strength  # Tie-breaker: stronger memory
+		)
+		
+		# 5. Return results
 		if known_candidates.is_empty():
 			result.success = false
+			if result.missing_prerequisites.size() > 0:
+				result.partial_knowledge = true
 			return result
-			
-		# 4. Misinformation & Sorting
-		# Sort by strength descending
-		known_candidates.sort_custom(func(a, b): return a.strength > b.strength)
 		
 		result.success = true
 		result.confidence = known_candidates[0].strength
 		
-		# Apply misinfo
-		for cand in known_candidates:
-			var fid = cand.fact.fact_id
-			if npc_knowledge.misinformation.has(fid):
-				var mis = npc_knowledge.misinformation[fid]
-				# Clone fact data for response to avoid modifying global state
-				var distorted_fact = FactData.new() # Shallow copy wrapper
-				distorted_fact.data = mis.distorted_data
-				distorted_fact.tags = cand.fact.tags
-				result.facts.append(distorted_fact)
-			else:
-				result.facts.append(cand.fact)
-			result.known_facts.append(cand.known)
-			
+		for candidate in known_candidates:
+			result.facts.append(candidate.fact_data)
+			result.known_facts.append(candidate.known_fact)
+		
+		# 6. Check for contradictions
+		result.has_contradictions = _detect_contradictions(known_candidates)
+		
 		return result
+
+	# NEW HELPER FUNCTION: Calculate how well fact tags match query tags
+	func _calculate_tag_match_score(fact_tags: Array[String], query_tags: Array[String]) -> float:
+		var score = 0.0
+		var important_matches = 0
+		var common_matches = 0
+		
+		# Define important tags that should be exact matches
+		var important_tag_types = ["blacksmith", "tavern", "king", "queen", "healer", 
+								   "merchant", "guild", "temple", "castle"]
+		
+		for query_tag in query_tags:
+			if query_tag in fact_tags:
+				# Check if this is an important/specific tag
+				if query_tag in important_tag_types:
+					important_matches += 1
+					score += 2.0  # Important tags worth more
+				else:
+					common_matches += 1
+					score += 0.5  # Generic tags (location, person) worth less
+		
+		# Scoring rules:
+		# - 1+ important match = good (score >= 2.0)
+		# - 2+ common matches = acceptable (score >= 1.0)
+		# - 1 common match only = weak (score = 0.5, filtered out)
+		
+		return score
+
+	# Keep the existing _detect_contradictions function as-is
+	func _detect_contradictions(candidates: Array) -> bool:
+		for i in range(candidates.size()):
+			for j in range(i + 1, candidates.size()):
+				var data_a = candidates[i].fact_data.data
+				var data_b = candidates[j].fact_data.data
+				
+				if data_a.get("subject") == data_b.get("subject"):
+					if data_a.get("object") != data_b.get("object"):
+						return true
+		return false
