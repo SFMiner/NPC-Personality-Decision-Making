@@ -18,7 +18,7 @@ func _ready():
 			count += 1
 	else:
 		print("  WARNING: No facts in WorldKnowledge!")
-	print_multiple_responses(npc_manager, "Vorak", "Where is the blacksmith?", 100)
+	print_multiple_responses(npc_manager, "Vorak", "Where is the blacksmith?", 10)
 
 func print_multiple_responses(npc_manager : NPCSystemEnhanced, char_id : String, request : String, num : int) -> void:
 	for i in range(num):

@@ -1,7 +1,7 @@
 extends Node
 class_name NPCSystemEnhanced
 
-var debugging = true
+var debugging : bool= false
 # KNOWLEDGE SYSTEM INTEGRATION
 var world_knowledge: WorldKnowledge
 
@@ -16,9 +16,11 @@ class Personality:
 	var risk_tolerance: float
 	var stability: float
 	var values: Dictionary
+	var debugging : bool = true
 	
 	func _init(w: float = 0.0, a: float = 0.0, c: float = 0.0,
-		cu: float = 0.0, r: float = 0.0, s: float = 0.0, v: Dictionary = {}):
+		cu: float = 0.0, r: float = 0.0, s: float = 0.0, v: Dictionary = {}, debug = true):
+		debugging = debug
 		warmth = w
 		assertiveness = a
 		conscientiousness = c
@@ -38,7 +40,7 @@ class Relationship:
 	var respect: float = 0.0
 	var fear: float = 0.0
 	var history: Array[String] = []
-	
+
 	func get_influence_multiplier() -> float:
 		var mult = 1.0
 		mult += affection * 0.5  # INCREASED from 0.3
@@ -71,11 +73,12 @@ class NPC:
 	var memory: Array[Dictionary] = []
 	var baseline_drives: Array[Drive] = []
 	var dynamic_drives: Array[Drive] = []
-	
+	var debugging : bool= true
+
 	# NEW: KNOWLEDGE SYSTEM INTEGRATION
 	var knowledge: KnowledgeIndex
 	
-	func _init(npc_id: String, npc_name: String, pers: Personality):
+	func _init(npc_id: String, npc_name: String, pers: Personality, debug : bool = false):
 		id = npc_id
 		name = npc_name
 		personality = pers
@@ -122,14 +125,17 @@ class RequestContext:
 	var emotional_tone: float = 0.0
 	var requester_id: String = "player"
 	var witnesses: Array[String] = []
+	var debugging : bool = true
 
 class Request:
 	var raw_text: String
 	var context: RequestContext
 	var parsed_intent: Dictionary
 	var response_options: Array[ResponseOption] = []
+	var debugging : bool = true
+
 	
-	func _init(text: String):
+	func _init(text: String, debug : bool = false):
 		raw_text = text
 		context = RequestContext.new()
 		parsed_intent = {}
@@ -151,8 +157,10 @@ class Drive:
 	var target_id: String = ""  # For personal drives like "PROTECT_Mira"
 	var urgency: float = 0.5  # How pressing is this drive right now?
 	var last_satisfied: int = 0  # Timestamp for future decay/urgency systems
+	var debugging : bool= true
+
 	
-	func _init(type: String = "", w: float = 0.5, target: String = "", urg: float = 0.5):
+	func _init(type: String = "", w: float = 0.5, target: String = "", urg: float = 0.5, debug : bool = false):
 		drive_type = type
 		weight = w
 		target_id = target
@@ -177,34 +185,140 @@ class ArchetypeTemplate:
 	var personality_variance: float = 0.15
 	var drive_variance: float = 0.15
 	var wealth_variance: float = 0.2
+	var debugging : bool= true
+
 	
-	func _init(archetype_name: String = ""):
+	func _init(archetype_name: String = "", debug : bool = false):
 		name = archetype_name
 
 class ArchetypeLibrary:
 	var templates: Dictionary = {}
-	func _init(): _define_archetypes()
+	var debugging : bool = true
+
+	
+	func _init():
+		_define_archetypes()
+	
 	func _define_archetypes():
+		# MERCHANT
 		var merchant = ArchetypeTemplate.new("merchant")
-		merchant.warmth = 0.4; merchant.assertiveness = 0.2; merchant.conscientiousness = 0.6
-		merchant.curiosity = 0.3; merchant.risk_tolerance = 0.4; merchant.stability = 0.5
+		merchant.description = "Profit-focused trader"
+		merchant.warmth = 0.4
+		merchant.assertiveness = 0.2
+		merchant.conscientiousness = 0.6
+		merchant.curiosity = 0.3
+		merchant.risk_tolerance = 0.4
+		merchant.stability = 0.5
 		merchant.values = {"WEALTH": 0.8, "COMMUNITY": 0.4, "KNOWLEDGE": 0.3}
-		merchant.baseline_drives = {"SELF_PRESERVATION": 0.6, "SEEK_WEALTH": 0.9, "SEEK_GIFTS": 0.7, "AVOID_PAIN": 0.7}
+		merchant.baseline_drives = {
+			"SELF_PRESERVATION": 0.6,
+			"SEEK_WEALTH": 0.9,
+			"SEEK_GIFTS": 0.7,
+			"AVOID_PAIN": 0.7
+		}
 		merchant.wealth_range = Vector2i(300, 700)
 		templates["merchant"] = merchant
 		
+		# WARLORD
+		var warlord = ArchetypeTemplate.new("warlord")
+		warlord.description = "Battle-hardened leader"
+		warlord.warmth = -0.3
+		warlord.assertiveness = 0.8
+		warlord.conscientiousness = 0.2
+		warlord.curiosity = -0.1
+		warlord.risk_tolerance = 0.7
+		warlord.stability = 0.3
+		warlord.values = {"POWER": 0.8, "HONOR": 0.4, "WEALTH": 0.3}
+		warlord.baseline_drives = {
+			"SELF_PRESERVATION": 0.4,
+			"SEEK_STATUS": 0.9,
+			"SEEK_WEALTH": 0.5,
+			"AVOID_PAIN": 0.3
+		}
+		warlord.wealth_range = Vector2i(200, 500)
+		templates["warlord"] = warlord
+		
+		# HEALER
+		var healer = ArchetypeTemplate.new("healer")
+		healer.description = "Compassionate caregiver"
+		healer.warmth = 0.8
+		healer.assertiveness = -0.3
+		healer.conscientiousness = 0.7
+		healer.curiosity = 0.4
+		healer.risk_tolerance = -0.4
+		healer.stability = 0.7
+		healer.values = {"COMMUNITY": 0.9, "HONOR": 0.6, "KNOWLEDGE": 0.4}
+		healer.baseline_drives = {
+			"SELF_PRESERVATION": 0.9,
+			"AVOID_PAIN": 0.9,
+			"SEEK_WEALTH": 0.3,
+			"SEEK_GIFTS": 0.4
+		}
+		healer.wealth_range = Vector2i(100, 300)
+		templates["healer"] = healer
+		
+		# SCHOLAR
 		var scholar = ArchetypeTemplate.new("scholar")
-		scholar.warmth = 0.3; scholar.assertiveness = -0.2; scholar.conscientiousness = 0.8
-		scholar.curiosity = 0.9; scholar.risk_tolerance = -0.2; scholar.stability = 0.6
+		scholar.description = "Knowledge seeker"
+		scholar.warmth = 0.3
+		scholar.assertiveness = -0.2
+		scholar.conscientiousness = 0.8
+		scholar.curiosity = 0.9
+		scholar.risk_tolerance = -0.2
+		scholar.stability = 0.6
 		scholar.values = {"KNOWLEDGE": 0.9, "HONOR": 0.5, "POWER": 0.2}
-		scholar.baseline_drives = {"SELF_PRESERVATION": 0.7, "SEEK_KNOWLEDGE": 0.9, "SEEK_WEALTH": 0.4}
+		scholar.baseline_drives = {
+			"SELF_PRESERVATION": 0.7,
+			"SEEK_KNOWLEDGE": 0.9,
+			"SEEK_WEALTH": 0.4,
+			"AVOID_PAIN": 0.6
+		}
 		scholar.wealth_range = Vector2i(150, 400)
 		templates["scholar"] = scholar
-		# ... (Other archetypes abbreviated for brevity, logic remains identical to original) ...
-		# Add back other archetypes (warlord, healer, rogue, noble) as needed
 		
+		# ROGUE
+		var rogue = ArchetypeTemplate.new("rogue")
+		rogue.description = "Independent opportunist"
+		rogue.warmth = -0.1
+		rogue.assertiveness = 0.3
+		rogue.conscientiousness = -0.4
+		rogue.curiosity = 0.5
+		rogue.risk_tolerance = 0.8
+		rogue.stability = 0.2
+		rogue.values = {"FREEDOM": 0.9, "WEALTH": 0.6, "POWER": 0.3}
+		rogue.baseline_drives = {
+			"SELF_PRESERVATION": 0.5,
+			"SEEK_WEALTH": 0.8,
+			"SEEK_STATUS": 0.4,
+			"AVOID_PAIN": 0.5
+		}
+		rogue.wealth_range = Vector2i(50, 250)
+		templates["rogue"] = rogue
+		
+		# NOBLE
+		var noble = ArchetypeTemplate.new("noble")
+		noble.description = "High-born authority"
+		noble.warmth = 0.2
+		noble.assertiveness = 0.6
+		noble.conscientiousness = 0.7
+		noble.curiosity = 0.1
+		noble.risk_tolerance = -0.3
+		noble.stability = 0.8
+		noble.values = {"HONOR": 0.8, "POWER": 0.7, "TRADITION": 0.6}
+		noble.baseline_drives = {
+			"SELF_PRESERVATION": 0.7,
+			"SEEK_STATUS": 0.9,
+			"SEEK_WEALTH": 0.6,
+			"SEEK_GIFTS": 0.8
+		}
+		noble.wealth_range = Vector2i(800, 1500)
+		templates["noble"] = noble
+	
 	func get_template(archetype: String) -> ArchetypeTemplate:
-		return templates.get(archetype, templates["merchant"])
+		if templates.has(archetype):
+			return templates[archetype]
+		push_error("Unknown archetype: " + archetype)
+		return templates["merchant"]  # Safe fallback
 
 class RoleModifier:
 	var role_name: String
@@ -243,7 +357,11 @@ class RequestParser:
 		"information": ["know", "tell", "explain", "where", "who", "what"],
 		"help": ["help", "assist", "aid", "support", "rescue", "save"]
 	}
-	
+	var debugging : bool = true
+
+	func _init(debug : bool = true):
+		debugging = debug
+		
 	func parse_request(text: String) -> Request:
 		var request = Request.new(text)
 		var lower_text = text.to_lower()
@@ -690,8 +808,12 @@ class ResponseGenerator:
 			"conditions": {"min_warmth": 0.5, "random_threshold": 0.85}
 		}
 	}
+	var debugging : bool = true
 
-	func _add_personality_flavor(response: String, personality: Personality, response_type: String) -> String:
+	func _init(debug : bool = false):
+		debugging = debug
+
+	func _add_personality_flavor(response: String, personality: Personality, response_type: String, debug : bool = false) -> String:
 		# Don't add flavor if already has flavor
 		if response.begins_with("Well, ") or response.begins_with("Listen. ") or response.begins_with("Interesting… "):
 			return response
@@ -1235,9 +1357,9 @@ class ResponseGenerator:
 		
 		# Get confidence level
 		var confidence_level = "high"
-		if k_result.confidence < 0.4:
+		if k_result.confidence < 0.3:
 			confidence_level = "low"
-		elif k_result.confidence < 0.7:
+		elif k_result.confidence < 0.6:
 			confidence_level = "medium"
 		
 		# Select template based on type and personality
@@ -1247,14 +1369,20 @@ class ResponseGenerator:
 			npc.personality
 		)
 		
+		print("Template returned: '%s'" % template)
+		
 		# Fill template with fact data
 		var response = template \
 			.replace("{subject}", fact.get("subject", "it")) \
 			.replace("{predicate}", fact.get("predicate", "is")) \
 			.replace("{object}", fact.get("object", "unknown"))
+#		print("Fact data: subject='%s', predicate='%s', object='%s'" % [fact.subject, fact.predicate, fact.object])
 		
 		# Apply personality flavor
 		response = _add_personality_flavor(response, npc.personality, option.response_type)
+
+		if response.length() > 0:
+			response = response[0].to_upper() + response.substr(1)
 		
 		return "[" + npc.name + "]: " + response
 
@@ -1293,56 +1421,69 @@ class ResponseGenerator:
 		
 	func _select_knowledge_template(response_type: String, confidence: String, personality: Personality) -> String:
 		# Templates organized by response type and confidence
-			var templates = {
-				"SHARE_KNOWLEDGE": {
-					"high": [
-						"{subject} {predicate} {object}.",
-						"I can tell you that {subject} {predicate} {object}.",
-						"{object}. Everyone knows that."
-					],
-					"medium": [
-						"I believe {subject} {predicate} {object}.",
-						"If I recall correctly, {subject} {predicate} {object}.",
-						"From what I understand, {subject} {predicate} {object}."
-					],
-					"low": [
-						"I think {subject} might be {object}... but I'm not certain.",
-						"If memory serves, {subject} {predicate} {object}... though don't quote me."
-					]
-				},
-				"SHARE_CAUTIOUS": {
-					"high": [
-						"Well... {subject} {predicate} {object}.",
-						"I suppose I can tell you: {subject} {predicate} {object}."
-					],
-					"medium": [
-						"I've heard that {subject} {predicate} {object}.",
-						"Some say {subject} {predicate} {object}."
-					],
-					"low": [
-						"I've heard rumors that {subject} might be {object}.",
-						"There are whispers about {subject}... something about {object}."
-					]
-				}
+		if debugging: print("Template selection: type=%s, conf=%s, assert=%.2f" % [response_type, confidence, personality.assertiveness])
+
+		var templates = {
+			"SHARE_KNOWLEDGE": {
+				"high": [
+					"{subject} {predicate} {object}.",
+					"I can tell you that {subject} {predicate} {object}.",
+					"{object}. Everyone knows that."
+				],
+				"medium": [
+					"I believe {subject} {predicate} {object}.",
+					"If I recall correctly, {subject} {predicate} {object}.",
+					"From what I understand, {subject} {predicate} {object}."
+				],
+				"low": [
+					"I think {subject} might be {object}... but I'm not certain.",
+					"If memory serves, {subject} {predicate} {object}... though don't quote me."
+				]
+			},
+			"SHARE_CAUTIOUS": {
+				"high": [
+					"Well... {subject} {predicate} {object}.",
+					"I suppose I can tell you: {subject} {predicate} {object}."
+				],
+				"medium": [
+					"I've heard that {subject} {predicate} {object}.",
+					"Some say {subject} {predicate} {object}."
+				],
+				"low": [
+					"I've heard rumors that {subject} might be {object}.",
+					"There are whispers about {subject}... something about {object}."
+				]
 			}
-			
-			var type_templates = templates.get(response_type, templates["SHARE_KNOWLEDGE"])
-			var confidence_templates = type_templates.get(confidence, type_templates["medium"])
-			
-			# Pick template based on personality
-			var index = 0
-			if personality.assertiveness > 0.5:
-				index = 0  # Direct statements
-			elif personality.warmth > 0.5:
-				index = min(1, confidence_templates.size() - 1)  # Helpful phrasing
+		}
+		
+		var type_templates = templates.get(response_type, templates["SHARE_KNOWLEDGE"])
+		var confidence_templates = type_templates.get(confidence, type_templates["medium"])
+		
+		# Pick template based on personality
+		var index = 0
+		var template_pool = confidence_templates.duplicate()
+		if personality.assertiveness > 0.7:
+			# Assertive: 70% direct, 30% other
+			if randf() > 0.3:
+				index = 0
 			else:
-				index = confidence_templates.size() - 1  # Cautious phrasing
-			
-			return confidence_templates[index]
+				index = randi() % confidence_templates.size()
+
+		elif personality.warmth > 0.5:
+			index = min(1, confidence_templates.size() - 1)  # Helpful phrasing
+		else:
+			index = confidence_templates.size() - 1  # Cautious phrasing
+		
+		return confidence_templates[index]
 # ============================================================================
 # DECISION SYSTEM
 # ============================================================================
 class DecisionEngine:
+	var debugging : bool = true
+			
+	func _init(debug : bool = false):
+		debugging = debug
+	
 	func evaluate_response(npc: NPC, option: ResponseOption, request: Request, system: NPCSystemEnhanced) -> float:
 		var score = option.base_score
 		
@@ -1372,8 +1513,9 @@ class DecisionEngine:
 				score *= 0.7  # 30% penalty for same type
 		
 		return score
-		
-		
+
+	
+	
 	func _generate_fallback(npc: NPC) -> String:
 		# Select fallback text based on personality and role
 		var fallback_text = ""
@@ -1685,10 +1827,17 @@ func process_request(npc_id: String, request_text: String) -> String:
 	
 	# 2. CHECK IF THIS IS A KNOWLEDGE QUERY AND ADD KNOWLEDGE OPTIONS
 	var k_query = KnowledgeQuery.parse(request_text)
+	if debugging: print("DEBUG: Query='%s', Type=%s" % [request_text, KnowledgeQuery.QueryType.keys()[k_query.query_type]])
+
 	if k_query.query_type != KnowledgeQuery.QueryType.GENERAL:
 		# This is a knowledge query - add knowledge-based response options
 		var k_executor = KnowledgeQuery.QueryExecutor.new(world_knowledge)
 		var k_result = k_executor.execute(npc.knowledge, k_query)
+		if debugging: print("DEBUG: Knowledge success=%s, confidence=%.2f" % [k_result.success, k_result.confidence])
+
+		var k_options = _create_knowledge_options(k_result)
+		if debugging: print("DEBUG: Created %d knowledge options" % k_options.size())
+		request.response_options.append_array(k_options)
 		
 		# Add knowledge response options to the existing options
 		request.response_options.append_array(_create_knowledge_options(k_result))
@@ -1730,6 +1879,12 @@ func process_request(npc_id: String, request_text: String) -> String:
 				npc.remember_response(response)
 				_update_npc_after_response(npc, best_option, request)
 				return response
+			if best_option.response_type in ["SHARE_KNOWLEDGE", "SHARE_CAUTIOUS", "DENY_KNOWLEDGE"]:
+# Factual queries should give consistent answers
+				npc.remember_response(response)
+				_update_npc_after_response(npc, best_option, request)
+				return response
+		
 		
 		# Penalize this option and try again
 		if best_option:
@@ -1746,7 +1901,7 @@ func _create_knowledge_options(k_result: KnowledgeQuery.QueryResult) -> Array[Re
 		# SHARE_KNOWLEDGE - High confidence answer
 		var share = ResponseOption.new()
 		share.response_type = "SHARE_KNOWLEDGE"
-		share.base_score = 0.6 + (k_result.confidence * 0.2)
+		share.base_score = 0.8 + (k_result.confidence * 0.3)
 		share.personality_tags = {"is_helpful": true, "is_knowledgeable": true}
 		share.action_tags = {"knowledge_sharing": true}
 		share.knowledge_result = k_result
