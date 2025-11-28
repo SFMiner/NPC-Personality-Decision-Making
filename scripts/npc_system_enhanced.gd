@@ -864,44 +864,51 @@ class ResponseGenerator:
 	# Main generation function
 	func generate_response(npc: NPC, chosen_option: ResponseOption, request: Request) -> String:
 		var response = chosen_option.response_template
-		var response_type = chosen_option.response_type
-		if chosen_option.response_type in ["SHARE_KNOWLEDGE", "SHARE_CAUTIOUS"]:
+		var response_type = chosen_option.response_type  # IMPORTANT: Declare this at the top
+		
+		# Handle knowledge responses first (returns early, bypasses rest)
+		if response_type in ["SHARE_KNOWLEDGE", "SHARE_CAUTIOUS"]:
 			return _format_knowledge_response(npc, chosen_option)
-
-		# Apply modifiers in order, passing response_type for tag checking
-		response = _apply_personality_modifiers(response, npc.personality, chosen_option.template_variant, response_type)
-		response = _apply_value_modifiers(response, npc.personality.values, chosen_option.template_variant, response_type)
-		response = _apply_context_modifiers(response, npc, request.context, response_type)
-		response = _apply_relationship_modifiers(response, npc.get_relationship(request.context.requester_id), npc.personality, response_type)
+		
+		# NEW: Handle ADMIT_IGNORANCE (complete response, skip modifiers)
+		if response_type == "ADMIT_IGNORANCE":
+			response = _select_knowledge_template("ADMIT_IGNORANCE", "", npc.personality)
+			# Note: response_type is still in scope for _add_personality_flavor below
+		
+		# NEW: Handle DENY_KNOWLEDGE (complete response, skip modifiers)
+		elif response_type == "DENY_KNOWLEDGE":
+			response = _select_knowledge_template("DENY_KNOWLEDGE", "", npc.personality)
+		
+		# NEW: Handle ADMIT_FORGOTTEN (complete response, skip modifiers)
+		elif response_type == "ADMIT_FORGOTTEN":
+			response = _select_knowledge_template("ADMIT_FORGOTTEN", "", npc.personality)
+		
+		# For all OTHER response types, apply normal modifiers
+		else:
+			# Apply modifiers in order (existing logic for AGREE, REFUSE, NEGOTIATE, etc.)
+			response = _apply_personality_modifiers(response, npc.personality, chosen_option.template_variant, response_type)
+			response = _apply_value_modifiers(response, npc.personality.values, chosen_option.template_variant, response_type)
+			response = _apply_context_modifiers(response, npc, request.context, response_type)
+			response = _apply_relationship_modifiers(response, npc.get_relationship(request.context.requester_id), npc.personality, response_type)
+		
+		# Add personality flavor to ALL responses (response_type is in scope throughout)
 		response = _add_personality_flavor(response, npc.personality, response_type)
 		
-		# Ensure response ends with punctuation before adding closings
+		# Ensure proper punctuation
 		if not response.ends_with(".") and not response.ends_with("!") and not response.ends_with("?"):
 			response = response + "."
 		
-		# Add closing punctuation variation (tag-aware)
+		# Add closings (existing logic)
 		if npc.personality.warmth > 0.3 and randf() > 0.7:
-			if _is_compatible(response_type, TAG_ALL):  # Friend suffix works with everything
-				response = response.trim_suffix(".") + ", friend."
+			response = response.trim_suffix(".") + ", friend."
 		
-		# Add assertive ending (only for negative responses)
+		# Add assertive ending
 		response = _add_assertive_ending(response, npc.personality, response_type)
 		
-		# High risk-tolerance adds excitement to acceptances
-		if npc.personality.risk_tolerance > 0.6:
-			if _is_compatible(response_type, TAG_POSITIVE):
-				if response.ends_with(".") and randf() > 0.6:
-					response = response.trim_suffix(".") + "!"
-		
-		if chosen_option.response_type in ["SHARE_KNOWLEDGE", "SHARE_CAUTIOUS"]:
-			return _format_knowledge_response(npc, chosen_option)
-		
-		# Final cleanup - fix any standalone lowercase "i"
-		var re = RegEx.new()
-		re.compile("\\bi\\b")
-		response = re.sub(response, "I", true)
-		
-		return "[" + npc.name + "]: " + response
+		# Format with NPC name
+		return "[%s]: %s" % [npc.name, response]
+
+	
 	
 	# Helper function to check if response_type is compatible with tag list
 	func _is_compatible(response_type: String, tag_list: Array) -> bool:
@@ -1419,63 +1426,6 @@ class ResponseGenerator:
 		return true
 		
 		
-	func _select_knowledge_template_old(response_type: String, confidence: String, personality: Personality) -> String:
-		# Templates organized by response type and confidence
-		if debugging: print("Template selection: type=%s, conf=%s, assert=%.2f" % [response_type, confidence, personality.assertiveness])
-
-		var templates = {
-			"SHARE_KNOWLEDGE": {
-				"high": [
-					"{subject} {predicate} {object}.",
-					"I can tell you that {subject} {predicate} {object}.",
-					"{object}. Everyone knows that."
-				],
-				"medium": [
-					"I believe {subject} {predicate} {object}.",
-					"If I recall correctly, {subject} {predicate} {object}.",
-					"From what I understand, {subject} {predicate} {object}."
-				],
-				"low": [
-					"I think {subject} might be {object}... but I'm not certain.",
-					"If memory serves, {subject} {predicate} {object}... though don't quote me."
-				]
-			},
-			"SHARE_CAUTIOUS": {
-				"high": [
-					"Well... {subject} {predicate} {object}.",
-					"I suppose I can tell you: {subject} {predicate} {object}."
-				],
-				"medium": [
-					"I've heard that {subject} {predicate} {object}.",
-					"Some say {subject} {predicate} {object}."
-				],
-				"low": [
-					"I've heard rumors that {subject} might be {object}.",
-					"There are whispers about {subject}... something about {object}."
-				]
-			}
-		}
-		
-		var type_templates = templates.get(response_type, templates["SHARE_KNOWLEDGE"])
-		var confidence_templates = type_templates.get(confidence, type_templates["medium"])
-		
-		# Pick template based on personality
-		var index = 0
-		var template_pool = confidence_templates.duplicate()
-		if personality.assertiveness > 0.7:
-			# Assertive: 70% direct, 30% other
-			if randf() > 0.3:
-				index = 0
-			else:
-				index = randi() % confidence_templates.size()
-
-		elif personality.warmth > 0.5:
-			index = min(1, confidence_templates.size() - 1)  # Helpful phrasing
-		else:
-			index = confidence_templates.size() - 1  # Cautious phrasing
-		
-		return confidence_templates[index]
-
 	func _select_knowledge_template(response_type: String, confidence: String, personality: Personality) -> String:
 		var knowledge_templates = {
 			"SHARE_KNOWLEDGE": {
@@ -1510,8 +1460,193 @@ class ResponseGenerator:
 			}
 		}
 		
+		# NEW: ADMIT_IGNORANCE templates - organized by personality style
+		var ignorance_templates = {
+			# Direct, honest (default)
+			"direct": [
+				"I don't know.",
+				"I have no idea.",
+				"I'm afraid I don't know anything about that.",
+				"That's outside my knowledge.",
+				"I don't have that information.",
+				"I can't help you with that."
+			],
+			# Warm, apologetic (high warmth)
+			"apologetic": [
+				"I wish I could help, but I don't know.",
+				"I'm so sorry, I don't have that information.",
+				"Unfortunately, I can't help you with that.",
+				"I'd love to help, but I simply don't know.",
+				"Forgive me, I don't know anything about that.",
+				"I'm sorry, that's not something I know about."
+			],
+			# Deflecting/suggesting alternatives (low assertiveness)
+			"deflecting": [
+				"I don't know. Perhaps someone else might.",
+				"That's not something I know about. Try asking elsewhere.",
+				"I'm not the right person to ask about that.",
+				"I don't know, but maybe someone at the tavern would.",
+				"I haven't heard about that. You might ask around.",
+				"That's beyond me, I'm afraid. Try the merchants."
+			],
+			# Uncertain/hedged (low assertiveness + low warmth)
+			"uncertain": [
+				"I... I don't think I know that.",
+				"I'm not sure. I don't really know.",
+				"I probably don't know enough to say.",
+				"I don't believe I know anything about that.",
+				"I'm uncertain... I don't know.",
+				"I don't know, really."
+			],
+			# Curious/intrigued (high curiosity)
+			"curious": [
+				"Interesting question... but I don't know.",
+				"I wish I knew! That's fascinating, but I don't have the answer.",
+				"Now that's a question. Sadly, I don't know.",
+				"Curious... I don't know, but I'd like to find out.",
+				"I've wondered about that myself. I don't know.",
+				"That's intriguing, but I'm afraid I don't know."
+			],
+			# Dismissive/curt (low warmth, high assertiveness)
+			"dismissive": [
+				"No idea.",
+				"Don't know.",
+				"Can't help you.",
+				"Not my area.",
+				"I don't know that.",
+				"No."
+			]
+		}
+		
+		# NEW: DENY_KNOWLEDGE templates - for when NPC won't share OR doesn't know
+		var deny_templates = {
+			# Secretive (knows but won't tell)
+			"secretive": [
+				"I prefer not to say.",
+				"That's not something I discuss.",
+				"I'd rather keep that to myself.",
+				"Some things are better left unsaid.",
+				"I have my reasons for not sharing.",
+				"That information isn't for sharing."
+			],
+			# Protective (protecting someone/something)
+			"protective": [
+				"I can't tell you that.",
+				"That's not for me to say.",
+				"I'm not at liberty to discuss that.",
+				"I've been asked not to share that.",
+				"That's private information.",
+				"Some knowledge is dangerous to share."
+			],
+			# Evasive (doesn't know but won't admit it)
+			"evasive": [
+				"I don't know anything about that.",
+				"Can't help you there.",
+				"That's not my concern.",
+				"I stay out of such matters.",
+				"I make it a point not to know.",
+				"Best not to ask me about that."
+			],
+			# Dismissive (doesn't care)
+			"dismissive": [
+				"Don't know, don't care.",
+				"Not my problem.",
+				"Why would I know that?",
+				"Ask someone else.",
+				"I have better things to worry about.",
+				"That's irrelevant to me."
+			]
+		}
+		
+		# NEW: ADMIT_FORGOTTEN templates
+		var forgotten_templates = {
+			"nostalgic": [
+				"I feel like I knew something about that once...",
+				"That sounds familiar, but I can't quite remember.",
+				"I used to know, but it escapes me now.",
+				"It's on the tip of my tongue... but I can't recall.",
+				"I'm sure I knew this once. How frustrating.",
+				"The memory is there, but too hazy to grasp."
+			],
+			"frustrated": [
+				"Damn it, I knew this once...",
+				"I can't remember. This is annoying.",
+				"I've forgotten. How irritating.",
+				"It's slipped my mind entirely.",
+				"I should know this, but I don't.",
+				"My memory fails me on this."
+			],
+			"honest": [
+				"I think I used to know, but I've forgotten.",
+				"I may have known once, but not anymore.",
+				"My memory of that has faded.",
+				"I've lost that knowledge, I'm afraid.",
+				"That information has slipped away from me.",
+				"I no longer remember that."
+			]
+		}
+		
+		# =========================================================================
+		# SELECTION LOGIC
+		# =========================================================================
+		
+		# Handle ADMIT_IGNORANCE - Select style based on personality
+		if response_type == "ADMIT_IGNORANCE":
+			var style = "direct"  # Default
+			
+			# High warmth → apologetic
+			if personality.warmth > 0.5:
+				style = "apologetic"
+			# Low assertiveness → deflecting or uncertain
+			elif personality.assertiveness < -0.2:
+				if personality.warmth < -0.2:
+					style = "uncertain"
+				else:
+					style = "deflecting"
+			# High curiosity → curious
+			elif personality.curiosity > 0.6:
+				style = "curious"
+			# Low warmth + high assertiveness → dismissive
+			elif personality.warmth < -0.3 and personality.assertiveness > 0.4:
+				style = "dismissive"
+			
+			var templates = ignorance_templates[style]
+			return templates[randi() % templates.size()]
+		
+		# Handle DENY_KNOWLEDGE - Select style based on personality
+		if response_type == "DENY_KNOWLEDGE":
+			var style = "evasive"  # Default
+			
+			# High conscientiousness → protective
+			if personality.conscientiousness > 0.6:
+				style = "protective"
+			# Low risk tolerance → secretive
+			elif personality.risk_tolerance < -0.3:
+				style = "secretive"
+			# Low warmth + high assertiveness → dismissive
+			elif personality.warmth < -0.3 and personality.assertiveness > 0.4:
+				style = "dismissive"
+			
+			var templates = deny_templates[style]
+			return templates[randi() % templates.size()]
+		
+		# Handle ADMIT_FORGOTTEN - Select style based on personality
+		if response_type == "ADMIT_FORGOTTEN":
+			var style = "honest"  # Default
+			
+			# High assertiveness → frustrated
+			if personality.assertiveness > 0.5:
+				style = "frustrated"
+			# High warmth or curiosity → nostalgic
+			elif personality.warmth > 0.4 or personality.curiosity > 0.5:
+				style = "nostalgic"
+			
+			var templates = forgotten_templates[style]
+			return templates[randi() % templates.size()]
+		
+		# Handle SHARE_KNOWLEDGE and SHARE_CAUTIOUS (existing logic)
 		var type_templates = knowledge_templates.get(response_type, knowledge_templates["SHARE_KNOWLEDGE"])
-		var confidence_templates = type_templates.get(confidence, type_templates["medium"])
+		var confidence_templates = type_templates.get(confidence, type_templates.get("medium", []))
 		
 		if confidence_templates.is_empty():
 			return "{subject} {predicate} {object}."
@@ -1522,18 +1657,9 @@ class ResponseGenerator:
 			var weight = _calculate_template_weight(i, confidence_templates.size(), personality, confidence)
 			weights.append(weight)
 		
-		# DEBUG: Print weights
-		print("DEBUG template weights: %s" % str(weights))
-		
 		# Weighted random selection
 		var index = _weighted_random_select(weights)
-		
-		# DEBUG: Print selection
-		print("DEBUG selected index: %d -> '%s'" % [index, confidence_templates[index].substr(0, 40)])
-		
 		return confidence_templates[index]
-
-
 	func _calculate_template_weight(index: int, total: int, personality: Personality, confidence: String) -> float:
 		var weight = 0.2
 		
@@ -1995,10 +2121,11 @@ func _create_knowledge_options(k_result: KnowledgeQuery.QueryResult) -> Array[Re
 	var options: Array[ResponseOption] = []
 	
 	if k_result.success:
+		# NPC HAS KNOWLEDGE
 		# SHARE_KNOWLEDGE - High confidence answer
 		var share = ResponseOption.new()
 		share.response_type = "SHARE_KNOWLEDGE"
-		share.base_score = 0.8 + (k_result.confidence * 0.3)
+		share.base_score = 0.8 + (k_result.confidence * 0.2)  # Changed from 0.3 to 0.2
 		share.personality_tags = {"is_helpful": true, "is_knowledgeable": true}
 		share.action_tags = {"knowledge_sharing": true}
 		share.knowledge_result = k_result
@@ -2008,32 +2135,69 @@ func _create_knowledge_options(k_result: KnowledgeQuery.QueryResult) -> Array[Re
 		# SHARE_CAUTIOUSLY - For secretive/careful characters
 		var cautious = ResponseOption.new()
 		cautious.response_type = "SHARE_CAUTIOUS"
-		cautious.base_score = 0.5
+		cautious.base_score = 0.7  # Increased from 0.5
 		cautious.personality_tags = {"is_cautious": true, "is_secretive": true}
 		cautious.action_tags = {"knowledge_sharing": true}
 		cautious.knowledge_result = k_result
 		cautious.response_template = "{knowledge_response_cautious}"
 		options.append(cautious)
+		
+		# DENY_KNOWLEDGE - "I know but won't tell" (for secretive NPCs)
+		var deny_has_knowledge = ResponseOption.new()
+		deny_has_knowledge.response_type = "DENY_KNOWLEDGE"
+		deny_has_knowledge.base_score = 0.25  # Very low - only for very secretive
+		deny_has_knowledge.personality_tags = {"is_secretive": true, "is_protective": true}
+		deny_has_knowledge.response_template = "{deny_knowledge_response}"
+		options.append(deny_has_knowledge)
 	
 	elif k_result.partial_knowledge:
+		# NPC USED TO KNOW BUT FORGOT
 		# ADMIT_FORGOTTEN - Honest about forgetting
 		var forgotten = ResponseOption.new()
 		forgotten.response_type = "ADMIT_FORGOTTEN"
-		forgotten.base_score = 0.45
+		forgotten.base_score = 0.6  # Increased from 0.45
 		forgotten.personality_tags = {"is_honest": true}
-		forgotten.response_template = "That sounds familiar, but I can't quite remember..."
+		forgotten.response_template = "{forgotten_response}"
 		options.append(forgotten)
+		
+		# ADMIT_IGNORANCE - Alternative (claim full ignorance)
+		var admit_partial = ResponseOption.new()
+		admit_partial.response_type = "ADMIT_IGNORANCE"
+		admit_partial.base_score = 0.5
+		admit_partial.personality_tags = {"is_honest": true}
+		admit_partial.response_template = "{ignorance_response}"
+		options.append(admit_partial)
+		
+		# DENY_KNOWLEDGE - Evasive
+		var deny_partial = ResponseOption.new()
+		deny_partial.response_type = "DENY_KNOWLEDGE"
+		deny_partial.base_score = 0.4
+		deny_partial.personality_tags = {"is_secretive": true}
+		deny_partial.response_template = "{deny_knowledge_response}"
+		options.append(deny_partial)
 	
-	# Always add DENY_KNOWLEDGE as an option (secretive NPCs might choose this even if they know)
-	var deny = ResponseOption.new()
-	deny.response_type = "DENY_KNOWLEDGE"
-	deny.base_score = 0.3
-	deny.personality_tags = {"is_secretive": true, "is_protective": true}
-	deny.response_template = "I don't know anything about that"
-	options.append(deny)
+	else:
+		# *** THIS IS THE CRITICAL NEW CODE ***
+		# NPC DOESN'T KNOW AT ALL
+		
+		# ADMIT_IGNORANCE - Honest "I don't know"
+		var admit = ResponseOption.new()
+		admit.response_type = "ADMIT_IGNORANCE"
+		admit.base_score = 0.85  # HIGH - should strongly win
+		admit.personality_tags = {"is_honest": true, "is_helpful": true}
+		admit.response_template = "{ignorance_response}"
+		options.append(admit)
+		
+		# DENY_KNOWLEDGE - Evasive/dismissive "I don't know"
+		var deny = ResponseOption.new()
+		deny.response_type = "DENY_KNOWLEDGE"
+		deny.base_score = 0.4  # Lower than ADMIT_IGNORANCE
+		deny.personality_tags = {"is_secretive": true, "is_dismissive": true}
+		deny.response_template = "{deny_knowledge_response}"
+		options.append(deny)
 	
 	return options
-
+	
 func _get_max_attempts(npc: NPC) -> int:
 	# Decisive roles try more times before giving up
 	if npc.context.role in ["warlord", "noble"]:
