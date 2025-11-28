@@ -61,15 +61,3 @@ class DecaySystem:
 				
 		for fid in to_forget:
 			npc_knowledge.forget_fact(fid, world)
-
-class ResponseTemplates:
-	static func get_template(confidence: float, query_type: int) -> String:
-		if confidence > 0.7:
-			match query_type:
-				KnowledgeQuery.QueryType.WHERE: return "{subject} is located {object}."
-				KnowledgeQuery.QueryType.WHO: return "{subject} is {object}."
-				_: return "I know that {subject} {predicate} {object}."
-		elif confidence > 0.4:
-			return "I believe {subject} {predicate} {object}."
-		else:
-			return "I vaguely recall that {subject} {predicate} {object}, but I'm not sure."

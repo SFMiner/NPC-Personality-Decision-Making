@@ -1,9 +1,12 @@
 extends Node
 class_name NPCSystemEnhanced
 
+const ResponseTemps = preload("res://data/response_templates.gd")
 var debugging : bool= false
 # KNOWLEDGE SYSTEM INTEGRATION
 var world_knowledge: WorldKnowledge
+
+
 
 # ============================================================================
 # CORE DATA STRUCTURES (Retained & Updated)
@@ -148,7 +151,8 @@ class ResponseOption:
 	var response_template: String = ""
 	var template_variant: int = 0
 	var action_tags: Dictionary = {}
-	var knowledge_result: KnowledgeQuery.QueryResult = null  # NEW: Store query result
+	var knowledge_result: KnowledgeQuery.QueryResult = null
+	var query_type: int = 0  # NEW: Store KnowledgeQuery.QueryType
 
 
 class Drive:
@@ -619,6 +623,9 @@ class RequestParser:
 # RESPONSE GENERATOR (Logic for standard dialogue)
 # ============================================================================
 class ResponseGenerator:
+	
+	var template_db: ResponseTemps = null
+
 	# Response type constants
 	const AGREE = "AGREE"
 	const AGREE_CONDITIONAL = "AGREE_CONDITIONAL"
@@ -812,6 +819,11 @@ class ResponseGenerator:
 
 	func _init(debug : bool = false):
 		debugging = debug
+
+	func _get_template_db() -> ResponseTemps:
+		if template_db == null:
+			template_db = ResponseTemps.get_instance()
+		return template_db
 
 	func _add_personality_flavor(response: String, personality: Personality, response_type: String, debug : bool = false) -> String:
 		# Don't add flavor if already has flavor
@@ -1373,7 +1385,9 @@ class ResponseGenerator:
 		var template = _select_knowledge_template(
 			option.response_type,
 			confidence_level,
-			npc.personality
+			npc.personality,
+			_get_template_db(),
+			fact  # Pass the FULL fact dict (has subject, predicate, object)
 		)
 		
 		print("Template returned: '%s'" % template)
@@ -1426,240 +1440,61 @@ class ResponseGenerator:
 		return true
 		
 		
-	func _select_knowledge_template(response_type: String, confidence: String, personality: Personality) -> String:
-		var knowledge_templates = {
-			"SHARE_KNOWLEDGE": {
-				"high": [
-					"{subject} {predicate} {object}.",
-					"I can tell you that {subject} {predicate} {object}.",
-					"{object}. Everyone knows that."
-				],
-				"medium": [
-					"I believe {subject} {predicate} {object}.",
-					"If I recall correctly, {subject} {predicate} {object}.",
-					"From what I understand, {subject} {predicate} {object}."
-				],
-				"low": [
-					"I think {subject} might be {object}... but I'm not certain.",
-					"If memory serves, {subject} {predicate} {object}... though don't quote me."
-				]
-			},
-			"SHARE_CAUTIOUS": {
-				"high": [
-					"Well... {subject} {predicate} {object}.",
-					"I suppose I can tell you: {subject} {predicate} {object}."
-				],
-				"medium": [
-					"I've heard that {subject} {predicate} {object}.",
-					"Some say {subject} {predicate} {object}."
-				],
-				"low": [
-					"I've heard rumors that {subject} might be {object}.",
-					"There are whispers about {subject}... something about {object}."
-				]
-			}
-		}
-		
-		# NEW: ADMIT_IGNORANCE templates - organized by personality style
-		var ignorance_templates = {
-			# Direct, honest (default)
-			"direct": [
-				"I don't know.",
-				"I have no idea.",
-				"I'm afraid I don't know anything about that.",
-				"That's outside my knowledge.",
-				"I don't have that information.",
-				"I can't help you with that."
-			],
-			# Warm, apologetic (high warmth)
-			"apologetic": [
-				"I wish I could help, but I don't know.",
-				"I'm so sorry, I don't have that information.",
-				"Unfortunately, I can't help you with that.",
-				"I'd love to help, but I simply don't know.",
-				"Forgive me, I don't know anything about that.",
-				"I'm sorry, that's not something I know about."
-			],
-			# Deflecting/suggesting alternatives (low assertiveness)
-			"deflecting": [
-				"I don't know. Perhaps someone else might.",
-				"That's not something I know about. Try asking elsewhere.",
-				"I'm not the right person to ask about that.",
-				"I don't know, but maybe someone at the tavern would.",
-				"I haven't heard about that. You might ask around.",
-				"That's beyond me, I'm afraid. Try the merchants."
-			],
-			# Uncertain/hedged (low assertiveness + low warmth)
-			"uncertain": [
-				"I... I don't think I know that.",
-				"I'm not sure. I don't really know.",
-				"I probably don't know enough to say.",
-				"I don't believe I know anything about that.",
-				"I'm uncertain... I don't know.",
-				"I don't know, really."
-			],
-			# Curious/intrigued (high curiosity)
-			"curious": [
-				"Interesting question... but I don't know.",
-				"I wish I knew! That's fascinating, but I don't have the answer.",
-				"Now that's a question. Sadly, I don't know.",
-				"Curious... I don't know, but I'd like to find out.",
-				"I've wondered about that myself. I don't know.",
-				"That's intriguing, but I'm afraid I don't know."
-			],
-			# Dismissive/curt (low warmth, high assertiveness)
-			"dismissive": [
-				"No idea.",
-				"Don't know.",
-				"Can't help you.",
-				"Not my area.",
-				"I don't know that.",
-				"No."
-			]
-		}
-		
-		# NEW: DENY_KNOWLEDGE templates - for when NPC won't share OR doesn't know
-		var deny_templates = {
-			# Secretive (knows but won't tell)
-			"secretive": [
-				"I prefer not to say.",
-				"That's not something I discuss.",
-				"I'd rather keep that to myself.",
-				"Some things are better left unsaid.",
-				"I have my reasons for not sharing.",
-				"That information isn't for sharing."
-			],
-			# Protective (protecting someone/something)
-			"protective": [
-				"I can't tell you that.",
-				"That's not for me to say.",
-				"I'm not at liberty to discuss that.",
-				"I've been asked not to share that.",
-				"That's private information.",
-				"Some knowledge is dangerous to share."
-			],
-			# Evasive (doesn't know but won't admit it)
-			"evasive": [
-				"I don't know anything about that.",
-				"Can't help you there.",
-				"That's not my concern.",
-				"I stay out of such matters.",
-				"I make it a point not to know.",
-				"Best not to ask me about that."
-			],
-			# Dismissive (doesn't care)
-			"dismissive": [
-				"Don't know, don't care.",
-				"Not my problem.",
-				"Why would I know that?",
-				"Ask someone else.",
-				"I have better things to worry about.",
-				"That's irrelevant to me."
-			]
-		}
-		
-		# NEW: ADMIT_FORGOTTEN templates
-		var forgotten_templates = {
-			"nostalgic": [
-				"I feel like I knew something about that once...",
-				"That sounds familiar, but I can't quite remember.",
-				"I used to know, but it escapes me now.",
-				"It's on the tip of my tongue... but I can't recall.",
-				"I'm sure I knew this once. How frustrating.",
-				"The memory is there, but too hazy to grasp."
-			],
-			"frustrated": [
-				"Damn it, I knew this once...",
-				"I can't remember. This is annoying.",
-				"I've forgotten. How irritating.",
-				"It's slipped my mind entirely.",
-				"I should know this, but I don't.",
-				"My memory fails me on this."
-			],
-			"honest": [
-				"I think I used to know, but I've forgotten.",
-				"I may have known once, but not anymore.",
-				"My memory of that has faded.",
-				"I've lost that knowledge, I'm afraid.",
-				"That information has slipped away from me.",
-				"I no longer remember that."
-			]
-		}
-		
-		# =========================================================================
-		# SELECTION LOGIC
-		# =========================================================================
-		
-		# Handle ADMIT_IGNORANCE - Select style based on personality
-		if response_type == "ADMIT_IGNORANCE":
-			var style = "direct"  # Default
+	func _select_knowledge_template(
+		response_type: String, 
+		confidence: String, 
+		personality: Personality,
+		template_db: ResponseTemps = null,
+		fact_data: Dictionary = {},  # CHANGE THIS - accept full fact instead of just subject
+		query_type: int = 0
+	) -> String:
+		var db = template_db if template_db != null else _get_template_db()
+
+		var rt_enum: ResponseTemps.ResponseType
+		match response_type:
+			"SHARE_KNOWLEDGE":
+				rt_enum = ResponseTemps.ResponseType.SHARE_KNOWLEDGE
+			"SHARE_CAUTIOUS":
+				rt_enum = ResponseTemps.ResponseType.SHARE_CAUTIOUS
+			"ADMIT_IGNORANCE":
+				rt_enum = ResponseTemps.ResponseType.ADMIT_IGNORANCE
+			"DENY_KNOWLEDGE":
+				rt_enum = ResponseTemps.ResponseType.DENY_KNOWLEDGE
+			"ADMIT_FORGOTTEN":
+				rt_enum = ResponseTemps.ResponseType.ADMIT_FORGOTTEN
+			_:
+				rt_enum = ResponseTemps.ResponseType.ADMIT_IGNORANCE
 			
-			# High warmth → apologetic
-			if personality.warmth > 0.5:
-				style = "apologetic"
-			# Low assertiveness → deflecting or uncertain
-			elif personality.assertiveness < -0.2:
-				if personality.warmth < -0.2:
-					style = "uncertain"
-				else:
-					style = "deflecting"
-			# High curiosity → curious
-			elif personality.curiosity > 0.6:
-				style = "curious"
-			# Low warmth + high assertiveness → dismissive
-			elif personality.warmth < -0.3 and personality.assertiveness > 0.4:
-				style = "dismissive"
+			# Convert personality to style
+		var style = ResponseTemps.personality_to_style(personality)
+		
+		# ContextPattern is always GENERAL for now (we'll refine this later)
+		var context: ResponseTemps.ContextPattern
+		match query_type:
+			KnowledgeQuery.QueryType.WHERE:
+				context = ResponseTemps.ContextPattern.WHERE_QUESTION
+			KnowledgeQuery.QueryType.WHO:
+				context = ResponseTemps.ContextPattern.WHO_QUESTION
+			KnowledgeQuery.QueryType.WHAT:
+				context = ResponseTemps.ContextPattern.WHAT_QUESTION
+			KnowledgeQuery.QueryType.WHEN:
+				context = ResponseTemps.ContextPattern.WHEN_QUESTION
+			KnowledgeQuery.QueryType.WHY:
+				context = ResponseTemps.ContextPattern.WHY_QUESTION
+			KnowledgeQuery.QueryType.HOW:
+				context = ResponseTemps.ContextPattern.HOW_QUESTION
+			_:
+				context = ResponseTemps.ContextPattern.GENERAL
 			
-			var templates = ignorance_templates[style]
-			return templates[randi() % templates.size()]
+			# Get template with placeholders
+		var placeholders = fact_data
 		
-		# Handle DENY_KNOWLEDGE - Select style based on personality
-		if response_type == "DENY_KNOWLEDGE":
-			var style = "evasive"  # Default
-			
-			# High conscientiousness → protective
-			if personality.conscientiousness > 0.6:
-				style = "protective"
-			# Low risk tolerance → secretive
-			elif personality.risk_tolerance < -0.3:
-				style = "secretive"
-			# Low warmth + high assertiveness → dismissive
-			elif personality.warmth < -0.3 and personality.assertiveness > 0.4:
-				style = "dismissive"
-			
-			var templates = deny_templates[style]
-			return templates[randi() % templates.size()]
+		var result = db.get_template(rt_enum, context, style, placeholders)
 		
-		# Handle ADMIT_FORGOTTEN - Select style based on personality
-		if response_type == "ADMIT_FORGOTTEN":
-			var style = "honest"  # Default
-			
-			# High assertiveness → frustrated
-			if personality.assertiveness > 0.5:
-				style = "frustrated"
-			# High warmth or curiosity → nostalgic
-			elif personality.warmth > 0.4 or personality.curiosity > 0.5:
-				style = "nostalgic"
-			
-			var templates = forgotten_templates[style]
-			return templates[randi() % templates.size()]
-		
-		# Handle SHARE_KNOWLEDGE and SHARE_CAUTIOUS (existing logic)
-		var type_templates = knowledge_templates.get(response_type, knowledge_templates["SHARE_KNOWLEDGE"])
-		var confidence_templates = type_templates.get(confidence, type_templates.get("medium", []))
-		
-		if confidence_templates.is_empty():
-			return "{subject} {predicate} {object}."
-		
-		# Calculate weights for each template based on personality
-		var weights: Array[float] = []
-		for i in range(confidence_templates.size()):
-			var weight = _calculate_template_weight(i, confidence_templates.size(), personality, confidence)
-			weights.append(weight)
-		
-		# Weighted random selection
-		var index = _weighted_random_select(weights)
-		return confidence_templates[index]
+		return db.get_template(rt_enum, context, style, placeholders)
+	
+	
+	
 	func _calculate_template_weight(index: int, total: int, personality: Personality, confidence: String) -> float:
 		var weight = 0.2
 		
@@ -1772,39 +1607,82 @@ class DecisionEngine:
 		
 	func _calculate_personality_modifier(personality: Personality, option: ResponseOption) -> float:
 		var modifier = 1.0
+		
 		for tag in option.personality_tags:
 			match tag:
 				"is_helpful":
 					if option.personality_tags[tag]:
 						modifier += personality.warmth * 0.3
+				
 				"is_aggressive":
 					if option.personality_tags[tag]:
 						modifier += personality.assertiveness * 0.3
+				
 				"is_cautious":
 					if option.personality_tags[tag]:
 						modifier += (1.0 - personality.risk_tolerance) * 0.3
+				
 				"is_strategic":
 					if option.personality_tags[tag]:
 						modifier += personality.conscientiousness * 0.2
+				
 				"is_evasive":
 					if option.personality_tags[tag]:
 						modifier += (1.0 - personality.assertiveness) * 0.2
-
-		# NEW: Risk-Tolerance affects acceptance/refusal likelihood
+				
+				# NEW: Knowledge-specific tags
+				"is_vulnerable":
+					# Admitting ignorance/weakness is harder for low assertiveness
+					if option.personality_tags[tag]:
+						modifier += personality.assertiveness * 0.3  # High assertiveness = easier to admit
+				
+				"is_dismissive":
+					# Low warmth = more dismissive
+					if option.personality_tags[tag]:
+						modifier += (1.0 - personality.warmth) * 0.3
+				
+				"is_confident":
+					# Sharing knowledge confidently
+					if option.personality_tags[tag]:
+						modifier += personality.assertiveness * 0.2
+				
+				"values_accuracy":
+					# FIXED: Conscientiousness BOOSTS honest admission of ignorance
+					# Conscientious people won't guess or evade - they want to be accurate
+					if option.personality_tags[tag]:
+						modifier += personality.conscientiousness * 0.3
+				
+				"requires_accuracy":
+					# For SHARING knowledge - conscientiousness penalizes low-confidence shares
+					if option.personality_tags[tag]:
+						# Get confidence from knowledge_result if available
+						if ("knowledge_result") in option and option.knowledge_result:
+							var confidence = option.knowledge_result.confidence
+							# Low confidence + high conscientiousness = penalty
+							if confidence < 0.6 and personality.conscientiousness > 0.5:
+								modifier -= 0.3  # Conscientious NPCs won't share uncertain info
+				
+				"is_risky_guess":
+					# Only applies to low-confidence knowledge shares
+					# Risk-tolerance DOES matter when guessing!
+					if option.personality_tags[tag]:
+						modifier += personality.risk_tolerance * 0.4  # High risk = willing to guess
+				
+				"is_secretive":
+					if option.personality_tags[tag]:
+						modifier += (1.0 - personality.warmth) * 0.2
+		
+		# Risk-Tolerance affects acceptance/refusal for ACTION requests (not knowledge)
 		if option.response_type in ["AGREE", "AGREE_CONDITIONAL"]:
-			# High risk-tolerance = more likely to accept
 			modifier += personality.risk_tolerance * 0.5
 		elif option.response_type in ["REFUSE", "REFUSE_SOFT", "REFUSE_HEDGED", "DEFLECT"]:
-			# Low risk-tolerance = more likely to refuse
-			modifier += (1.0 - personality.risk_tolerance) * 0.4
-
-		# Adjust conditional responses based on risk
-		if option.response_type == "AGREE_CONDITIONAL":
-			# Low risk wants MORE conditions (harder to accept unconditionally)
-			if personality.risk_tolerance < 0.0:
-				modifier += 0.3
-
+			# ONLY apply risk penalty to refusals for NON-knowledge queries
+			# Check if this is a knowledge response type
+			if option.response_type not in ["ADMIT_IGNORANCE", "DENY_KNOWLEDGE", "ADMIT_FORGOTTEN"]:
+				modifier += (1.0 - personality.risk_tolerance) * 0.4
+		
 		return max(0.1, modifier)
+	
 	
 	func _calculate_value_modifier(values: Dictionary, option: ResponseOption) -> float:
 		var modifier = 1.0
@@ -1982,7 +1860,12 @@ var knowledge_seeder: KnowledgeHelpers.Seeder
 var knowledge_decay: KnowledgeHelpers.DecaySystem
 var tick_count: int = 0
 
+var _template_db = null
+
 func _ready():
+	add_to_group("npc_system")
+	
+	_template_db = ResponseTemps.get_instance()
 	world_knowledge = WorldDB
 	# In a real setup, you might add_child(world_knowledge) if it needs to process frames, 
 	# but here it's acting as a database.
@@ -1996,7 +1879,7 @@ func _ready():
 	
 	knowledge_seeder = KnowledgeHelpers.Seeder.new(world_knowledge)
 	knowledge_decay = KnowledgeHelpers.DecaySystem.new(world_knowledge)
-	
+
 	_create_sample_npcs()
 
 func _create_sample_npcs():
@@ -2040,6 +1923,10 @@ func create_npc_from_template(npc_id, npc_name, archetype, contextual_role = "")
 	return npc
 
 func process_request(npc_id: String, request_text: String) -> String:
+	
+	var generator = ResponseGenerator.new()
+	generator.template_db = _template_db
+
 	if not npcs.has(npc_id):
 		return "Unknown NPC"
 	
@@ -2050,20 +1937,16 @@ func process_request(npc_id: String, request_text: String) -> String:
 	
 	# 2. CHECK IF THIS IS A KNOWLEDGE QUERY AND ADD KNOWLEDGE OPTIONS
 	var k_query = KnowledgeQuery.parse(request_text)
-	if debugging: print("DEBUG: Query='%s', Type=%s" % [request_text, KnowledgeQuery.QueryType.keys()[k_query.query_type]])
-
+	
 	if k_query.query_type != KnowledgeQuery.QueryType.GENERAL:
 		# This is a knowledge query - add knowledge-based response options
 		var k_executor = KnowledgeQuery.QueryExecutor.new(world_knowledge)
 		var k_result = k_executor.execute(npc.knowledge, k_query)
-		if debugging: print("DEBUG: Knowledge success=%s, confidence=%.2f" % [k_result.success, k_result.confidence])
-
+	
 		var k_options = _create_knowledge_options(k_result)
-		if debugging: print("DEBUG: Created %d knowledge options" % k_options.size())
-		request.response_options.append_array(k_options)
 		
 		# Add knowledge response options to the existing options
-		request.response_options.append_array(_create_knowledge_options(k_result))
+		request.response_options.append_array(_create_knowledge_options(k_result, k_query))
 	
 	# 3. ADD PERSONALITY-SPECIFIC OPTIONS
 	if npc.personality.warmth > 0.7:
@@ -2117,84 +2000,134 @@ func process_request(npc_id: String, request_text: String) -> String:
 	# 6. FALLBACK (only as last resort)
 	return decision_engine._generate_fallback(npc)
 
-func _create_knowledge_options(k_result: KnowledgeQuery.QueryResult) -> Array[ResponseOption]:
+
+
+
+
+
+func get_template_db() -> ResponseTemps:
+	if _template_db == null:
+		_template_db = ResponseTemps.get_instance()
+	return _template_db
+
+func _create_knowledge_options(
+	k_result: KnowledgeQuery.QueryResult,
+	k_query: KnowledgeQuery = null  # NEW: Optional query parameter
+) -> Array[ResponseOption]:
 	var options: Array[ResponseOption] = []
 	
 	if k_result.success:
-		# NPC HAS KNOWLEDGE
-		# SHARE_KNOWLEDGE - High confidence answer
+		# Sharing knowledge (potentially risky if guessing)
 		var share = ResponseOption.new()
 		share.response_type = "SHARE_KNOWLEDGE"
-		share.base_score = 0.8 + (k_result.confidence * 0.2)  # Changed from 0.3 to 0.2
-		share.personality_tags = {"is_helpful": true, "is_knowledgeable": true}
-		share.action_tags = {"knowledge_sharing": true}
+		share.base_score = 0.8 + (k_result.confidence * 0.2)
+		
+		# NEW: More specific tags that make sense
+		share.personality_tags = {
+			"is_helpful": true,          # Warmth bonus
+			"is_confident": true,        # Assertiveness bonus (sharing confidently)
+			"requires_accuracy": true    # Conscientiousness check (low conf = penalty)
+		}
+		
+		# NEW: Only apply risk for LOW confidence shares (guessing)
+		if k_result.confidence < 0.5:
+			share.personality_tags["is_risky_guess"] = true
+		
 		share.knowledge_result = k_result
-		share.response_template = "{knowledge_response}"
 		options.append(share)
 		
-		# SHARE_CAUTIOUSLY - For secretive/careful characters
+		# Cautious sharing
 		var cautious = ResponseOption.new()
 		cautious.response_type = "SHARE_CAUTIOUS"
-		cautious.base_score = 0.7  # Increased from 0.5
-		cautious.personality_tags = {"is_cautious": true, "is_secretive": true}
-		cautious.action_tags = {"knowledge_sharing": true}
+		cautious.base_score = 0.7
+		cautious.personality_tags = {
+			"is_helpful": true,
+			"is_cautious": true,         # For low risk-tolerance NPCs
+			"requires_accuracy": true
+		}
 		cautious.knowledge_result = k_result
-		cautious.response_template = "{knowledge_response_cautious}"
 		options.append(cautious)
 		
-		# DENY_KNOWLEDGE - "I know but won't tell" (for secretive NPCs)
+		# Refusing to share (when they know but won't tell)
 		var deny_has_knowledge = ResponseOption.new()
 		deny_has_knowledge.response_type = "DENY_KNOWLEDGE"
-		deny_has_knowledge.base_score = 0.25  # Very low - only for very secretive
-		deny_has_knowledge.personality_tags = {"is_secretive": true, "is_protective": true}
-		deny_has_knowledge.response_template = "{deny_knowledge_response}"
+		deny_has_knowledge.base_score = 0.25
+		deny_has_knowledge.personality_tags = {
+			"is_secretive": true,
+			"is_protective": true,
+			"is_dismissive": true  # Low warmth bonus
+		}
 		options.append(deny_has_knowledge)
 	
 	elif k_result.partial_knowledge:
-		# NPC USED TO KNOW BUT FORGOT
-		# ADMIT_FORGOTTEN - Honest about forgetting
+		# Used to know but forgot
 		var forgotten = ResponseOption.new()
 		forgotten.response_type = "ADMIT_FORGOTTEN"
-		forgotten.base_score = 0.6  # Increased from 0.45
-		forgotten.personality_tags = {"is_honest": true}
-		forgotten.response_template = "{forgotten_response}"
+		forgotten.base_score = 0.6
+		forgotten.personality_tags = {
+			"is_honest": true,      # Warmth bonus
+			"is_vulnerable": true   # Low assertiveness makes this harder
+		}
 		options.append(forgotten)
 		
-		# ADMIT_IGNORANCE - Alternative (claim full ignorance)
+		# Claim full ignorance instead
 		var admit_partial = ResponseOption.new()
 		admit_partial.response_type = "ADMIT_IGNORANCE"
 		admit_partial.base_score = 0.5
-		admit_partial.personality_tags = {"is_honest": true}
-		admit_partial.response_template = "{ignorance_response}"
+		admit_partial.personality_tags = {
+			"is_honest": true,
+			"is_vulnerable": true   # Admitting ignorance = vulnerable
+		}
 		options.append(admit_partial)
 		
-		# DENY_KNOWLEDGE - Evasive
+		# Evasive
 		var deny_partial = ResponseOption.new()
 		deny_partial.response_type = "DENY_KNOWLEDGE"
 		deny_partial.base_score = 0.4
-		deny_partial.personality_tags = {"is_secretive": true}
-		deny_partial.response_template = "{deny_knowledge_response}"
+		deny_partial.personality_tags = {
+			"is_evasive": true,
+			"is_dismissive": true
+		}
 		options.append(deny_partial)
 	
 	else:
-		# *** THIS IS THE CRITICAL NEW CODE ***
-		# NPC DOESN'T KNOW AT ALL
+		# NPC DOESN'T KNOW
 		
-		# ADMIT_IGNORANCE - Honest "I don't know"
+		# Honest admission of ignorance
 		var admit = ResponseOption.new()
 		admit.response_type = "ADMIT_IGNORANCE"
-		admit.base_score = 0.85  # HIGH - should strongly win
-		admit.personality_tags = {"is_honest": true, "is_helpful": true}
-		admit.response_template = "{ignorance_response}"
+		admit.base_score = 0.85
+		
+		# NEW: Admitting ignorance shows good traits
+		admit.personality_tags = {
+			"is_honest": true,         # High warmth bonus
+			"is_helpful": true,        # Trying to be helpful even without answer
+			"is_vulnerable": true,     # Admitting limitation (boosted by assertiveness)
+			"values_accuracy": true    # Conscientiousness bonus (won't give bad info)
+		}
 		options.append(admit)
 		
-		# DENY_KNOWLEDGE - Evasive/dismissive "I don't know"
+		# Dismissive/evasive "don't know"
 		var deny = ResponseOption.new()
 		deny.response_type = "DENY_KNOWLEDGE"
-		deny.base_score = 0.4  # Lower than ADMIT_IGNORANCE
-		deny.personality_tags = {"is_secretive": true, "is_dismissive": true}
-		deny.response_template = "{deny_knowledge_response}"
+		deny.base_score = 0.4
+		deny.personality_tags = {
+			"is_dismissive": true,    # Low warmth
+			"is_evasive": true        # Low assertiveness (won't admit directly)
+		}
 		options.append(deny)
+	
+	if k_result.success:
+		var share = ResponseOption.new()
+		# ... existing setup ...
+		share.query_type = k_query.query_type if k_query else KnowledgeQuery.QueryType.GENERAL
+		options.append(share)
+		
+		var cautious = ResponseOption.new()
+
+		cautious.query_type = k_query.query_type if k_query else KnowledgeQuery.QueryType.GENERAL
+		options.append(cautious)
+
 	
 	return options
 	

@@ -11,11 +11,10 @@ config_version=5
 [application]
 
 config/name="NPC Decision Demo"
-run/main_scene="res://mainOld.tscn"
+run/main_scene="uid://bnfyaqjjdlqp2"
 config/features=PackedStringArray("4.5")
 
 [autoload]
 
-WoldKNowledge="*res://scripts/world_knowledge.gd"
 WorldDB="*res://scripts/world_knowledge.gd"
 NpcManager="*res://scripts/npc_system_enhanced.gd"
